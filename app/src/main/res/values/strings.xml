@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">TXNotes</string>
     <string name="new_note_button">Добавить заметку</string>
+    <string name="new_note_header_text">Новая заметка</string>
 </resources>

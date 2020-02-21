@@ -2,6 +2,7 @@ package com.example.txnotes;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -14,7 +15,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Adds a new note and shows NewNoteActivity
-    public void addNewNote(View view) {
-        // Do something in response to button click
+    public void createNewNote(View view) {
+        // Go to CreateNewNoteActivity
+        Intent intent = new Intent(this, CreateNewNoteActivity.class);
+        startActivity(intent);
     }
 }
