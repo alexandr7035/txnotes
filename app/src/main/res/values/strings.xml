@@ -2,4 +2,8 @@
     <string name="app_name">TXNotes</string>
     <string name="new_note_button">Добавить заметку</string>
     <string name="new_note_header_text">Новая заметка</string>
+    <string name="set_note_title_hint">Заголовок заметки"</string>
+    <string name="set_note_text_hint">Текст заметки</string>
+    <string name="cancel_note">Отмена</string>
+    <string name="save_note">Сохранить</string>
 </resources>
