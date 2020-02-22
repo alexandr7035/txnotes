@@ -30,10 +30,10 @@
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
         android:ems="10"
+        android:gravity="top|left"
         android:hint="@string/set_note_text_hint"
         android:inputType="textMultiLine"
         android:minLines="5"
-        android:gravity="top|left"
         app:layout_constraintBottom_toTopOf="@+id/cancelNote"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -42,20 +42,24 @@
 
     <Button
         android:id="@+id/cancelNote"
-        android:layout_width="185dp"
+        android:layout_width="0dp"
         android:layout_height="60dp"
+        android:layout_marginRight="5dp"
         android:text="@string/cancel_note"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/saveNote"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         tools:text="@string/save_note" />
 
     <Button
         android:id="@+id/saveNote"
-        android:layout_width="169dp"
+        android:layout_width="0dp"
         android:layout_height="60dp"
+        android:layout_marginLeft="5dp"
         android:text="@string/save_note"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/cancelNote" />
 </androidx.constraintlayout.widget.ConstraintLayout>
