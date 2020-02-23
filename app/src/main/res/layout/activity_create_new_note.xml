@@ -57,6 +57,7 @@
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:layout_marginLeft="5dp"
+        android:onClick="btnAddNote"
         android:text="@string/save_note"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

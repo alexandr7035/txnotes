@@ -14,10 +14,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        TXDatabase database = new TXDatabase(this);
-        database.addNote("123", "Текст", 123, 123);
-
     }
 
     // Adds a new note and shows NewNoteActivity
