@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.txnotes.db.TXDatabase;
 
 public class CreateNewNoteActivity extends AppCompatActivity {
 
@@ -78,10 +77,6 @@ public class CreateNewNoteActivity extends AppCompatActivity {
         // Get note text from 'noteText' element
         text = findViewById(R.id.noteText);
         String note_text = text.getText().toString();
-
-        // Save data
-        TXDatabase database = new TXDatabase(this);
-        database.addNote(note_title, note_text, 0, 0);
 
         // Go to CreateNewNoteActivity
         Intent intent = new Intent(this, MainActivity.class);
