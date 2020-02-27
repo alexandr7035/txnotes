@@ -5,6 +5,7 @@ import android.util.Log;
 
 import androidx.room.Room;
 
+import com.example.txnotes.db.NotesDao;
 import com.example.txnotes.db.NotesDatabase;
 
 
@@ -20,6 +21,7 @@ public class TXNotesApplication extends Application {
         // FIXME fix allowMainThreadQueries() !!!!!!
         NotesDatabase db =  Room.databaseBuilder(getApplicationContext(),
                 NotesDatabase.class, "notes.db").allowMainThreadQueries().build();
+        
     }
 }
 
