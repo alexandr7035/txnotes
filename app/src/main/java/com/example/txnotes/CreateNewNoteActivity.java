@@ -1,7 +1,5 @@
 package com.example.txnotes;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -10,7 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.txnotes.db.TXDatabase;
+import androidx.appcompat.app.AppCompatActivity;
+
 
 public class CreateNewNoteActivity extends AppCompatActivity {
 
@@ -25,7 +24,6 @@ public class CreateNewNoteActivity extends AppCompatActivity {
         setTitle(title_string);
 
         // Elements' objects to operate
-        final EditText note_title = findViewById(R.id.noteTitle);
         final EditText note_text = findViewById(R.id.noteText);
         final Button save_btn = findViewById(R.id.saveNote);
 
@@ -71,17 +69,9 @@ public class CreateNewNoteActivity extends AppCompatActivity {
 
         EditText text;
 
-        // Get note title from 'noteTitle' element
-        text = findViewById(R.id.noteTitle);
-        String note_title = text.getText().toString();
-
         // Get note text from 'noteText' element
         text = findViewById(R.id.noteText);
         String note_text = text.getText().toString();
-
-        // Save data
-        TXDatabase database = new TXDatabase(this);
-        database.addNote(note_title, note_text, 0, 0);
 
         // Go to CreateNewNoteActivity
         Intent intent = new Intent(this, MainActivity.class);

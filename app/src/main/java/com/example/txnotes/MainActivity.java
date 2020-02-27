@@ -1,14 +1,16 @@
 package com.example.txnotes;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
-import com.example.txnotes.db.TXDatabase;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
+
+import com.example.txnotes.db.NotesDatabase;
+
 
 public class MainActivity extends AppCompatActivity {
 
