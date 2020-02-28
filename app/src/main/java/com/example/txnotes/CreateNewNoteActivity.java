@@ -10,6 +10,10 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.txnotes.db.NotesDao;
+import com.example.txnotes.db.NotesDatabase;
+import com.example.txnotes.db.NotesEntity;
+
 
 public class CreateNewNoteActivity extends AppCompatActivity {
 
@@ -72,6 +76,11 @@ public class CreateNewNoteActivity extends AppCompatActivity {
         // Get note text from 'noteText' element
         text = findViewById(R.id.noteTextField);
         String note_text = text.getText().toString();
+
+        // Add note to db
+        NotesDatabase db = ((TXNotesApplication) this.getApplication()).getDatabaseInstance();
+        NotesDao db_dao = db.getNotesDao();
+        db_dao.addNote(new NotesEntity(note_text, 0));
 
         // Go to CreateNewNoteActivity
         Intent intent = new Intent(this, MainActivity.class);
