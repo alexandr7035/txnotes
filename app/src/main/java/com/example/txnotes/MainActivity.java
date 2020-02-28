@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Space;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,7 +13,6 @@ import androidx.room.Room;
 
 import com.example.txnotes.db.NotesDao;
 import com.example.txnotes.db.NotesDatabase;
-import com.example.txnotes.TXNotesApplication;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,10 +34,18 @@ public class MainActivity extends AppCompatActivity {
         // A layout for notes
         LinearLayout notes_layout = findViewById(R.id.notesLayout);
         for (Integer i=notes_count; i>=1; i--) {
-            Button note_btn = new Button(getApplicationContext());
+            NoteWidget note_btn = new NoteWidget(getApplicationContext());
             String note_text = db_dao.getNoteText(i);
-            note_btn.setText(note_text);
+            //note_btn.setText(note_text);
+
             notes_layout.addView(note_btn);
+
+
+
+            // Add a space after a note
+            Space space = new Space(getApplicationContext());
+            space.setMinimumHeight(note_btn.DISTANCE_AFTER_NOTE);
+            notes_layout.addView(space);
         }
 
     }
