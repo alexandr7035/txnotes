@@ -25,16 +25,20 @@ public class MainActivity extends AppCompatActivity {
         NotesDatabase db = ((TXNotesApplication) this.getApplication()).getDatabaseInstance();
         NotesDao db_dao = db.getNotesDao();
 
-        LinearLayout notes_layout = findViewById(R.id.notesLayout);
-        notes_layout.addView(new Button(getApplicationContext()));
-
         // Get notes count and add to title
         TextView app_title = findViewById(R.id.appTitleView);
         //Integer notes_count = 5;
         Integer notes_count = db_dao.getNotesCount();
-
-
         app_title.setText(getString(R.string.app_title,  " (" + notes_count + ")"));
+
+        // A layout for notes
+        LinearLayout notes_layout = findViewById(R.id.notesLayout);
+        for (Integer i=notes_count; i>=1; i--) {
+            Button note_btn = new Button(getApplicationContext());
+            String note_text = db_dao.getNoteText(i);
+            note_btn.setText(note_text);
+            notes_layout.addView(note_btn);
+        }
 
     }
 
