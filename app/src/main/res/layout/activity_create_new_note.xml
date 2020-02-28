@@ -5,51 +5,60 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-    android:layout_marginLeft="10dp"
-    android:layout_marginTop="10dp"
-    android:layout_marginRight="10dp"
-    android:layout_marginBottom="10dp"
     tools:context=".CreateNewNoteActivity">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/saveNoteBar"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:background="@color/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:onClick="btnCancelNewNote"
+            android:text="Button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/saveNoteBtn"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/saveNoteBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="btnAddNote"
+            android:text="Button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.981"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.47" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <EditText
-        android:id="@+id/noteText"
+        android:id="@+id/noteTextField"
         android:layout_width="0dp"
-
         android:layout_height="0dp"
-        android:layout_marginBottom="20dp"
+        android:layout_margin="10dp"
         android:ems="10"
-        android:gravity="top|left"
-        android:hint="@string/set_note_text_hint"
+        android:gravity="start|top"
         android:inputType="textMultiLine"
-        android:minLines="5"
-        app:layout_constraintBottom_toTopOf="@+id/cancelNote"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/cancelNote"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:layout_marginRight="5dp"
-        android:onClick="btnCancelNewNote"
-        android:text="@string/cancel_note"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/saveNote"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:text="@string/save_note" />
-
-    <Button
-        android:id="@+id/saveNote"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:layout_marginLeft="5dp"
-        android:onClick="btnAddNote"
-        android:text="@string/save_note"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/cancelNote" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/saveNoteBar"
+        app:layout_constraintVertical_bias="1.0" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

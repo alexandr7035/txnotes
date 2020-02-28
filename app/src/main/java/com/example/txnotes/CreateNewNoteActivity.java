@@ -24,8 +24,8 @@ public class CreateNewNoteActivity extends AppCompatActivity {
         setTitle(title_string);
 
         // Elements' objects to operate
-        final EditText note_text = findViewById(R.id.noteText);
-        final Button save_btn = findViewById(R.id.saveNote);
+        final EditText note_text = findViewById(R.id.noteTextField);
+        final Button save_btn = findViewById(R.id.saveNoteBtn);
 
         // Disable 'save' button first
         save_btn.setEnabled(false);
@@ -70,7 +70,7 @@ public class CreateNewNoteActivity extends AppCompatActivity {
         EditText text;
 
         // Get note text from 'noteText' element
-        text = findViewById(R.id.noteText);
+        text = findViewById(R.id.noteTextField);
         String note_text = text.getText().toString();
 
         // Go to CreateNewNoteActivity
