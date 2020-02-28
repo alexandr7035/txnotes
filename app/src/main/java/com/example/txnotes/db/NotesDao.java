@@ -16,6 +16,9 @@ public interface NotesDao {
     @Query("SELECT COUNT(*) FROM notes")
     Integer getNotesCount();
 
+    @Query("SELECT note_creation_date FROM notes WHERE id = (:id)")
+    Long getNoteCreationDate(Integer id);
+
     @Insert
     void addNote(NotesEntity noteEntity);
 

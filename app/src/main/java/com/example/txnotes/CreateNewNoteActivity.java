@@ -77,10 +77,13 @@ public class CreateNewNoteActivity extends AppCompatActivity {
         text = findViewById(R.id.noteTextField);
         String note_text = text.getText().toString();
 
+        // FIXME Should be fixed to long before 01/19/2038 :)
+        long note_creation_date = System.currentTimeMillis() / 1000;
+
         // Add note to db
         NotesDatabase db = ((TXNotesApplication) this.getApplication()).getDatabaseInstance();
         NotesDao db_dao = db.getNotesDao();
-        db_dao.addNote(new NotesEntity(note_text, 0));
+        db_dao.addNote(new NotesEntity(note_text, note_creation_date));
 
         // Go to CreateNewNoteActivity
         Intent intent = new Intent(this, MainActivity.class);
