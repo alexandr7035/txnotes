@@ -34,18 +34,16 @@ public class MainActivity extends AppCompatActivity {
         // A layout for notes
         LinearLayout notes_layout = findViewById(R.id.notesLayout);
         for (Integer i=notes_count; i>=1; i--) {
+            // Create note button
             NoteWidget note_btn = new NoteWidget(getApplicationContext());
-            String note_text = db_dao.getNoteText(i);
-            //note_btn.setText(note_text);
 
+            // Set title
+            String note_text = db_dao.getNoteText(i);
+            note_btn.setNoteTitle(note_text);
+
+            // Add note to the notesLayout
             notes_layout.addView(note_btn);
 
-
-
-            // Add a space after a note
-            Space space = new Space(getApplicationContext());
-            space.setMinimumHeight(note_btn.DISTANCE_AFTER_NOTE);
-            notes_layout.addView(space);
         }
 
     }
