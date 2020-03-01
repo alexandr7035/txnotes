@@ -9,14 +9,17 @@ public class NoteWidget extends LinearLayout {
     public NoteWidget(Context context) {
         super(context);
 
-
-
-        //this = View.inflate(getContext(), R.layout.view_note, null);
+        // Apply view_note.xml
         this.inflate(context, R.layout.view_note, this);
     }
 
     public void setNoteTitle(String title) {
         TextView textview = findViewWithTag("noteTitleView");
         textview.setText(title);
+    }
+
+    public void setNoteDate(Long date) {
+        TextView textview = findViewWithTag("noteDateView");
+        textview.setText("" + date);
     }
 }
