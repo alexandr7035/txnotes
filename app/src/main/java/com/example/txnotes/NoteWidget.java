@@ -1,8 +1,11 @@
 package com.example.txnotes;
 
 import android.content.Context;
+import android.text.format.DateFormat;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import java.util.Calendar;
 
 public class NoteWidget extends LinearLayout {
 
@@ -18,8 +21,9 @@ public class NoteWidget extends LinearLayout {
         textview.setText(title);
     }
 
-    public void setNoteDate(Long date) {
+    public void setNoteDate(Long date) { ;
         TextView textview = findViewWithTag("noteDateView");
-        textview.setText("" + date);
+        String string_date = DateFormat.format("dd-MM-yyyy\nHH:mm", date*1000).toString();
+        textview.setText(string_date);
     }
 }

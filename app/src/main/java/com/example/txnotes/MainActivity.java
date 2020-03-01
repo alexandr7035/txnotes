@@ -41,6 +41,10 @@ public class MainActivity extends AppCompatActivity {
             String note_text = db_dao.getNoteText(i);
             note_btn.setNoteTitle(note_text);
 
+            // Set date
+            Long date = db_dao.getNoteCreationDate(i);
+            note_btn.setNoteDate(date);
+
             // Add note to the notesLayout
             notes_layout.addView(note_btn);
 
