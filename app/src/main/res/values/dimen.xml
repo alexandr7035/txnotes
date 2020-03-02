@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="app_tile_font_size">21dp</dimen>
-    <dimen name="note_title_font_size">16sp</dimen>
+    <dimen name="note_title_font_size">18sp</dimen>
+    <dimen name="note_date_font_size">15sp</dimen>
 </resources>
