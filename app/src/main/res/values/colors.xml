@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
-    <color name="noteWidget">#EFE2CE</color>
+    <color name="colorPrimary">#E49B6A2E</color>
+    <color name="colorPrimaryDark">#E4603F1E</color>
+    <color name="colorAccent">#E4603F1E</color>
+    <color name="colorNoteWidget">#C5C2C2</color>
+    <color name="colorBackground">#FFFFFF</color>
 </resources>
