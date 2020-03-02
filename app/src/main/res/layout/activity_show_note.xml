@@ -34,6 +34,22 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
 
+        <TextView
+            android:id="@+id/showNoteTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:gravity="center|left"
+            android:text="@string/show_note_title"
+            android:textColor="#FFFFFF"
+            android:textSize="@dimen/app_tile_font_size"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/cancelShowNoteBtn"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ScrollView
