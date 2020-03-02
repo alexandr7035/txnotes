@@ -7,6 +7,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -29,7 +30,7 @@ public class CreateNewNoteActivity extends AppCompatActivity {
 
         // Elements' objects to operate
         final EditText note_text = findViewById(R.id.noteTextField);
-        final Button save_btn = findViewById(R.id.saveNoteBtn);
+        final ImageButton save_btn = findViewById(R.id.saveNoteBtn);
 
         // Disable 'save' button first
         save_btn.setEnabled(false);

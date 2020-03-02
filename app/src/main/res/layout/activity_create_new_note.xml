@@ -16,32 +16,43 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
+        <ImageButton
+            android:id="@+id/cancelNewNoteBtn"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@null"
             android:onClick="btnCancelNewNote"
-            android:text="Button"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/saveNoteBtn"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/saveNoteBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="btnAddNote"
-            android:text="Button"
+            android:paddingLeft="12dp"
+            android:paddingTop="15dp"
+            android:paddingRight="12dp"
+            android:paddingBottom="10dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/back_button_default"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.981"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.47" />
+            app:layout_constraintVertical_bias="0.0" />
+
+        <ImageButton
+            android:id="@+id/saveNoteBtn"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@null"
+            android:onClick="btnAddNote"
+            android:paddingLeft="12dp"
+            android:paddingTop="15dp"
+            android:paddingRight="12dp"
+            android:paddingBottom="10dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/save_note_btn_default"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.997"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -53,6 +64,10 @@
         android:ems="10"
         android:gravity="start|top"
         android:inputType="textMultiLine"
+        android:background="@color/colorShowNote"
+        android:hint="@string/set_note_text_hint"
+        android:textSize="@dimen/show_note_text"
+        android:padding="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
