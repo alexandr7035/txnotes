@@ -1,6 +1,7 @@
 package com.example.txnotes;
 
 import android.content.Context;
+import android.text.Html;
 import android.text.format.DateFormat;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -23,7 +24,10 @@ public class NoteWidget extends LinearLayout {
 
     public void setNoteDate(Long date) { ;
         TextView textview = findViewWithTag("noteDateView");
-        String string_date = DateFormat.format("dd-MM-yyyy\nHH:mm", date*1000).toString();
-        textview.setText(string_date);
+        
+        String string_date = "<b>" + DateFormat.format("dd-MM-yyyy", date*1000).toString()
+                + "</b><br>" + DateFormat.format("HH:mm", date*1000).toString();
+
+        textview.setText(Html.fromHtml(string_date));
     }
 }
