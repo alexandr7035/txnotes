@@ -23,8 +23,8 @@
             android:layout_weight="0"
             android:text="@string/app_name"
             android:textColor="#FFFFFF"
-            android:textStyle="bold"
             android:textSize="@dimen/app_tile_font_size"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/newNoteButton"
             app:layout_constraintHorizontal_bias="0.124"
@@ -38,32 +38,38 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_weight="0"
-            android:src="@drawable/new_note_btn_default"
+            android:background="@null"
             android:onClick="createNewNote"
-            android:scaleType="fitCenter"
             android:paddingLeft="12dp"
+            android:paddingTop="15dp"
             android:paddingRight="12dp"
             android:paddingBottom="10dp"
-            android:paddingTop="15dp"
-            android:background="@null"
+            android:scaleType="fitCenter"
+            android:src="@drawable/new_note_btn_default"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <LinearLayout
-        android:id="@+id/notesLayout"
+    <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:orientation="vertical"
-        android:padding="10dp"
-        android:background="@color/colorBackground"
+        android:layout_marginTop="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mainBar">
 
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/notesLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorBackground"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+        </LinearLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
