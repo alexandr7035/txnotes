@@ -14,6 +14,8 @@ import com.example.txnotes.db.NotesDatabase;
 
 public class ShowNoteActivity extends AppCompatActivity {
 
+    Integer note_id;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,11 +27,11 @@ public class ShowNoteActivity extends AppCompatActivity {
 
         // Get note_id
         Intent intent = getIntent();
-        Integer note_id = intent.getIntExtra("clicked_note_id", 0);
+        this.note_id = intent.getIntExtra("clicked_note_id", 0);
 
         // FIXME - add modification date later !!!
         TextView dates_view = findViewById(R.id.noteDatesView);
-        Long creation_date = db_dao.getNoteCreationDate(note_id);
+        Long creation_date = db_dao.getNoteCreationDate(this.note_id);
 
         String dates_string = "<b> Создана: </b>" + DateFormat.format("dd-MM-yyyy  HH:mm", creation_date*1000).toString();
         dates_string += "<br><b> Изменена: </b>" + DateFormat.format("dd-MM-yyyy  HH:mm", creation_date*1000).toString();
@@ -38,7 +40,7 @@ public class ShowNoteActivity extends AppCompatActivity {
 
 
         // Get note text by id
-        String note_text = db_dao.getNoteText(note_id);
+        String note_text = db_dao.getNoteText(this.note_id);
 
         // Get note's TextView object and set text
         TextView note_view = findViewById(R.id.showNoteView);
@@ -47,11 +49,17 @@ public class ShowNoteActivity extends AppCompatActivity {
 
     }
 
-
-
     public void cancelShowNote(View view) {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+    }
+
+    public void btnEditNote(View view) {
+        Intent intent = new Intent(this, EditNoteActivity.class);            // Go to CreateNewNoteActivity);
+        intent.putExtra("edited_note_id", this.note_id);
+        startActivity(intent);
+
+
     }
 
 }

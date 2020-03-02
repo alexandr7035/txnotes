@@ -51,11 +51,12 @@
             app:layout_constraintVertical_bias="0.0" />
 
         <ImageButton
-            android:id="@+id/newNoteButton"
+            android:id="@+id/editNoteButton"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_weight="0"
             android:background="@null"
+            android:onClick="btnEditNote"
             android:paddingLeft="12dp"
             android:paddingTop="15dp"
             android:paddingRight="12dp"

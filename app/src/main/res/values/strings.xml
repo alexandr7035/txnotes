@@ -4,5 +4,6 @@
     <string name="new_note_header_text">Новая заметка</string>
     <string name="set_note_text_hint">Текст заметки</string>
     <string name="show_note_title">Просмотр</string>
+    <string name="edit_note_title">Редактирование</string>
 
 </resources>
