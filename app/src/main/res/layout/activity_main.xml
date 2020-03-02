@@ -33,13 +33,19 @@
             app:layout_constraintVertical_bias="0.555"
             tools:text="@string/app_name" />
 
-        <Button
+        <ImageButton
             android:id="@+id/newNoteButton"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_weight="0"
+            android:src="@drawable/new_note_btn_default"
             android:onClick="createNewNote"
-            android:text="+"
+            android:scaleType="fitCenter"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:paddingBottom="10dp"
+            android:paddingTop="15dp"
+            android:background="@null"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
