@@ -52,7 +52,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <ImageButton
-        android:id="@+id/saveNoteBtn"
+        android:id="@+id/saveEditedNoteBtn"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:background="@null"

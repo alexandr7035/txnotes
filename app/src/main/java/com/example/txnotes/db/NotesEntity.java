@@ -24,6 +24,7 @@ public class NotesEntity {
     @ColumnInfo(name = "note_creation_date")
     public Long note_creation_date;
 
-
+    @ColumnInfo(name = "note_modification_date")
+    public Long note_modification_date;
 
 }

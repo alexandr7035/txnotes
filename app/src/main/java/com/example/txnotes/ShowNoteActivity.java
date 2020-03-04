@@ -32,12 +32,11 @@ public class ShowNoteActivity extends AppCompatActivity {
         // FIXME - add modification date later !!!
         TextView dates_view = findViewById(R.id.noteDatesView);
         Long creation_date = db_dao.getNoteCreationDate(this.note_id);
+        Long modification_date = db_dao.getNoteModificationDate(this.note_id);
 
         String dates_string = "<b> Создана: </b>" + DateFormat.format("dd-MM-yyyy  HH:mm", creation_date*1000).toString();
-        dates_string += "<br><b> Изменена: </b>" + DateFormat.format("dd-MM-yyyy  HH:mm", creation_date*1000).toString();
+        dates_string += "<br><b> Изменена: </b>" + DateFormat.format("dd-MM-yyyy  HH:mm", modification_date*1000).toString();
         dates_view.setText(Html.fromHtml(dates_string));
-
-
 
         // Get note text by id
         String note_text = db_dao.getNoteText(this.note_id);
