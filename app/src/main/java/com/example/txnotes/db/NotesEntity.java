@@ -12,6 +12,7 @@ public class NotesEntity {
     public NotesEntity(String note_text, Long note_creation_date) {
         this.note_text = note_text;
         this.note_creation_date = note_creation_date;
+        this.note_modification_date = new Long(0);
     }
 
     @PrimaryKey(autoGenerate = true)

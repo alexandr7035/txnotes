@@ -78,7 +78,6 @@ public class CreateNewNoteActivity extends AppCompatActivity {
         text = findViewById(R.id.noteTextField);
         String note_text = text.getText().toString();
 
-        // FIXME Should be fixed to long before 01/19/2038 :)
         long note_creation_date = System.currentTimeMillis() / 1000;
 
         // Add note to db
