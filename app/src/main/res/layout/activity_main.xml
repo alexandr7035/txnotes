@@ -40,9 +40,7 @@
             android:layout_weight="0"
             android:background="@null"
             android:onClick="createNewNote"
-            android:paddingLeft="12dp"
             android:paddingTop="15dp"
-            android:paddingRight="12dp"
             android:paddingBottom="10dp"
             android:scaleType="fitCenter"
             android:src="@drawable/new_note_btn_default"
@@ -65,7 +63,6 @@
             android:id="@+id/notesLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorBackground"
             android:orientation="vertical"
             android:padding="10dp">
 
