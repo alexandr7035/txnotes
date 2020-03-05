@@ -41,6 +41,7 @@
             android:textColor="@color/colorActivityTitle"
             android:textSize="@dimen/app_tile_font_size"
             android:textStyle="bold"
+            android:paddingLeft="5dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
