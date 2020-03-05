@@ -86,10 +86,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    // Disable back button in MainActivity
+    // Override back button in MainActivity
     @Override
     public void onBackPressed() {
-        // Do nothing
+        // Minimize the app
+        this.moveTaskToBack(true);
     }
 
 }
