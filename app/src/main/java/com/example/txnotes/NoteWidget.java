@@ -6,8 +6,6 @@ import android.text.format.DateFormat;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.util.Calendar;
-
 public class NoteWidget extends LinearLayout {
 
     public NoteWidget(Context context) {

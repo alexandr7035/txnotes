@@ -2,15 +2,11 @@ package com.example.txnotes;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.Space;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
 
 import com.example.txnotes.db.NotesDao;
 import com.example.txnotes.db.NotesDatabase;
@@ -75,7 +71,6 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onClick(View v) {
-            Log.i("DEBUG_TX", "clicked " + this.note_id + " note");
 
             // Go to CreateNewNoteActivity
             Intent intent = new Intent(v.getContext(), ShowNoteActivity.class);
