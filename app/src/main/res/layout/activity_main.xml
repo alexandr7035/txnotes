@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0"
             android:text="@string/app_name"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/colorActivityTitle"
             android:textSize="@dimen/app_tile_font_size"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"

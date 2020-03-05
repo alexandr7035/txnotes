@@ -39,7 +39,7 @@
         android:layout_height="60dp"
         android:gravity="center|left"
         android:text="@string/edit_note_title"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/colorActivityTitle"
         android:textSize="@dimen/app_tile_font_size"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
