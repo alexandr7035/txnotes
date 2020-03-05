@@ -3,10 +3,15 @@
     <color name="colorPrimary">#E49B6A2E</color>
     <color name="colorPrimaryDark">#E4603F1E</color>
     <color name="colorAccent">#E4603F1E</color>
-    <color name="colorNoteWidget">#C5C2C2</color>
-    <color name="colorBackground">#FFFFFF</color>
-    <color name="colorNoteText">#000000</color>
-    <color name="colorShowNote">#E8E5E5</color>
+
     <color name="colorActivityTitle">#FFFFFF</color>
+
+    <color name="colorNoteWidget">#C5C2C2</color>
+    <color name="colorNoteText">#000000</color>
+    <color name="colorNoteWidgetPressed">#9B9B9B</color>
+
+    <color name="colorShowNote">#E8E5E5</color>
+
     <color name="colorToolbarButtonPressed">#E47E5830</color>
+
 </resources>
