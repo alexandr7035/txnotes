@@ -28,4 +28,32 @@ public class NotesEntity {
     @ColumnInfo(name = "note_modification_date")
     public Long note_modification_date;
 
+    public Long getNoteCreationDate() {
+        return this.note_creation_date;
+    }
+
+    public Long getNoteModificationDate() {
+        return this.note_modification_date;
+    }
+
+    public void setCreationDate(Long date) {
+        this.note_modification_date = date;
+    }
+
+    public String getNoteText() {
+        return this.note_text;
+    }
+
+    public void setTitle(String text) {
+        this.note_text = text;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
 }

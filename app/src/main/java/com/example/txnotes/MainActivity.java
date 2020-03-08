@@ -3,15 +3,24 @@ package com.example.txnotes;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.txnotes.db.NotesDao;
 import com.example.txnotes.db.NotesDatabase;
+import com.example.txnotes.db.NotesEntity;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
+
+    public static RecyclerView recyclerView;
+    public static RecyclerView.Adapter adapter;
+    List<NotesEntity> items;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,32 +33,19 @@ public class MainActivity extends AppCompatActivity {
 
         // Get notes count and add to title
         TextView app_title = findViewById(R.id.appTitleView);
+
         //Integer notes_count = 5;
         Integer notes_count = db_dao.getNotesCount();
         app_title.setText(getString(R.string.app_title, " (" + notes_count + ")"));
 
-        // A layout for notes
-        LinearLayout notes_layout = findViewById(R.id.notesLayout);
-        for (Integer i = notes_count; i >= 1; i--) {
-            // Create note button
-            NoteWidget note_btn = new NoteWidget(getApplicationContext());
 
-            // Set title
-            String note_text = db_dao.getNoteText(i);
-            note_btn.setNoteTitle(note_text);
 
-            // Set date
-            Long date = db_dao.getNoteCreationDate(i);
-            note_btn.setNoteDate(date);
-
-            // Add note to the notesLayout
-            notes_layout.addView(note_btn);
-
-            // Set onclick function
-            note_btn.setOnClickListener(new NoteClickListener(i));
-
-        }
-
+        items = db_dao.getAllNotes();
+        recyclerView= (RecyclerView)findViewById(R.id.notesRecycleView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter= new NotesRecycleViewAdapter(items);
+        adapter.notifyDataSetChanged();
+        recyclerView.setAdapter(adapter);
     }
 
     // Adds a new note and shows NewNoteActivity
