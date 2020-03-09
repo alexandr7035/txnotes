@@ -16,8 +16,10 @@ public interface NotesDao {
     @Query("SELECT * FROM notes")
     List<NotesEntity> getAllNotes();
 
+    @Query("SELECT * FROM notes WHERE id = (:id)")
+    NotesEntity getNoteById(int id);
     @Insert
-    void insertAll(NotesEntity... items);
+    void addNote(NotesEntity... notesEntities);
 
     //@Delete
     //void delete(User user);
