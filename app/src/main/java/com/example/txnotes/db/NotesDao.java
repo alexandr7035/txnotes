@@ -1,6 +1,7 @@
 package com.example.txnotes.db;
 
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
@@ -26,6 +27,6 @@ public interface NotesDao {
     @Update
     void updateNote(NotesEntity noteEntity);
 
-    //@Delete
-    //void delete(User user);
+    @Delete
+    void deleteNote(NotesEntity noteEntity);
 }

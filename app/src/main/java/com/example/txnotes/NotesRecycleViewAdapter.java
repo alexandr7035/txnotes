@@ -18,18 +18,21 @@ import java.util.List;
 
 public class NotesRecycleViewAdapter extends RecyclerView.Adapter<NotesRecycleViewAdapter.ViewHolder> {
 
-    List<NotesEntity> items;
+    private List<NotesEntity> items;
     private NoteClickListener noteClickListener;
+    private NoteLongClickListener noteLongClickListener;
 
-    public NotesRecycleViewAdapter(List<NotesEntity> items, NoteClickListener noteClickListener) {
+    public NotesRecycleViewAdapter(List<NotesEntity> items, NoteClickListener noteClickListener,
+                                                            NoteLongClickListener noteLongClickListener) {
         this.items = items;
         this.noteClickListener = noteClickListener;
+        this.noteLongClickListener = noteLongClickListener;
     }
 
     @Override
     public NotesRecycleViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_note,parent,false);
-        return new ViewHolder(view, this.noteClickListener);
+        return new ViewHolder(view, this.noteClickListener, this.noteLongClickListener);
     }
 
     @Override
@@ -68,20 +71,29 @@ public class NotesRecycleViewAdapter extends RecyclerView.Adapter<NotesRecycleVi
         return items.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder
+                            implements View.OnClickListener, View.OnLongClickListener {
+
         public TextView note_title_view;
         public TextView note_date_view;
         NoteClickListener noteClickListener;
+        NoteLongClickListener noteLongClickListener;
         int note_id;
 
-        public ViewHolder(View itemView, NoteClickListener noteClickListener) {
+        public ViewHolder(View itemView, NoteClickListener noteClickListener,
+                                         NoteLongClickListener noteLongClickListener) {
+
             super(itemView);
             note_title_view = itemView.findViewById(R.id.noteTitleView);
             note_date_view = itemView.findViewById(R.id.noteDateView);
 
             this.noteClickListener = noteClickListener;
+            this.noteLongClickListener = noteLongClickListener;
 
+            // Use this because ViewHolder implements
+            // View.OnClickListener and View.OnLongClickListener interfaces
             itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this);
         }
 
         @Override
@@ -89,12 +101,27 @@ public class NotesRecycleViewAdapter extends RecyclerView.Adapter<NotesRecycleVi
             Log.d("DEBUG_DB", "clicked " + this.note_id);
             noteClickListener.onNoteClick(this.note_id);
         }
+
+        @Override
+        public boolean onLongClick(View view) {
+            Log.d("DEBUG_DB", "clicked LONG " + this.note_id);
+            noteLongClickListener.onLongNoteClick(this.note_id);
+            items.remove(getAdapterPosition());
+            notifyDataSetChanged();
+            return true;
+        }
+
     }
 
 
     public interface NoteClickListener {
 
         void onNoteClick(int note_id);
+    }
+
+    public interface NoteLongClickListener {
+
+        void onLongNoteClick(int note_id);
     }
 }
 

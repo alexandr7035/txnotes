@@ -16,12 +16,19 @@ import com.example.txnotes.db.NotesEntity;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements NotesRecycleViewAdapter.NoteClickListener {
+public class MainActivity extends AppCompatActivity
+                          implements NotesRecycleViewAdapter.NoteClickListener,
+                                     NotesRecycleViewAdapter.NoteLongClickListener {
 
 
     public static RecyclerView recyclerView;
     public static RecyclerView.Adapter adapter;
     List<NotesEntity> items;
+
+    NotesDatabase db;
+    NotesDao db_dao;
+
+    TextView app_title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,22 +36,18 @@ public class MainActivity extends AppCompatActivity implements NotesRecycleViewA
         setContentView(R.layout.activity_main);
 
         // DB
-        NotesDatabase db = ((TXNotesApplication) this.getApplication()).getDatabaseInstance();
-        NotesDao db_dao = db.getNotesDao();
+        db = ((TXNotesApplication) this.getApplication()).getDatabaseInstance();
+        db_dao = db.getNotesDao();
 
-        // Get notes count and add to title
-        TextView app_title = findViewById(R.id.appTitleView);
-
-        //Integer notes_count = 5;
-        Integer notes_count = db_dao.getNotesCount();
-        app_title.setText(getString(R.string.app_title, " (" + notes_count + ")"));
-
+        // Set activity's title, see setTitle method
+        app_title = findViewById(R.id.appTitleView);
+        app_title.setText(getActivityTitleText());
 
 
         items = db_dao.getAllNotes();
         recyclerView= (RecyclerView)findViewById(R.id.notesRecycleView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter= new NotesRecycleViewAdapter(items, this);
+        adapter= new NotesRecycleViewAdapter(items, this, this);
         adapter.notifyDataSetChanged();
         recyclerView.setAdapter(adapter);
     }
@@ -57,6 +60,17 @@ public class MainActivity extends AppCompatActivity implements NotesRecycleViewA
         Log.d("DEBUG_DB", "MainActivity: passed to show note: " + note_id);
         intent.putExtra("clicked_note_id", note_id);
         startActivity(intent);
+    }
+
+    @Override
+    public void onLongNoteClick(int note_id) {
+
+        NotesEntity note = db_dao.getNoteById(note_id);
+        db_dao.deleteNote(note);
+
+        // Update title (notes count changed)
+        app_title.setText(getActivityTitleText());
+
     }
 
 
@@ -72,6 +86,14 @@ public class MainActivity extends AppCompatActivity implements NotesRecycleViewA
     public void onBackPressed() {
         // Minimize the app
         this.moveTaskToBack(true);
+    }
+
+    // Generate activity's title
+    // (depending on notes count)
+    public String getActivityTitleText() {
+        Integer notes_count = db_dao.getNotesCount();
+        String title_string = getString(R.string.app_title, " (" + notes_count + ")");
+        return title_string;
     }
 
 }
