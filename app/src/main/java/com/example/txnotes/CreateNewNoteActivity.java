@@ -82,6 +82,7 @@ public class CreateNewNoteActivity extends AppCompatActivity {
         // Add note to db
         NotesDatabase db = ((TXNotesApplication) this.getApplication()).getDatabaseInstance();
         NotesDao db_dao = db.getNotesDao();
+
         db_dao.addNote(new NotesEntity(note_text, note_creation_date));
 
         // Go to CreateNewNoteActivity
