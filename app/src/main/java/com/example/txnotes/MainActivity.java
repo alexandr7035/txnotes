@@ -92,8 +92,7 @@ public class MainActivity extends AppCompatActivity
     // (depending on notes count)
     public String getActivityTitleText() {
         Integer notes_count = db_dao.getNotesCount();
-        String title_string = getString(R.string.app_title, " (" + notes_count + ")");
-        return title_string;
+        return getString(R.string.app_title, " (" + notes_count + ")");
     }
 
 }
