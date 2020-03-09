@@ -36,7 +36,7 @@ public class NotesEntity {
         return this.note_modification_date;
     }
 
-    public void setCreationDate(Long date) {
+    public void setNoteModificationDate(Long date) {
         this.note_modification_date = date;
     }
 
@@ -44,9 +44,10 @@ public class NotesEntity {
         return this.note_text;
     }
 
-    public void setTitle(String text) {
+    public void setNoteText(String text) {
         this.note_text = text;
     }
+
 
     public int getId() {
         return id;
