@@ -12,11 +12,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.txnotes.db.NotesDao;
 import com.example.txnotes.db.NotesDatabase;
+import com.example.txnotes.db.NotesEntity;
 
 public class EditNoteActivity extends AppCompatActivity {
 
     NotesDatabase db;
     NotesDao db_dao;
+    NotesEntity note_data;
     Integer note_id;
     EditText note_edit_field;
 
@@ -33,8 +35,11 @@ public class EditNoteActivity extends AppCompatActivity {
         Intent intent = getIntent();
         note_id = intent.getIntExtra("edited_note_id", 0);
 
+        // Get note's entity
+        this.note_data = db_dao.getNoteById(note_id);
+
         // Set old text to textedit field
-        final String old_note_text = db_dao.getNoteText(note_id);
+        final String old_note_text = this.note_data.getNoteText();
         note_edit_field = findViewById(R.id.editedNoteTextField);
         note_edit_field.setText(old_note_text);
 
@@ -78,13 +83,18 @@ public class EditNoteActivity extends AppCompatActivity {
 
     public void btnSaveEditedNote(View view) {
 
+        // FIXME
         // Get modification date and update it in the db
         Long note_updated_date = System.currentTimeMillis() / 1000;
-        db_dao.setNoteModificationDate(this.note_id, note_updated_date);
+        note_data.setNoteModificationDate(note_updated_date);
 
+        // FIXME
         // Get updated text and set in the db
         String updated_text = note_edit_field.getText().toString();
-        db_dao.updateNoteText(this.note_id, updated_text);
+        note_data.setNoteText(updated_text);
+
+        // Update NotesEntity
+        db_dao.updateNote(note_data);
 
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
