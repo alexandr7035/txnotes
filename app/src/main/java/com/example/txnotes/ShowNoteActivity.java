@@ -1,7 +1,5 @@
 package com.example.txnotes;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
@@ -9,8 +7,11 @@ import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.txnotes.db.NotesDao;
 import com.example.txnotes.db.NotesDatabase;
+import com.example.txnotes.db.NotesEntity;
 
 public class ShowNoteActivity extends AppCompatActivity {
 
@@ -21,17 +22,22 @@ public class ShowNoteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_note);
 
-        // DB
-        NotesDatabase db = ((TXNotesApplication) this.getApplication()).getDatabaseInstance();
-        NotesDao db_dao = db.getNotesDao();
-
         // Get note_id
         Intent intent = getIntent();
         this.note_id = intent.getIntExtra("clicked_note_id", 0);
 
+        // DB
+        NotesDatabase db = ((TXNotesApplication) this.getApplication()).getDatabaseInstance();
+        NotesDao db_dao = db.getNotesDao();
+        NotesEntity note_data = db_dao.getNoteById(note_id);
+
+
+
+        // Get note's datas from the db and set to the view
         TextView dates_view = findViewById(R.id.noteDatesView);
-        Long creation_date = db_dao.getNoteCreationDate(this.note_id);
-        Long modification_date = db_dao.getNoteModificationDate(this.note_id);
+
+        Long creation_date = note_data.getNoteCreationDate();
+        Long modification_date = note_data.getNoteModificationDate();
 
         // Creation date string
         String creation_date_string = "<b> Создана: </b>" + DateFormat.format("dd-MM-yyyy  HH:mm", creation_date*1000).toString();
@@ -50,7 +56,7 @@ public class ShowNoteActivity extends AppCompatActivity {
         dates_view.setText(Html.fromHtml(dates_string));
 
         // Get note text by id
-        String note_text = db_dao.getNoteText(this.note_id);
+        String note_text = note_data.getNoteText();
 
         // Get note's TextView object and set text
         TextView note_view = findViewById(R.id.showNoteView);
