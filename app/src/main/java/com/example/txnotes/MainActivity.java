@@ -2,6 +2,7 @@ package com.example.txnotes;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -15,7 +16,7 @@ import com.example.txnotes.db.NotesEntity;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NotesRecycleViewAdapter.NoteClickListener {
 
 
     public static RecyclerView recyclerView;
@@ -43,10 +44,21 @@ public class MainActivity extends AppCompatActivity {
         items = db_dao.getAllNotes();
         recyclerView= (RecyclerView)findViewById(R.id.notesRecycleView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter= new NotesRecycleViewAdapter(items);
+        adapter= new NotesRecycleViewAdapter(items, this);
         adapter.notifyDataSetChanged();
         recyclerView.setAdapter(adapter);
     }
+
+
+
+    @Override
+    public void onNoteClick(int note_id) {
+        Intent intent = new Intent(this, ShowNoteActivity.class);
+        Log.d("DEBUG_DB", "MainActivity: passed to show note: " + note_id);
+        intent.putExtra("clicked_note_id", note_id);
+        startActivity(intent);
+    }
+
 
     // Adds a new note and shows NewNoteActivity
     public void createNewNote(View view) {
@@ -54,28 +66,6 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, CreateNewNoteActivity.class);
         startActivity(intent);
     }
-
-
-    // Click listener for notes
-    public class NoteClickListener implements View.OnClickListener {
-
-        int note_id;
-
-        public NoteClickListener(int note_id) {
-            this.note_id = note_id;
-        }
-
-        @Override
-        public void onClick(View v) {
-
-            // Go to CreateNewNoteActivity
-            Intent intent = new Intent(v.getContext(), ShowNoteActivity.class);
-            intent.putExtra("clicked_note_id", this.note_id);
-            startActivity(intent);
-        }
-
-    }
-
 
     // Override back button in MainActivity
     @Override
