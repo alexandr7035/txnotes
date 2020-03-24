@@ -13,7 +13,7 @@ public interface NotesDao {
 
 
     @Query("SELECT COUNT(*) FROM notes")
-    Integer getNotesCount();
+    int getNotesCount();
 
     @Query("SELECT * FROM notes")
     List<NoteEntity> getAllNotes();

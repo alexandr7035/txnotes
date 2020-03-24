@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity
     // Generate activity's title
     // (depending on notes count)
     public String getActivityTitleText() {
-        Integer notes_count = db_dao.getNotesCount();
+        int notes_count = db_dao.getNotesCount();
         return getString(R.string.app_title, " (" + notes_count + ")");
     }
 

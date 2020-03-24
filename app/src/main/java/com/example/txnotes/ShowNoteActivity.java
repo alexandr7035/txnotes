@@ -15,7 +15,7 @@ import com.example.txnotes.db.NoteEntity;
 
 public class ShowNoteActivity extends AppCompatActivity {
 
-    Integer note_id;
+    int note_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

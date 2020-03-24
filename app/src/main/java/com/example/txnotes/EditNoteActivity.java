@@ -19,7 +19,7 @@ public class EditNoteActivity extends AppCompatActivity {
     NotesDatabase db;
     NotesDao db_dao;
     NoteEntity note_data;
-    Integer note_id;
+    int note_id;
     EditText note_edit_field;
 
     @Override
