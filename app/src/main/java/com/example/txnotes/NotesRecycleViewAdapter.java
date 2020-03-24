@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.txnotes.db.NotesEntity;
+import com.example.txnotes.db.NoteEntity;
 
 import java.util.List;
 
@@ -18,11 +18,11 @@ import java.util.List;
 
 public class NotesRecycleViewAdapter extends RecyclerView.Adapter<NotesRecycleViewAdapter.ViewHolder> {
 
-    private List<NotesEntity> items;
+    private List<NoteEntity> items;
     private NoteClickListener noteClickListener;
     private NoteLongClickListener noteLongClickListener;
 
-    public NotesRecycleViewAdapter(List<NotesEntity> items, NoteClickListener noteClickListener,
+    public NotesRecycleViewAdapter(List<NoteEntity> items, NoteClickListener noteClickListener,
                                                             NoteLongClickListener noteLongClickListener) {
         this.items = items;
         this.noteClickListener = noteClickListener;
@@ -39,7 +39,7 @@ public class NotesRecycleViewAdapter extends RecyclerView.Adapter<NotesRecycleVi
     public void onBindViewHolder(NotesRecycleViewAdapter.ViewHolder holder, int position) {
 
         // Note's entity from the db
-        NotesEntity note_data = items.get(position);
+        NoteEntity note_data = items.get(position);
 
         // Set note title
         holder.note_title_view.setText(note_data.getNoteText());

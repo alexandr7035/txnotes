@@ -12,13 +12,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.txnotes.db.NotesDao;
 import com.example.txnotes.db.NotesDatabase;
-import com.example.txnotes.db.NotesEntity;
+import com.example.txnotes.db.NoteEntity;
 
 public class EditNoteActivity extends AppCompatActivity {
 
     NotesDatabase db;
     NotesDao db_dao;
-    NotesEntity note_data;
+    NoteEntity note_data;
     Integer note_id;
     EditText note_edit_field;
 
@@ -93,7 +93,7 @@ public class EditNoteActivity extends AppCompatActivity {
         String updated_text = note_edit_field.getText().toString();
         note_data.setNoteText(updated_text);
 
-        // Update NotesEntity
+        // Update NoteEntity
         db_dao.updateNote(note_data);
 
         Intent intent = new Intent(this, MainActivity.class);

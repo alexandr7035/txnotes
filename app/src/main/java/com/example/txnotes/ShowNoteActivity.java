@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.txnotes.db.NotesDao;
 import com.example.txnotes.db.NotesDatabase;
-import com.example.txnotes.db.NotesEntity;
+import com.example.txnotes.db.NoteEntity;
 
 public class ShowNoteActivity extends AppCompatActivity {
 
@@ -29,7 +29,7 @@ public class ShowNoteActivity extends AppCompatActivity {
         // DB
         NotesDatabase db = ((TXNotesApplication) this.getApplication()).getDatabaseInstance();
         NotesDao db_dao = db.getNotesDao();
-        NotesEntity note_data = db_dao.getNoteById(note_id);
+        NoteEntity note_data = db_dao.getNoteById(note_id);
 
 
 

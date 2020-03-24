@@ -16,17 +16,17 @@ public interface NotesDao {
     Integer getNotesCount();
 
     @Query("SELECT * FROM notes")
-    List<NotesEntity> getAllNotes();
+    List<NoteEntity> getAllNotes();
 
     @Query("SELECT * FROM notes WHERE id = (:id)")
-    NotesEntity getNoteById(int id);
+    NoteEntity getNoteById(int id);
 
     @Insert
-    void addNote(NotesEntity... notesEntities);
+    void addNote(NoteEntity... notesEntities);
 
     @Update
-    void updateNote(NotesEntity noteEntity);
+    void updateNote(NoteEntity noteEntity);
 
     @Delete
-    void deleteNote(NotesEntity noteEntity);
+    void deleteNote(NoteEntity noteEntity);
 }

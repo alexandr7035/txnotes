@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.txnotes.db.NotesDao;
 import com.example.txnotes.db.NotesDatabase;
-import com.example.txnotes.db.NotesEntity;
+import com.example.txnotes.db.NoteEntity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity
 
     public static RecyclerView recyclerView;
     public static RecyclerView.Adapter adapter;
-    List<NotesEntity> items;
+    List<NoteEntity> items;
 
     NotesDatabase db;
     NotesDao db_dao;
@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity
             vibrator.vibrate(200);
 
 
-            NotesEntity note = db_dao.getNoteById(deleting_note_id);
+            NoteEntity note = db_dao.getNoteById(deleting_note_id);
             db_dao.deleteNote(note);
             items.remove(position);
             adapter.notifyItemRemoved(position);

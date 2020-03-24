@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.txnotes.db.NotesDao;
 import com.example.txnotes.db.NotesDatabase;
-import com.example.txnotes.db.NotesEntity;
+import com.example.txnotes.db.NoteEntity;
 
 
 public class CreateNewNoteActivity extends AppCompatActivity {
@@ -83,7 +83,7 @@ public class CreateNewNoteActivity extends AppCompatActivity {
         NotesDatabase db = ((TXNotesApplication) this.getApplication()).getDatabaseInstance();
         NotesDao db_dao = db.getNotesDao();
 
-        db_dao.addNote(new NotesEntity(note_text, note_creation_date));
+        db_dao.addNote(new NoteEntity(note_text, note_creation_date));
 
         // Go to CreateNewNoteActivity
         Intent intent = new Intent(this, MainActivity.class);
