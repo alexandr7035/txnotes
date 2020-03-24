@@ -99,15 +99,21 @@ public class NotesRecycleViewAdapter extends RecyclerView.Adapter<NotesRecycleVi
         @Override
         public void onClick(View v) {
             Log.d("DEBUG_DB", "clicked " + this.note_id);
-            noteClickListener.onNoteClick(this.note_id);
+            noteClickListener.onNoteClick(this.note_id, getAdapterPosition());
         }
 
         @Override
         public boolean onLongClick(View view) {
             Log.d("DEBUG_DB", "clicked LONG " + this.note_id);
-            noteLongClickListener.onLongNoteClick(this.note_id);
-            items.remove(getAdapterPosition());
-            notifyDataSetChanged();
+
+            // Highlight the deleted item in red
+            view.setBackgroundColor(itemView.getContext().getResources().getColor(R.color.colorDeletingNote));
+
+            noteLongClickListener.onLongNoteClick(this.note_id, getAdapterPosition());
+
+            //items.remove(getAdapterPosition());
+            //notifyItemRemoved(getAdapterPosition());
+
             return true;
         }
 
@@ -116,12 +122,12 @@ public class NotesRecycleViewAdapter extends RecyclerView.Adapter<NotesRecycleVi
 
     public interface NoteClickListener {
 
-        void onNoteClick(int note_id);
+        void onNoteClick(int note_id, int position);
     }
 
     public interface NoteLongClickListener {
 
-        void onLongNoteClick(int note_id);
+        void onLongNoteClick(int note_id, int position);
     }
 }
 
