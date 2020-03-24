@@ -1,7 +1,9 @@
 package com.example.txnotes;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -115,10 +117,18 @@ public class MainActivity extends AppCompatActivity
 
         @Override
         public void onClick(View v) {
+
+            // Vibrate when deleting
+            Vibrator vibrator = (Vibrator) v.getContext().getSystemService(Context.VIBRATOR_SERVICE);
+            vibrator.vibrate(200);
+
+
             NotesEntity note = db_dao.getNoteById(deleting_note_id);
             db_dao.deleteNote(note);
             items.remove(position);
             adapter.notifyItemRemoved(position);
+
+            delete_note_btn.hide();
         }
 
     }
