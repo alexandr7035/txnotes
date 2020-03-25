@@ -9,10 +9,10 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "notes")
 public class NoteEntity {
 
-    public NoteEntity(String note_text, Long note_creation_date) {
+    public NoteEntity(String note_text, long note_creation_date) {
         this.note_text = note_text;
         this.note_creation_date = note_creation_date;
-        this.note_modification_date = new Long(0);
+        this.note_modification_date = 0L;
     }
 
     @PrimaryKey(autoGenerate = true)
@@ -23,20 +23,20 @@ public class NoteEntity {
     public String note_text;
 
     @ColumnInfo(name = "note_creation_date")
-    public Long note_creation_date;
+    public long note_creation_date;
 
     @ColumnInfo(name = "note_modification_date")
-    public Long note_modification_date;
+    public long note_modification_date;
 
-    public Long getNoteCreationDate() {
+    public long getNoteCreationDate() {
         return this.note_creation_date;
     }
 
-    public Long getNoteModificationDate() {
+    public long getNoteModificationDate() {
         return this.note_modification_date;
     }
 
-    public void setNoteModificationDate(Long date) {
+    public void setNoteModificationDate(long date) {
         this.note_modification_date = date;
     }
 

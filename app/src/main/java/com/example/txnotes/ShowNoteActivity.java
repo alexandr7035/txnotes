@@ -36,8 +36,8 @@ public class ShowNoteActivity extends AppCompatActivity {
         // Get note's datas from the db and set to the view
         TextView dates_view = findViewById(R.id.noteDatesView);
 
-        Long creation_date = note_data.getNoteCreationDate();
-        Long modification_date = note_data.getNoteModificationDate();
+        long creation_date = note_data.getNoteCreationDate();
+        long modification_date = note_data.getNoteModificationDate();
 
         // Creation date string
         String creation_date_string = "<b> Создана: </b>" + DateFormat.format("dd-MM-yyyy  HH:mm", creation_date*1000).toString();

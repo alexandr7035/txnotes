@@ -47,7 +47,7 @@ public class NotesRecycleViewAdapter extends RecyclerView.Adapter<NotesRecycleVi
 
         // Set formatted note's modification date to textview
         // (Set creation date if note wasn't modified yet)
-        Long date;
+        long date;
         if (note_data.getNoteModificationDate() == 0) {
             date = note_data.getNoteCreationDate();
         }

@@ -85,7 +85,7 @@ public class EditNoteActivity extends AppCompatActivity {
 
         // FIXME
         // Get modification date and update it in the db
-        Long note_updated_date = System.currentTimeMillis() / 1000;
+        long note_updated_date = System.currentTimeMillis() / 1000;
         note_data.setNoteModificationDate(note_updated_date);
 
         // FIXME
