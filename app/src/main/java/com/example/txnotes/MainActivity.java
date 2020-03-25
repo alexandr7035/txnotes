@@ -24,16 +24,18 @@ public class MainActivity extends AppCompatActivity
                                      NotesRecycleViewAdapter.NoteLongClickListener {
 
 
+    // Recycleviw for list of notes
     public static RecyclerView recyclerView;
     public static RecyclerView.Adapter adapter;
-    List<NoteEntity> items;
+    private List<NoteEntity> items;
 
-    NotesDatabase db;
-    NotesDao db_dao;
+    // Database
+    private NotesDatabase db;
+    private NotesDao db_dao;
 
-    TextView app_title;
-
-    FloatingActionButton delete_note_btn;
+    // Views
+    private TextView app_title;
+    private FloatingActionButton delete_note_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,15 +50,17 @@ public class MainActivity extends AppCompatActivity
         app_title = findViewById(R.id.appTitleView);
         app_title.setText(getActivityTitleText());
 
-
-        items = db_dao.getAllNotes();
+        // Recycleview settings
         recyclerView = (RecyclerView) findViewById(R.id.notesRecycleView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        // Notes data from database
+        items = db_dao.getAllNotes();
+        // Pass "this" as click listener (MainActivity implements click listeners from NotesRecycleViewAdapter)
         adapter = new NotesRecycleViewAdapter(items, this, this);
         adapter.notifyDataSetChanged();
         recyclerView.setAdapter(adapter);
 
-        //
+        // A button to delete note (hidden by default, shown when note is selected)
         delete_note_btn = findViewById(R.id.deleteNoteButton);
         delete_note_btn.hide();
     }
@@ -84,7 +88,7 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-    // Adds a new note and shows NewNoteActivity
+    // Shows NewNoteActivity
     public void createNewNote(View view) {
         // Go to CreateNewNoteActivity
         Intent intent = new Intent(this, CreateNewNoteActivity.class);
@@ -105,6 +109,9 @@ public class MainActivity extends AppCompatActivity
         return getString(R.string.app_title, " (" + notes_count + ")");
     }
 
+
+    // DeleteNoteButton is shown where any note is selected by long click
+    // Deletes note
     public class DeleteBtnClickListener implements View.OnClickListener {
 
         int deleting_note_id;
@@ -121,7 +128,6 @@ public class MainActivity extends AppCompatActivity
             // Vibrate when deleting
             Vibrator vibrator = (Vibrator) v.getContext().getSystemService(Context.VIBRATOR_SERVICE);
             vibrator.vibrate(200);
-
 
             NoteEntity note = db_dao.getNoteById(deleting_note_id);
             db_dao.deleteNote(note);
