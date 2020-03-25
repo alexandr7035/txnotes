@@ -12,11 +12,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.txnotes.db.NoteEntity;
 import com.example.txnotes.db.NotesDao;
 import com.example.txnotes.db.NotesDatabase;
-import com.example.txnotes.db.NoteEntity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity
@@ -36,6 +37,10 @@ public class MainActivity extends AppCompatActivity
     // Views
     private TextView app_title;
     private FloatingActionButton delete_note_btn;
+
+    // Lists for notes being deleted
+    private ArrayList<Integer> notesToDeleteIdsList = new ArrayList<Integer>();
+    private ArrayList<Integer> notesToDeletePositionsList = new ArrayList<Integer>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,13 +82,15 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onLongNoteClick(int note_id, int position) {
 
+        // Add to notesToDeleteList
+        notesToDeleteIdsList.add(note_id);
+        notesToDeletePositionsList.add(position);
+        Log.d("DEBUG_TXNOTES", "Deleted ids: " + notesToDeleteIdsList.toString());
+        Log.d("DEBUG_TXNOTES", "Deleted positions: " + notesToDeletePositionsList.toString());
 
         delete_note_btn.show();
 
-        delete_note_btn.setOnClickListener(new DeleteBtnClickListener(note_id, position));
-
-        // Update title (notes count changed)
-        app_title.setText(getActivityTitleText());
+        delete_note_btn.setOnClickListener(new DeleteBtnClickListener());
 
     }
 
@@ -114,27 +121,36 @@ public class MainActivity extends AppCompatActivity
     // Deletes note
     public class DeleteBtnClickListener implements View.OnClickListener {
 
-        int deleting_note_id;
-        int position;
-
-        public DeleteBtnClickListener(int note_id, int position) {
-            this.deleting_note_id = note_id;
-            this.position = position;
-        }
-
         @Override
         public void onClick(View v) {
 
             // Vibrate when deleting
             Vibrator vibrator = (Vibrator) v.getContext().getSystemService(Context.VIBRATOR_SERVICE);
-            vibrator.vibrate(200);
+           //vibrator.vibrate(200);
 
-            NoteEntity note = db_dao.getNoteById(deleting_note_id);
-            db_dao.deleteNote(note);
-            items.remove(position);
-            adapter.notifyItemRemoved(position);
+            // Delete from db
+            for (int id : MainActivity.this.notesToDeleteIdsList) {
+                Log.d("DEBUG_TXNOTES", "Deleted id: " + id);
+                NoteEntity note = db_dao.getNoteById(id);
+                db_dao.deleteNote(note);
+            }
 
+            // Refresh adapter
+            for (int position: MainActivity.this.notesToDeletePositionsList) {
+                Log.d("DEBUG_TXNOTES", "Deleted position: " + position);
+                items.remove(position);
+                adapter.notifyItemRemoved(position);
+            }
+
+            // Clear lists
+            MainActivity.this.notesToDeleteIdsList.clear();
+            MainActivity.this.notesToDeletePositionsList.clear();
+
+            // Hide the button
             delete_note_btn.hide();
+
+            // Update title (notes count changed)
+            app_title.setText(getActivityTitleText());
         }
 
     }
