@@ -12,21 +12,57 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.txnotes.db.NoteEntity;
 
+import java.util.ArrayList;
 import java.util.List;
-
 
 
 public class NotesRecycleViewAdapter extends RecyclerView.Adapter<NotesRecycleViewAdapter.ViewHolder> {
 
     private List<NoteEntity> items;
+    private List<NoteEntity> selectedItems;
+
     private NoteClickListener noteClickListener;
     private NoteLongClickListener noteLongClickListener;
 
     public NotesRecycleViewAdapter(List<NoteEntity> items, NoteClickListener noteClickListener,
                                                             NoteLongClickListener noteLongClickListener) {
         this.items = items;
+        this.selectedItems = new ArrayList<>();
         this.noteClickListener = noteClickListener;
         this.noteLongClickListener = noteLongClickListener;
+    }
+
+    // Add item to list of selected
+    public void selectItem(int position) {
+        selectedItems.add(items.get(position));
+    }
+
+    // Remove item form list of selected
+    public void unselectItem (int position) {
+        selectedItems.remove(items.get(position));
+    }
+
+    // Remove all items from list of selected
+    public void unselectAll() {
+        selectedItems.clear();
+    }
+
+    public boolean checkIfItemSelected(int position) {
+        if (selectedItems.contains(items.get(position))) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public boolean checkIfAnyItemSelected() {
+        return true;
+    }
+
+    // Returns whole selectedItems list
+    public List<NoteEntity> getSelectedItems() {
+        return selectedItems;
     }
 
     @Override
@@ -43,7 +79,6 @@ public class NotesRecycleViewAdapter extends RecyclerView.Adapter<NotesRecycleVi
 
         // Set note title
         holder.note_title_view.setText(note_data.getNoteText());
-
 
         // Set formatted note's modification date to textview
         // (Set creation date if note wasn't modified yet)
@@ -64,12 +99,23 @@ public class NotesRecycleViewAdapter extends RecyclerView.Adapter<NotesRecycleVi
         holder.note_id = note_data.getId();
         Log.d("DEBUG_DB", "holder " + holder.note_id);
 
+
+        // Mark item if selected
+        if (checkIfItemSelected(position)) {
+            Log.d("DEBUG_TXNOTES", position + " is selected");
+            holder.itemView.setBackgroundResource(R.color.colorSelectedNoteWidget);
+        }
+        else {
+            holder.itemView.setBackgroundResource(R.color.colorNoteWidget);
+        }
+
     }
 
     @Override
     public int getItemCount() {
         return items.size();
     }
+
 
     public class ViewHolder extends RecyclerView.ViewHolder
                             implements View.OnClickListener, View.OnLongClickListener {
@@ -107,10 +153,14 @@ public class NotesRecycleViewAdapter extends RecyclerView.Adapter<NotesRecycleVi
             Log.d("DEBUG_DB", "clicked LONG " + this.note_id);
 
             // Highlight the deleted item in red
-            view.setBackgroundColor(itemView.getContext().getResources().getColor(R.color.colorDeletingNote));
+            //view.setBackgroundColor(itemView.getContext().getResources().getColor(R.color.colorDeletingNote));
+
+            // Select item
+            selectItem(getAdapterPosition());
 
             noteLongClickListener.onLongNoteClick(this.note_id, getAdapterPosition());
 
+            notifyItemChanged(getAdapterPosition());
             //items.remove(getAdapterPosition());
             //notifyItemRemoved(getAdapterPosition());
 

@@ -17,7 +17,6 @@ import com.example.txnotes.db.NotesDao;
 import com.example.txnotes.db.NotesDatabase;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity
@@ -27,7 +26,7 @@ public class MainActivity extends AppCompatActivity
 
     // Recycleviw for list of notes
     public static RecyclerView recyclerView;
-    public static RecyclerView.Adapter adapter;
+    public static NotesRecycleViewAdapter adapter;
     private List<NoteEntity> items;
 
     // Database
@@ -37,10 +36,6 @@ public class MainActivity extends AppCompatActivity
     // Views
     private TextView app_title;
     private FloatingActionButton delete_note_btn;
-
-    // Lists for notes being deleted
-    private ArrayList<Integer> notesToDeleteIdsList = new ArrayList<Integer>();
-    private ArrayList<Integer> notesToDeletePositionsList = new ArrayList<Integer>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,14 +77,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onLongNoteClick(int note_id, int position) {
 
-        // Add to notesToDeleteList
-        notesToDeleteIdsList.add(note_id);
-        notesToDeletePositionsList.add(position);
-        Log.d("DEBUG_TXNOTES", "Deleted ids: " + notesToDeleteIdsList.toString());
-        Log.d("DEBUG_TXNOTES", "Deleted positions: " + notesToDeletePositionsList.toString());
-
         delete_note_btn.show();
-
         delete_note_btn.setOnClickListener(new DeleteBtnClickListener());
 
     }
@@ -126,25 +114,19 @@ public class MainActivity extends AppCompatActivity
 
             // Vibrate when deleting
             Vibrator vibrator = (Vibrator) v.getContext().getSystemService(Context.VIBRATOR_SERVICE);
-           //vibrator.vibrate(200);
+            vibrator.vibrate(100);
 
-            // Delete from db
-            for (int id : MainActivity.this.notesToDeleteIdsList) {
-                Log.d("DEBUG_TXNOTES", "Deleted id: " + id);
-                NoteEntity note = db_dao.getNoteById(id);
+            // Delete notes
+            for (NoteEntity note: adapter.getSelectedItems()) {
+                // Remove from adapter
+                items.remove(note);
+                // Remove from db
                 db_dao.deleteNote(note);
+                adapter.notifyDataSetChanged();
             }
 
-            // Refresh adapter
-            for (int position: MainActivity.this.notesToDeletePositionsList) {
-                Log.d("DEBUG_TXNOTES", "Deleted position: " + position);
-                items.remove(position);
-                adapter.notifyItemRemoved(position);
-            }
-
-            // Clear lists
-            MainActivity.this.notesToDeleteIdsList.clear();
-            MainActivity.this.notesToDeletePositionsList.clear();
+            // Clear list of selected items
+            adapter.unselectAll();
 
             // Hide the button
             delete_note_btn.hide();
