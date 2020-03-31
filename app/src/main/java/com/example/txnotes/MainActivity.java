@@ -102,6 +102,7 @@ public class MainActivity extends AppCompatActivity
         }
         else {
             adapter.unselectAllItems();
+            delete_note_btn.hide();
         }
     }
 

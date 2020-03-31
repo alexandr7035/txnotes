@@ -35,11 +35,13 @@ public class NotesRecycleViewAdapter extends RecyclerView.Adapter<NotesRecycleVi
     // Add item to list of selected
     public void selectItem(int position) {
         selectedItems.add(items.get(position));
+        notifyItemChanged(position);
     }
 
     // Remove item form list of selected
     public void unselectItem (int position) {
         selectedItems.remove(items.get(position));
+        notifyItemChanged(position);
     }
 
     // Remove all items from list of selected
@@ -149,10 +151,23 @@ public class NotesRecycleViewAdapter extends RecyclerView.Adapter<NotesRecycleVi
             itemView.setOnLongClickListener(this);
         }
 
+        // If no items selected, show note
+        // Else unselect or select the item
         @Override
         public void onClick(View v) {
             Log.d("DEBUG_DB", "clicked " + this.note_id);
-            noteClickListener.onNoteClick(this.note_id, getAdapterPosition());
+
+            if (checkIfAnyItemSelected()) {
+                if (checkIfItemSelected(getAdapterPosition())) {
+                    unselectItem(getAdapterPosition());
+                } else {
+                    selectItem(getAdapterPosition());
+                }
+            }
+            else {
+                // Open note. See method in MainActivity
+                noteClickListener.onNoteClick(this.note_id, getAdapterPosition());
+            }
         }
 
         @Override
@@ -161,7 +176,6 @@ public class NotesRecycleViewAdapter extends RecyclerView.Adapter<NotesRecycleVi
 
             // Select item
             selectItem(getAdapterPosition());
-            notifyItemChanged(getAdapterPosition());
 
             noteLongClickListener.onLongNoteClick(this.note_id, getAdapterPosition());
 
