@@ -43,8 +43,9 @@ public class NotesRecycleViewAdapter extends RecyclerView.Adapter<NotesRecycleVi
     }
 
     // Remove all items from list of selected
-    public void unselectAll() {
+    public void unselectAllItems() {
         selectedItems.clear();
+        notifyDataSetChanged();
     }
 
     public boolean checkIfItemSelected(int position) {
@@ -56,8 +57,14 @@ public class NotesRecycleViewAdapter extends RecyclerView.Adapter<NotesRecycleVi
         }
     }
 
+    // Returns true if selectedItems list is not empty
     public boolean checkIfAnyItemSelected() {
-        return true;
+        if (selectedItems.size() > 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     // Returns whole selectedItems list

@@ -91,10 +91,18 @@ public class MainActivity extends AppCompatActivity
     }
 
     // Override back button in MainActivity
+    // Minimize the app if no items selected
+    // Else clear selection
     @Override
     public void onBackPressed() {
-        // Minimize the app
-        this.moveTaskToBack(true);
+
+        if ( ! adapter.checkIfAnyItemSelected()) {
+            // Minimize the app
+            this.moveTaskToBack(true);
+        }
+        else {
+            adapter.unselectAllItems();
+        }
     }
 
     // Generate activity's title
@@ -126,7 +134,7 @@ public class MainActivity extends AppCompatActivity
             }
 
             // Clear list of selected items
-            adapter.unselectAll();
+            adapter.unselectAllItems();
 
             // Hide the button
             delete_note_btn.hide();
