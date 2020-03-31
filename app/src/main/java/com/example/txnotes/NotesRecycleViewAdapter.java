@@ -159,17 +159,11 @@ public class NotesRecycleViewAdapter extends RecyclerView.Adapter<NotesRecycleVi
         public boolean onLongClick(View view) {
             Log.d("DEBUG_DB", "clicked LONG " + this.note_id);
 
-            // Highlight the deleted item in red
-            //view.setBackgroundColor(itemView.getContext().getResources().getColor(R.color.colorDeletingNote));
-
             // Select item
             selectItem(getAdapterPosition());
+            notifyItemChanged(getAdapterPosition());
 
             noteLongClickListener.onLongNoteClick(this.note_id, getAdapterPosition());
-
-            notifyItemChanged(getAdapterPosition());
-            //items.remove(getAdapterPosition());
-            //notifyItemRemoved(getAdapterPosition());
 
             return true;
         }
