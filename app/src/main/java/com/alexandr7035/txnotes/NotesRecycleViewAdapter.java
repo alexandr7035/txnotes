@@ -115,7 +115,7 @@ public class NotesRecycleViewAdapter extends RecyclerView.Adapter<NotesRecycleVi
             holder.itemView.setBackgroundResource(R.color.colorSelectedNoteWidget);
         }
         else {
-            holder.itemView.setBackgroundResource(R.color.colorNoteWidget);
+            holder.itemView.setBackgroundResource(R.drawable.note_view_background);
         }
 
     }
