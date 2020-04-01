@@ -68,10 +68,19 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onNoteClick(int note_id, int position) {
-        Intent intent = new Intent(this, ShowNoteActivity.class);
-        Log.d("DEBUG_DB", "MainActivity: passed to show note: " + note_id);
-        intent.putExtra("clicked_note_id", note_id);
-        startActivity(intent);
+
+        // Hide button if visible
+        if (delete_note_btn.getVisibility() == View.VISIBLE && adapter.getSelectedItems().size() == 0) {
+            delete_note_btn.hide();
+            return;
+        }
+
+        if ( ! adapter.checkIfAnyItemSelected()) {
+            Intent intent = new Intent(this, ShowNoteActivity.class);
+            Log.d("DEBUG_DB", "MainActivity: passed to show note: " + note_id);
+            intent.putExtra("clicked_note_id", note_id);
+            startActivity(intent);
+        }
     }
 
     @Override

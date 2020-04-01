@@ -164,10 +164,10 @@ public class NotesRecycleViewAdapter extends RecyclerView.Adapter<NotesRecycleVi
                     selectItem(getAdapterPosition());
                 }
             }
-            else {
-                // Open note. See method in MainActivity
-                noteClickListener.onNoteClick(this.note_id, getAdapterPosition());
-            }
+
+            // Open note. See method in MainActivity
+            noteClickListener.onNoteClick(this.note_id, getAdapterPosition());
+
         }
 
         @Override
