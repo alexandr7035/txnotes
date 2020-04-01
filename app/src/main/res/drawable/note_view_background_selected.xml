@@ -2,18 +2,30 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item  android:state_pressed="true">
         <shape>
+            <corners android:bottomRightRadius="7dp"
+                android:bottomLeftRadius="@dimen/roundedCornersDimen"
+                android:topLeftRadius="@dimen/roundedCornersDimen"
+                android:topRightRadius="@dimen/roundedCornersDimen" />
             <solid android:color="@color/colorNoteWidgetSelected"/>
         </shape>
     </item>
 
     <item android:state_focused="true" >
         <shape>
+            <corners android:bottomRightRadius="7dp"
+                android:bottomLeftRadius="@dimen/roundedCornersDimen"
+                android:topLeftRadius="@dimen/roundedCornersDimen"
+                android:topRightRadius="@dimen/roundedCornersDimen" />
             <solid android:color="@color/colorNoteWidgetSelected"/>
         </shape>
     </item>
 
     <item>
         <shape>
+            <corners android:bottomRightRadius="7dp"
+                android:bottomLeftRadius="@dimen/roundedCornersDimen"
+                android:topLeftRadius="@dimen/roundedCornersDimen"
+                android:topRightRadius="@dimen/roundedCornersDimen" />
             <solid android:color="@color/colorNoteWidgetSelected"/>
         </shape>
     </item>

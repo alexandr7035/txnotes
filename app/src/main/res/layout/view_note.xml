@@ -11,7 +11,7 @@
         android:tag="noteDateView"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:paddingLeft="10dp"
+        android:paddingLeft="15dp"
         android:paddingRight="20dp"
         android:text=""
         android:textSize="@dimen/note_date_font_size"
