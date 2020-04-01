@@ -14,5 +14,5 @@
 
     <color name="colorToolbarButtonPressed">#E47E5830</color>
 
-    <color name="colorSelectedNoteWidget">#BD7070</color>
+    <color name="colorNoteWidgetSelected">#BD7070</color>
 </resources>

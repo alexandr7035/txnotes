@@ -112,7 +112,7 @@ public class NotesRecycleViewAdapter extends RecyclerView.Adapter<NotesRecycleVi
         // Mark item if selected
         if (checkIfItemSelected(position)) {
             Log.d("DEBUG_TXNOTES", position + " is selected");
-            holder.itemView.setBackgroundResource(R.color.colorSelectedNoteWidget);
+            holder.itemView.setBackgroundResource(R.drawable.note_view_background_selected);
         }
         else {
             holder.itemView.setBackgroundResource(R.drawable.note_view_background);
