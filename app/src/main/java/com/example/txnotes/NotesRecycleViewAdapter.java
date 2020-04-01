@@ -174,10 +174,11 @@ public class NotesRecycleViewAdapter extends RecyclerView.Adapter<NotesRecycleVi
         public boolean onLongClick(View view) {
             Log.d("DEBUG_DB", "clicked LONG " + this.note_id);
 
-            // Select item
-            selectItem(getAdapterPosition());
-
-            noteLongClickListener.onLongNoteClick(this.note_id, getAdapterPosition());
+            if (! checkIfItemSelected(getAdapterPosition())) {
+                // Select item
+                selectItem(getAdapterPosition());
+                noteLongClickListener.onLongNoteClick(this.note_id, getAdapterPosition());
+            }
 
             return true;
         }
