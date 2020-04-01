@@ -1,4 +1,4 @@
-package com.example.txnotes;
+package com.alexandr7035.txnotes;
 
 import android.content.Context;
 

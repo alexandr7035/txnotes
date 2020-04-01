@@ -1,11 +1,11 @@
-package com.example.txnotes;
+package com.alexandr7035.txnotes;
 
 import android.app.Application;
 import android.util.Log;
 
 import androidx.room.Room;
 
-import com.example.txnotes.db.NotesDatabase;
+import com.alexandr7035.txnotes.db.NotesDatabase;
 
 
 public class TXNotesApplication extends Application {

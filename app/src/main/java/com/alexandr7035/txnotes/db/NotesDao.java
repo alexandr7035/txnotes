@@ -1,4 +1,4 @@
-package com.example.txnotes.db;
+package com.alexandr7035.txnotes.db;
 
 import androidx.room.Dao;
 import androidx.room.Delete;

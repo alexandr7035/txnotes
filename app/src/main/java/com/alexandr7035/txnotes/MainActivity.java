@@ -1,4 +1,4 @@
-package com.example.txnotes;
+package com.alexandr7035.txnotes;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,9 +12,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.txnotes.db.NoteEntity;
-import com.example.txnotes.db.NotesDao;
-import com.example.txnotes.db.NotesDatabase;
+import com.alexandr7035.txnotes.db.NoteEntity;
+import com.alexandr7035.txnotes.db.NotesDao;
+import com.alexandr7035.txnotes.db.NotesDatabase;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;

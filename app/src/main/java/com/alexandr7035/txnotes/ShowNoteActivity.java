@@ -1,4 +1,4 @@
-package com.example.txnotes;
+package com.alexandr7035.txnotes;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,9 +9,9 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.txnotes.db.NotesDao;
-import com.example.txnotes.db.NotesDatabase;
-import com.example.txnotes.db.NoteEntity;
+import com.alexandr7035.txnotes.db.NotesDao;
+import com.alexandr7035.txnotes.db.NotesDatabase;
+import com.alexandr7035.txnotes.db.NoteEntity;
 
 public class ShowNoteActivity extends AppCompatActivity {
 
