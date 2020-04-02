@@ -4,7 +4,7 @@ android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
     defaultConfig {
-        applicationId "com.example.txnotes"
+        applicationId "com.alexandr7035.txnotes"
         minSdkVersion 15
         targetSdkVersion 29
         versionCode 1
@@ -17,11 +17,17 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
 
+        debug {
+            applicationIdSuffix ".debug"
+            debuggable true
+            versionNameSuffix ".debug"
+        }
+
+        // Don't set appidsuffix. When app releases, it wiil replece this one
         alpha {
-            signingConfig signingConfigs.debug // <-- ADD THIS TO SIGN WITH YOUR DEBUG CERTIFICATE
-            debuggable true     // <-- ADD THIS
-            minifyEnabled false // <-- ADD THIS
-            applicationIdSuffix ".alpha"
+            signingConfig signingConfigs.debug
+            debuggable true
+            minifyEnabled false
             versionNameSuffix ".alpha"
         }
     }
