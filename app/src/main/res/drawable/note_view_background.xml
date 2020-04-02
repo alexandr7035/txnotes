@@ -2,30 +2,33 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item  android:state_pressed="true">
         <shape>
-            <corners android:bottomRightRadius="7dp"
-                android:bottomLeftRadius="@dimen/roundedCornersDimen"
-                android:topLeftRadius="@dimen/roundedCornersDimen"
-                android:topRightRadius="@dimen/roundedCornersDimen" />
+            <corners
+                android:bottomRightRadius="@dimen/noteViewRoundedCornersDimen"
+                android:bottomLeftRadius="@dimen/noteViewRoundedCornersDimen"
+                android:topLeftRadius="@dimen/noteViewRoundedCornersDimen"
+                android:topRightRadius="@dimen/noteViewRoundedCornersDimen" />
             <solid android:color="@color/colorNoteWidgetPressed"/>
         </shape>
     </item>
 
     <item android:state_focused="true" >
         <shape>
-            <corners android:bottomRightRadius="7dp"
-                android:bottomLeftRadius="@dimen/roundedCornersDimen"
-                android:topLeftRadius="@dimen/roundedCornersDimen"
-                android:topRightRadius="@dimen/roundedCornersDimen" />
+            <corners
+                android:bottomRightRadius="@dimen/noteViewRoundedCornersDimen"
+                android:bottomLeftRadius="@dimen/noteViewRoundedCornersDimen"
+                android:topLeftRadius="@dimen/noteViewRoundedCornersDimen"
+                android:topRightRadius="@dimen/noteViewRoundedCornersDimen" />
             <solid android:color="@color/colorNoteWidgetPressed"/>
         </shape>
     </item>
 
     <item>
         <shape>
-            <corners android:bottomRightRadius="7dp"
-                android:bottomLeftRadius="@dimen/roundedCornersDimen"
-                android:topLeftRadius="@dimen/roundedCornersDimen"
-                android:topRightRadius="@dimen/roundedCornersDimen" />
+            <corners
+                android:bottomRightRadius="@dimen/noteViewRoundedCornersDimen"
+                android:bottomLeftRadius="@dimen/noteViewRoundedCornersDimen"
+                android:topLeftRadius="@dimen/noteViewRoundedCornersDimen"
+                android:topRightRadius="@dimen/noteViewRoundedCornersDimen" />
             <solid android:color="@color/colorNoteWidget"/>
         </shape>
     </item>

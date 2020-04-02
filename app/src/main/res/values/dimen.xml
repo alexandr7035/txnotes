@@ -6,6 +6,6 @@
     <dimen name="show_note_text">20sp</dimen>
     <dimen name="show_note_dates_field">17sp</dimen>
 
-    <dimen name="roundedCornersDimen">7dp</dimen>
+    <dimen name="noteViewRoundedCornersDimen">7dp</dimen>
     <dimen name="defaultFieldRoundedCornersDimen">5dp</dimen>
 </resources>
