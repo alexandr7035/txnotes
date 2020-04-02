@@ -76,7 +76,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="10dp"
-        android:background="@color/colorShowNote"
+        android:background="@drawable/default_field_background"
         android:ems="10"
         android:gravity="start|top"
         android:hint="@string/set_note_text_hint"

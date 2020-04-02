@@ -10,7 +10,7 @@
     <color name="colorNoteText">#000000</color>
     <color name="colorNoteWidgetPressed">#9B9B9B</color>
 
-    <color name="colorShowNote">#E8E5E5</color>
+    <color name="colorDefaultField">#E8E5E5</color>
 
     <color name="colorToolbarButtonPressed">#E47E5830</color>
 

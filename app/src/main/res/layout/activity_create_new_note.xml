@@ -79,7 +79,7 @@
         android:ems="10"
         android:gravity="start|top"
         android:inputType="textMultiLine"
-        android:background="@color/colorShowNote"
+        android:background="@drawable/default_field_background"
         android:hint="@string/set_note_text_hint"
         android:textSize="@dimen/show_note_text"
         android:padding="10dp"
