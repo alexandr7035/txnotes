@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity
                           implements NotesRecycleViewAdapter.NoteClickListener,
                                      NotesRecycleViewAdapter.NoteLongClickListener {
 
+    private TXNotesApplication app;
 
     // Recycleviw for list of notes
     public static RecyclerView recyclerView;
@@ -37,13 +38,17 @@ public class MainActivity extends AppCompatActivity
     private TextView app_title;
     private FloatingActionButton delete_note_btn;
 
+    private String LOG_TAG;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        this.app = (TXNotesApplication) this.getApplication();
+
         // DB
-        db = ((TXNotesApplication) this.getApplication()).getDatabaseInstance();
+        db = app.getDatabaseInstance();
         db_dao = db.getNotesDao();
 
         // Set activity's title, see setTitle method
@@ -63,6 +68,9 @@ public class MainActivity extends AppCompatActivity
         // A button to delete note (hidden by default, shown when note is selected)
         delete_note_btn = findViewById(R.id.deleteNoteButton);
         delete_note_btn.hide();
+
+        // Set log tag
+        this.LOG_TAG = app.getLogTag();
     }
 
 
