@@ -16,6 +16,14 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+
+        alpha {
+            signingConfig signingConfigs.debug // <-- ADD THIS TO SIGN WITH YOUR DEBUG CERTIFICATE
+            debuggable true     // <-- ADD THIS
+            minifyEnabled false // <-- ADD THIS
+            applicationIdSuffix ".alpha"
+            versionNameSuffix ".alpha"
+        }
     }
 }
 
