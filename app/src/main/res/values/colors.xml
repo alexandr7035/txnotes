@@ -4,15 +4,15 @@
     <color name="colorPrimaryDark">#E4603F1E</color>
     <color name="colorAccent">#E4603F1E</color>
 
+    <color name="colorToolbarButtonPressed">#E47E5830</color>
+
     <color name="colorActivityTitle">#FFFFFF</color>
 
     <color name="colorNoteWidget">#C5C2C2</color>
-    <color name="colorNoteText">#000000</color>
     <color name="colorNoteWidgetPressed">#9B9B9B</color>
+    <color name="colorNoteWidgetSelected">#BD7070</color>
+    <color name="colorNoteText">#000000</color>
 
     <color name="colorDefaultField">#E8E5E5</color>
-
-    <color name="colorToolbarButtonPressed">#E47E5830</color>
-
-    <color name="colorNoteWidgetSelected">#BD7070</color>
+    
 </resources>
