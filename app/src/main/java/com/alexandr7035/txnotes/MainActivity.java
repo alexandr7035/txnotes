@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,6 +17,7 @@ import com.alexandr7035.txnotes.db.NoteEntity;
 import com.alexandr7035.txnotes.db.NotesDao;
 import com.alexandr7035.txnotes.db.NotesDatabase;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
@@ -35,6 +37,7 @@ public class MainActivity extends AppCompatActivity
     private NotesDao db_dao;
 
     // Views
+    private ConstraintLayout mainLayout;
     private TextView app_title;
     private FloatingActionButton delete_note_btn;
 
@@ -71,7 +74,8 @@ public class MainActivity extends AppCompatActivity
 
         // Set log tag
         this.LOG_TAG = app.getLogTag();
-    }
+
+        mainLayout = findViewById(R.id.mainLayout);    }
 
 
     @Override
@@ -142,6 +146,15 @@ public class MainActivity extends AppCompatActivity
             Vibrator vibrator = (Vibrator) v.getContext().getSystemService(Context.VIBRATOR_SERVICE);
             vibrator.vibrate(100);
 
+            // Snackbar to show deleted notes count and 'undo' button
+            String text = getString(R.string.delete_notes_snack,
+                            "" + adapter.getSelectedItems().size());
+            Snackbar snackbar = Snackbar.make(
+                    mainLayout,
+                    text,
+                    Snackbar.LENGTH_LONG
+            );
+
             // Delete notes
             for (NoteEntity note: adapter.getSelectedItems()) {
                 // Remove from adapter
@@ -159,6 +172,9 @@ public class MainActivity extends AppCompatActivity
 
             // Update title (notes count changed)
             app_title.setText(getActivityTitleText());
+
+            // Show snackbar
+            snackbar.show();
         }
 
     }
