@@ -7,4 +7,8 @@
     <string name="edit_note_title">Редактирование</string>
 
     <string name="delete_notes_snack">Заметки удалены (%1$s)</string>
+
+    <string name="dialog_delete_note"><![CDATA[<b>Удалить заметки?</b> [%1$s]]]></string>
+    <string name="dialog_positive">Да</string>
+    <string name="dialog_negative">Нет</string>
 </resources>

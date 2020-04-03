@@ -1,13 +1,18 @@
 package com.alexandr7035.txnotes;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.text.Html;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -40,6 +45,9 @@ public class MainActivity extends AppCompatActivity
     private ConstraintLayout mainLayout;
     private TextView app_title;
     private FloatingActionButton delete_note_btn;
+    private Snackbar snackbar;
+
+    private Vibrator vibrator;
 
     private String LOG_TAG;
 
@@ -49,6 +57,8 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         this.app = (TXNotesApplication) this.getApplication();
+
+        mainLayout = findViewById(R.id.mainLayout);
 
         // DB
         db = app.getDatabaseInstance();
@@ -72,10 +82,13 @@ public class MainActivity extends AppCompatActivity
         delete_note_btn = findViewById(R.id.deleteNoteButton);
         delete_note_btn.hide();
 
+        // Vibrator
+        vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
         // Set log tag
         this.LOG_TAG = app.getLogTag();
 
-        mainLayout = findViewById(R.id.mainLayout);    }
+    }
 
 
     @Override
@@ -142,39 +155,81 @@ public class MainActivity extends AppCompatActivity
         @Override
         public void onClick(View v) {
 
-            // Vibrate when deleting
-            Vibrator vibrator = (Vibrator) v.getContext().getSystemService(Context.VIBRATOR_SERVICE);
-            vibrator.vibrate(100);
+            int deleting_notes_count = adapter.getSelectedItems().size();
 
             // Snackbar to show deleted notes count and 'undo' button
             String text = getString(R.string.delete_notes_snack,
-                            "" + adapter.getSelectedItems().size());
-            Snackbar snackbar = Snackbar.make(
+                            "" + deleting_notes_count);
+
+            snackbar = Snackbar.make(
                     mainLayout,
                     text,
                     Snackbar.LENGTH_LONG
             );
 
-            // Delete notes
-            for (NoteEntity note: adapter.getSelectedItems()) {
-                // Remove from adapter
-                items.remove(note);
-                // Remove from db
-                db_dao.deleteNote(note);
-                adapter.notifyDataSetChanged();
-            }
+            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    switch (which){
+                        case DialogInterface.BUTTON_POSITIVE:
+                            //Yes button clicked
 
-            // Clear list of selected items
-            adapter.unselectAllItems();
+                            // Delete notes
+                            for (NoteEntity note: adapter.getSelectedItems()) {
+                                // Remove from adapter
+                                items.remove(note);
+                                // Remove from db
+                                db_dao.deleteNote(note);
+                                adapter.notifyDataSetChanged();
 
-            // Hide the button
-            delete_note_btn.hide();
+                                // Clear list of selected items
+                                adapter.unselectAllItems();
 
-            // Update title (notes count changed)
-            app_title.setText(getActivityTitleText());
+                                // Hide the button
+                                delete_note_btn.hide();
 
-            // Show snackbar
-            snackbar.show();
+                                // Update title (notes count changed)
+                                app_title.setText(getActivityTitleText());
+
+                                // Vibrate
+                                vibrator.vibrate(100);
+
+                                // Show snackbar
+                                snackbar.show();
+                            }
+
+
+                            // "No" button clicked
+                        case DialogInterface.BUTTON_NEGATIVE:
+
+                            // Clear list of selected items
+                            adapter.unselectAllItems();
+                            // Hide the button
+                            delete_note_btn.hide();
+
+                    }
+                }
+            };
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+
+            builder.setMessage(Html.fromHtml(getString(R.string.dialog_delete_note, "" + deleting_notes_count)));
+            builder.setPositiveButton(getString(R.string.dialog_positive), dialogClickListener);
+            builder.setNegativeButton(getString(R.string.dialog_negative), dialogClickListener);
+
+            AlertDialog dialog = builder.create();
+
+            dialog.setCanceledOnTouchOutside(false);
+
+            dialog.show();
+
+            TextView msgTxt = dialog.findViewById(android.R.id.message);
+            Button posBtn = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
+            Button negBtn = dialog.getButton(DialogInterface.BUTTON_NEGATIVE);
+
+            msgTxt.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.dialog_message_text));
+            posBtn.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.dialog_message_btn));
+            negBtn.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.dialog_message_btn));
         }
 
     }

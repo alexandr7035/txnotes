@@ -5,6 +5,8 @@
     <dimen name="note_date_font_size">15sp</dimen>
     <dimen name="show_note_text">20sp</dimen>
     <dimen name="show_note_dates_field">17sp</dimen>
+    <dimen name="dialog_message_text">19sp</dimen>
+    <dimen name="dialog_message_btn">15sp</dimen>
 
     <dimen name="noteViewRoundedCornersDimen">4dp</dimen>
     <dimen name="defaultFieldRoundedCornersDimen">4dp</dimen>
