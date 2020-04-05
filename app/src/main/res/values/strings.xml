@@ -13,6 +13,6 @@
     <string name="dialog_negative">Нет</string>
 
     <string name="menu_trash_can">Корзина</string>
-    <string name="menu_export_to_txt">Экспортировать в TXT</string>
+    <string name="menu_export_to_txt">Экспорт в TXT</string>
     <string name="menu_about_app">О приложении</string>
 </resources>
