@@ -10,4 +10,6 @@
 
     <dimen name="noteViewRoundedCornersDimen">4dp</dimen>
     <dimen name="defaultFieldRoundedCornersDimen">4dp</dimen>
+
+    <dimen name="navigationMenuWith">270dp</dimen>
 </resources>

@@ -8,6 +8,7 @@ import android.os.Vibrator;
 import android.text.Html;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -46,6 +48,7 @@ public class MainActivity extends AppCompatActivity
     private TextView app_title;
     private FloatingActionButton delete_note_btn;
     private Snackbar snackbar;
+    private DrawerLayout drawer;
 
     private Vibrator vibrator;
 
@@ -57,6 +60,9 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         this.app = (TXNotesApplication) this.getApplication();
+
+        // Set log tag
+        this.LOG_TAG = app.getLogTag();
 
         mainLayout = findViewById(R.id.mainLayout);
 
@@ -85,8 +91,12 @@ public class MainActivity extends AppCompatActivity
         // Vibrator
         vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
-        // Set log tag
-        this.LOG_TAG = app.getLogTag();
+        // Navigation menu
+        drawer = findViewById(R.id.drawer_layout);
+
+        Log.d(LOG_TAG, "open drawer " + drawer.toString());
+
+
 
     }
 
@@ -235,6 +245,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void menuBtnClicked(View v) {
-        
+
+        drawer.openDrawer(Gravity.LEFT);
     }
 }
