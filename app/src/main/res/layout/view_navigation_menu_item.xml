@@ -4,16 +4,15 @@
     android:layout_height="@dimen/navigationMenuItemHeight"
     android:layout_marginBottom="@dimen/navigationMenuSpaceBetweenItems"
     android:background="@drawable/background_navigation_menu_item"
-    android:orientation="horizontal"
-    android:clickable="true"
-    android:focusable="true">
+    android:orientation="horizontal">
 
     <!-- Square -->
     <ImageView
         android:id="@+id/image"
         android:layout_width="@dimen/navigationMenuItemHeight"
         android:layout_height="match_parent"
-        android:padding="5dp">
+        android:padding="5dp"
+        android:duplicateParentState="true">
 
     </ImageView>
 
@@ -23,7 +22,8 @@
         android:layout_height="match_parent"
         android:gravity="center|left"
         android:paddingLeft="5dp"
-        android:textSize="@dimen/navigationMenuItemTextSize" />
+        android:textSize="@dimen/navigationMenuItemTextSize"
+        android:duplicateParentState="true"/>
 
 
 </LinearLayout>

@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -18,6 +20,8 @@ public class NavigationMenuItem extends LinearLayout {
     public NavigationMenuItem(Context context, AttributeSet attrs) {
         super(context, attrs);
         inflate(context, R.layout.view_navigation_menu_item, this);
+
+        setClickable(true);
 
         // Child views
         textView = findViewById(R.id.text);
@@ -41,6 +45,15 @@ public class NavigationMenuItem extends LinearLayout {
         }
 
         arr.recycle();
+
+        setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("DEBUG_TX", "CLICKED");
+            }
+        });
+
     }
+
 
 }
