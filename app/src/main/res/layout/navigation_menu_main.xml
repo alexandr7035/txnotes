@@ -24,17 +24,27 @@
         <com.alexandr7035.txnotes.views.NavigationMenuItem
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:item_text="@string/menu_export_to_txt"/>
+            app:item_text="@string/menu_export_to_txt"
+            app:item_icon="@drawable/txt"/>
 
         <com.alexandr7035.txnotes.views.NavigationMenuItem
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:item_text="@string/menu_trash_can"/>
+            app:item_text="@string/menu_trash_can"
+            app:item_icon="@drawable/trash"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="5dp"
+            android:background="@android:color/darker_gray" />
 
         <com.alexandr7035.txnotes.views.NavigationMenuItem
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:item_text="@string/menu_about_app"/>
+            app:item_text="@string/menu_about_app"
+            app:item_icon="@drawable/about"/>
 
 
     </LinearLayout>

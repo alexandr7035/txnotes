@@ -10,8 +10,10 @@
 
     <!-- Square -->
     <ImageView
+        android:id="@+id/image"
         android:layout_width="@dimen/navigationMenuItemHeight"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:padding="5dp">
 
     </ImageView>
 
@@ -19,8 +21,9 @@
         android:id="@+id/text"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:textSize="@dimen/navigationMenuItemTextSize"
-        android:gravity="center|left" />
+        android:gravity="center|left"
+        android:paddingLeft="5dp"
+        android:textSize="@dimen/navigationMenuItemTextSize" />
 
 
 </LinearLayout>

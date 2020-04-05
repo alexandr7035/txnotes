@@ -19,7 +19,7 @@
     <color name="colorNavigationMenu">#FFFFFF</color>
     <color name="colorNavigationMenuHeader">#E47E5830</color>
     <color name="colorNavigationMenuBody">#FFFFFF</color>
-    <color name="colorNavigationMenuItem">#B8B7B6</color>
+    <color name="colorNavigationMenuItem">#FFFFFF</color>
     <color name="colorNavigationMenuItemPressed">#B8B7B6</color>
 
 </resources>
