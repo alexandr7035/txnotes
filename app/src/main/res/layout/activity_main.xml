@@ -8,8 +8,98 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:openDrawer="start">
+    android:fitsSystemWindows="true">
+
+    <!-- The main layout
+         (Must be declared fist in this file (before navigation menu),
+         otherwise navigation menu's items won't be clickable ¯\_(ツ)_/¯ -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/mainLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="0dp"
+        tools:context=".activities.MainActivity">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/mainBar"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/colorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageButton
+                android:id="@+id/menuBtn"
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/toolbar_button_background"
+                android:onClick="menuBtnClicked"
+                android:paddingTop="20dp"
+                android:paddingBottom="16dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/menu_button"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:layout_editor_absoluteY="0dp" />
+
+            <TextView
+                android:id="@+id/appTitleView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:text="@string/app_name"
+                android:textColor="@color/colorActivityTitle"
+                android:textSize="@dimen/app_tile_font_size"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/newNoteButton"
+                app:layout_constraintHorizontal_bias="0.051"
+                app:layout_constraintStart_toEndOf="@+id/menuBtn"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@string/app_name" />
+
+            <ImageButton
+                android:id="@+id/newNoteButton"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_weight="0"
+                android:background="@drawable/toolbar_button_background"
+                android:onClick="createNewNote"
+                android:paddingTop="15dp"
+                android:paddingBottom="10dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/new_note_btn_default"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/notesRecycleView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mainBar" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/deleteNoteButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:layout_margin="10dp"
+            android:src="@drawable/delete_note_btn"
+            app:layout_constraintBottom_toBottomOf="@+id/notesRecycleView"
+            app:layout_constraintEnd_toEndOf="@+id/notesRecycleView" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 
     <!-- A container for navigation menu
@@ -20,7 +110,8 @@
         android:layout_height="match_parent"
         android:layout_gravity="left"
         android:orientation="vertical"
-        android:fitsSystemWindows="false">
+        android:fitsSystemWindows="false"
+        android:clickable="true">
 
         <include
             layout="@layout/navigation_menu_main"
@@ -30,91 +121,5 @@
     </LinearLayout>
 
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/mainLayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_margin="0dp"
-    tools:context=".activities.MainActivity">
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/mainBar"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@color/colorPrimary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageButton
-            android:id="@+id/menuBtn"
-            android:layout_width="40dp"
-            android:layout_height="match_parent"
-            android:background="@drawable/toolbar_button_background"
-            android:onClick="menuBtnClicked"
-            android:paddingTop="20dp"
-            android:paddingBottom="16dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/menu_button"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="0dp" />
-
-        <TextView
-            android:id="@+id/appTitleView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:text="@string/app_name"
-            android:textColor="@color/colorActivityTitle"
-            android:textSize="@dimen/app_tile_font_size"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/newNoteButton"
-            app:layout_constraintHorizontal_bias="0.051"
-            app:layout_constraintStart_toEndOf="@+id/menuBtn"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="@string/app_name" />
-
-        <ImageButton
-            android:id="@+id/newNoteButton"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_weight="0"
-            android:background="@drawable/toolbar_button_background"
-            android:onClick="createNewNote"
-            android:paddingTop="15dp"
-            android:paddingBottom="10dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/new_note_btn_default"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/notesRecycleView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_margin="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mainBar" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/deleteNoteButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:layout_margin="10dp"
-        android:src="@drawable/delete_note_btn"
-        app:layout_constraintBottom_toBottomOf="@+id/notesRecycleView"
-        app:layout_constraintEnd_toEndOf="@+id/notesRecycleView" />
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.drawerlayout.widget.DrawerLayout>
