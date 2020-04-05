@@ -3,8 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/navigationMenuItemHeight"
     android:layout_marginBottom="@dimen/navigationMenuSpaceBetweenItems"
-    android:background="@color/colorNavigationMenuItem"
-    android:orientation="horizontal">
+    android:background="@drawable/background_navigation_menu_item"
+    android:orientation="horizontal"
+    android:clickable="true"
+    android:focusable="true">
 
     <!-- Square -->
     <ImageView
