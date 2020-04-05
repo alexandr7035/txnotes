@@ -14,5 +14,11 @@
     <color name="colorNoteText">#000000</color>
 
     <color name="colorDefaultField">#E8E5E5</color>
-    
+
+    <!-- Navigation menu -->
+    <color name="colorNavigationMenu">#FFFFFF</color>
+    <color name="colorNavigationMenuHeader">#E47E5830</color>
+    <color name="colorNavigationMenuBody">#FFFFFF</color>
+
+
 </resources>
