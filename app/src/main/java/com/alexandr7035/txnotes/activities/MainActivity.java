@@ -1,4 +1,4 @@
-package com.alexandr7035.txnotes;
+package com.alexandr7035.txnotes.activities;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -20,6 +20,9 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alexandr7035.txnotes.adapters.NotesRecycleViewAdapter;
+import com.alexandr7035.txnotes.R;
+import com.alexandr7035.txnotes.TXNotesApplication;
 import com.alexandr7035.txnotes.db.NoteEntity;
 import com.alexandr7035.txnotes.db.NotesDao;
 import com.alexandr7035.txnotes.db.NotesDatabase;

@@ -10,9 +10,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.alexandr7035.txnotes.EditNoteActivity"></activity>
-        <activity android:name="com.alexandr7035.txnotes.ShowNoteActivity" />
-        <activity android:name="com.alexandr7035.txnotes.MainActivity">
+        <activity android:name="com.alexandr7035.txnotes.activities.EditNoteActivity"></activity>
+        <activity android:name="com.alexandr7035.txnotes.activities.ShowNoteActivity" />
+        <activity android:name="com.alexandr7035.txnotes.activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,8 +20,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.alexandr7035.txnotes.CreateNewNoteActivity"
-            android:parentActivityName="com.alexandr7035.txnotes.MainActivity" />
+            android:name="com.alexandr7035.txnotes.activities.CreateNewNoteActivity"
+            android:parentActivityName="com.alexandr7035.txnotes.activities.MainActivity" />
     </application>
 
 	<uses-permission android:name="android.permission.VIBRATE"/>

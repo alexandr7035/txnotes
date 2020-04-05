@@ -1,4 +1,4 @@
-package com.alexandr7035.txnotes;
+package com.alexandr7035.txnotes.adapters;
 
 import android.text.Html;
 import android.text.format.DateFormat;
@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alexandr7035.txnotes.R;
 import com.alexandr7035.txnotes.db.NoteEntity;
 
 import java.util.ArrayList;

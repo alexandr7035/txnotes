@@ -1,4 +1,4 @@
-package com.alexandr7035.txnotes;
+package com.alexandr7035.txnotes.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.alexandr7035.txnotes.R;
+import com.alexandr7035.txnotes.TXNotesApplication;
 import com.alexandr7035.txnotes.db.NotesDao;
 import com.alexandr7035.txnotes.db.NotesDatabase;
 import com.alexandr7035.txnotes.db.NoteEntity;
