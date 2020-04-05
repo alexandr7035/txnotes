@@ -11,4 +11,8 @@
     <string name="dialog_delete_note"><![CDATA[<b>Удалить заметки?</b> [%1$s]]]></string>
     <string name="dialog_positive">Да</string>
     <string name="dialog_negative">Нет</string>
+
+    <string name="menu_trash_can">Корзина</string>
+    <string name="menu_export_to_txt">Экспортировать в TXT</string>
+    <string name="menu_about_app">О приложении</string>
 </resources>

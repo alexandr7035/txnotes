@@ -12,4 +12,6 @@
     <dimen name="defaultFieldRoundedCornersDimen">4dp</dimen>
 
     <dimen name="navigationMenuWith">270dp</dimen>
+    <dimen name="navigationMenuItemHeight">50dp</dimen>
+    <dimen name="navigationMenuSpaceBetweenItems">10dp</dimen>
 </resources>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/navigationMenu"
     android:layout_width="@dimen/navigationMenuWith"
     android:layout_height="match_parent"
@@ -14,7 +15,27 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorNavigationMenuBody">
+        android:background="@color/colorNavigationMenuBody"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+
+
+        <com.alexandr7035.txnotes.views.NavigationMenuItem
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:item_text="@string/menu_export_to_txt"/>
+
+        <com.alexandr7035.txnotes.views.NavigationMenuItem
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:item_text="@string/menu_trash_can"/>
+
+        <com.alexandr7035.txnotes.views.NavigationMenuItem
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:item_text="@string/menu_about_app"/>
+
 
     </LinearLayout>
 
