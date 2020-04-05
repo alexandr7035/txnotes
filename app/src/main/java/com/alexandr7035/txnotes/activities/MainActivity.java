@@ -3,6 +3,8 @@ package com.alexandr7035.txnotes.activities;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.text.Html;
@@ -20,9 +22,9 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.alexandr7035.txnotes.adapters.NotesRecycleViewAdapter;
 import com.alexandr7035.txnotes.R;
 import com.alexandr7035.txnotes.TXNotesApplication;
+import com.alexandr7035.txnotes.adapters.NotesRecycleViewAdapter;
 import com.alexandr7035.txnotes.db.NoteEntity;
 import com.alexandr7035.txnotes.db.NotesDao;
 import com.alexandr7035.txnotes.db.NotesDatabase;
@@ -52,6 +54,7 @@ public class MainActivity extends AppCompatActivity
     private FloatingActionButton delete_note_btn;
     private Snackbar snackbar;
     private DrawerLayout drawer;
+    private TextView appHeaderVersionView;
 
     private Vibrator vibrator;
 
@@ -96,9 +99,19 @@ public class MainActivity extends AppCompatActivity
 
         // Navigation menu
         drawer = findViewById(R.id.drawer_layout);
+        appHeaderVersionView = findViewById(R.id.headerVersionField);
 
-        Log.d(LOG_TAG, "open drawer " + drawer.toString());
+        String version;
 
+        try {
+            PackageInfo pInfo = getApplicationContext().getPackageManager().getPackageInfo(getPackageName(), 0);
+            version = pInfo.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+            version = "(?)";
+        }
+
+        appHeaderVersionView.setText(getString(R.string.header_version_template, version));
 
 
     }

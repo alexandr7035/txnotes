@@ -15,4 +15,6 @@
     <string name="menu_trash_can">Корзина</string>
     <string name="menu_export_to_txt">Экспорт в TXT</string>
     <string name="menu_about_app">О приложении</string>
+    <string name="menu_header_text">TXNotes</string>
+    <string name="header_version_template">v%1$s</string>
 </resources>

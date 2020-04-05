@@ -16,4 +16,6 @@
     <dimen name="navigationMenuSpaceBetweenItems">3dp</dimen>
     <dimen name="navigationMenuItemTextSize">18sp</dimen>
     <dimen name="navigationMenuItemImagePadding">10dp</dimen>
+    <dimen name="navigationMenuHeaderText">24sp</dimen>
+    <dimen name="navigationMenuVersionText">20sp</dimen>
 </resources>

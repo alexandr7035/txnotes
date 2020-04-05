@@ -17,9 +17,11 @@
 
     <!-- Navigation menu -->
     <color name="colorNavigationMenu">#FFFFFF</color>
-    <color name="colorNavigationMenuHeader">#E47E5830</color>
+    <color name="colorNavigationMenuHeader">#E4875E2D</color>
     <color name="colorNavigationMenuBody">#FFFFFF</color>
     <color name="colorNavigationMenuItem">#FFFFFF</color>
     <color name="colorNavigationMenuItemPressed">#B8B7B6</color>
+    <color name="colorNavigationMenuHeaderText">#FFFFFF</color>
+    <color name="colorNavigationMenuHeaderVersionField">#BFAB94</color>
 
 </resources>
