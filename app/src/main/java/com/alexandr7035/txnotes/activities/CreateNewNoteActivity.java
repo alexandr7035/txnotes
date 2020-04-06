@@ -12,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.alexandr7035.txnotes.R;
 import com.alexandr7035.txnotes.TXNotesApplication;
-import com.alexandr7035.txnotes.activities.MainActivity;
 import com.alexandr7035.txnotes.db.NotesDao;
 import com.alexandr7035.txnotes.db.NotesDatabase;
 import com.alexandr7035.txnotes.db.NoteEntity;
@@ -27,7 +26,7 @@ public class CreateNewNoteActivity extends AppCompatActivity {
 
         // Set activity's title (new note)
         String title_string;
-        title_string = getString(R.string.new_note_header_text);
+        title_string = getString(R.string.activity_create_note_title);
         setTitle(title_string);
 
         // Elements' objects to operate

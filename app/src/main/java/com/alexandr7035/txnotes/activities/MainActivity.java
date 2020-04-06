@@ -154,7 +154,7 @@ public class MainActivity extends AppCompatActivity
     // (depending on notes count)
     public String getActivityTitleText() {
         int notes_count = db_dao.getNotesCount();
-        return getString(R.string.app_title, " (" + notes_count + ")");
+        return getString(R.string.activity_main_title, " (" + notes_count + ")");
     }
 
 
@@ -168,7 +168,7 @@ public class MainActivity extends AppCompatActivity
             int deleting_notes_count = adapter.getSelectedItems().size();
 
             // Snackbar to show deleted notes count and 'undo' button
-            String text = getString(R.string.delete_notes_snack,
+            String text = getString(R.string.snack_delete_notes,
                             "" + deleting_notes_count);
 
             snackbar = Snackbar.make(
@@ -223,9 +223,9 @@ public class MainActivity extends AppCompatActivity
 
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
 
-            builder.setMessage(Html.fromHtml(getString(R.string.dialog_delete_note, "" + deleting_notes_count)));
-            builder.setPositiveButton(getString(R.string.dialog_positive), dialogClickListener);
-            builder.setNegativeButton(getString(R.string.dialog_negative), dialogClickListener);
+            builder.setMessage(Html.fromHtml(getString(R.string.dialog_delete_note_message, "" + deleting_notes_count)));
+            builder.setPositiveButton(getString(R.string.dialog_delete_note_positive), dialogClickListener);
+            builder.setNegativeButton(getString(R.string.dialog_delete_note_negative), dialogClickListener);
 
             AlertDialog dialog = builder.create();
 

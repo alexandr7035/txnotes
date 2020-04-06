@@ -37,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="60dp"
             android:gravity="center|left"
-            android:text="@string/show_note_title"
+            android:text="@string/activity_show_note_title"
             android:textColor="@color/colorActivityTitle"
             android:textSize="@dimen/app_tile_font_size"
             android:textStyle="bold"
