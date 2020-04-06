@@ -160,29 +160,21 @@ public class MainActivity extends AppCompatActivity
                                 db_dao.deleteNote(note);
                                 adapter.notifyDataSetChanged();
 
-                                // Clear list of selected items
+                                // Hide the button and clear list of selected items
+                                // Update activity's title (notes count changed)
+                                // Also vibrate and show the snackbar
                                 adapter.unselectAllItems();
-
-                                // Hide the button
                                 delete_note_btn.hide();
-
-                                // Update title (notes count changed)
                                 app_title.setText(getActivityTitleText());
-
-                                // Vibrate
                                 vibrator.vibrate(100);
-
-                                // Show snackbar
                                 snackbar.show();
                             }
-
-
-                            // "No" button clicked
+                            
+                        // "No" button clicked
                         case DialogInterface.BUTTON_NEGATIVE:
 
-                            // Clear list of selected items
+                            // // Hide the button and clear list of selected items
                             adapter.unselectAllItems();
-                            // Hide the button
                             delete_note_btn.hide();
 
                     }
