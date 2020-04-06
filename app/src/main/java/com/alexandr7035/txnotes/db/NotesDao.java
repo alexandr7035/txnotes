@@ -15,7 +15,8 @@ public interface NotesDao {
     @Query("SELECT COUNT(*) FROM notes")
     int getNotesCount();
 
-    @Query("SELECT * FROM notes")
+    // Reverse by default (show new ones first)
+    @Query("SELECT * FROM notes ORDER BY id DESC")
     List<NoteEntity> getAllNotes();
 
     @Query("SELECT * FROM notes WHERE id = (:id)")
