@@ -126,37 +126,6 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-    // Shows NewNoteActivity
-    public void createNewNote(View view) {
-        // Go to CreateNewNoteActivity
-        Intent intent = new Intent(this, CreateNewNoteActivity.class);
-        startActivity(intent);
-    }
-
-    // Override back button in MainActivity
-    // Minimize the app if no items selected
-    // Else clear selection
-    @Override
-    public void onBackPressed() {
-
-        if ( ! adapter.checkIfAnyItemSelected()) {
-            // Minimize the app
-            this.moveTaskToBack(true);
-        }
-        else {
-            adapter.unselectAllItems();
-            delete_note_btn.hide();
-        }
-    }
-
-    // Generate activity's title
-    // (depending on notes count)
-    public String getActivityTitleText() {
-        int notes_count = db_dao.getNotesCount();
-        return getString(R.string.activity_main_title, " (" + notes_count + ")");
-    }
-
-
     // DeleteNoteButton is shown where any note is selected by long click
     // Deletes note
     public class DeleteBtnClickListener implements View.OnClickListener {
@@ -243,8 +212,39 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    public void menuBtnClicked(View v) {
+    // Override back button in MainActivity
+    // Minimize the app if no items selected
+    // Else clear selection
+    @Override
+    public void onBackPressed() {
 
+        if ( ! adapter.checkIfAnyItemSelected()) {
+            // Minimize the app
+            this.moveTaskToBack(true);
+        }
+        else {
+            adapter.unselectAllItems();
+            delete_note_btn.hide();
+        }
+    }
+
+
+    public void showMenuAction(View v) {
         drawer.openDrawer(Gravity.LEFT);
+    }
+
+    // Shows NewNoteActivity
+    public void createNewNoteAction(View view) {
+        // Go to CreateNewNoteActivity
+        Intent intent = new Intent(this, CreateNewNoteActivity.class);
+        startActivity(intent);
+    }
+
+
+    // Generate activity's title
+    // (depending on notes count)
+    public String getActivityTitleText() {
+        int notes_count = db_dao.getNotesCount();
+        return getString(R.string.activity_main_title, " (" + notes_count + ")");
     }
 }
