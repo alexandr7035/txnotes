@@ -3,8 +3,6 @@ package com.alexandr7035.txnotes.activities;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.text.Html;
@@ -99,20 +97,6 @@ public class MainActivity extends AppCompatActivity
 
         // Navigation menu
         drawer = findViewById(R.id.drawer_layout);
-        appHeaderVersionView = findViewById(R.id.headerVersionField);
-
-        String version;
-
-        try {
-            PackageInfo pInfo = getApplicationContext().getPackageManager().getPackageInfo(getPackageName(), 0);
-            version = pInfo.versionName;
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-            version = "(?)";
-        }
-
-        appHeaderVersionView.setText(getString(R.string.header_version_template, version));
-
 
     }
 
