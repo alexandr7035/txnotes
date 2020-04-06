@@ -52,7 +52,6 @@ public class MainActivity extends AppCompatActivity
     private FloatingActionButton delete_note_btn;
     private Snackbar snackbar;
     private DrawerLayout drawer;
-    private TextView appHeaderVersionView;
 
     private Vibrator vibrator;
 
