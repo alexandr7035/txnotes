@@ -9,12 +9,15 @@ import android.text.Html;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -40,7 +43,7 @@ public class MainActivity extends AppCompatActivity
     // Recycleviw for list of notes
     public static RecyclerView recyclerView;
     public static NotesRecycleViewAdapter adapter;
-    private List<NoteEntity> items;
+    private List<NoteEntity> notes_list;
 
     // Database
     private NotesDatabase db;
@@ -52,6 +55,7 @@ public class MainActivity extends AppCompatActivity
     private FloatingActionButton delete_note_btn;
     private Snackbar snackbar;
     private DrawerLayout drawer;
+    private ImageButton menuBtn;
 
     private Vibrator vibrator;
 
@@ -81,9 +85,9 @@ public class MainActivity extends AppCompatActivity
         recyclerView = (RecyclerView) findViewById(R.id.notesRecycleView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         // Notes data from database
-        items = db_dao.getAllNotes();
+        notes_list = db_dao.getAllNotes();
         // Pass "this" as click listener (MainActivity implements click listeners from NotesRecycleViewAdapter)
-        adapter = new NotesRecycleViewAdapter(items, this, this);
+        adapter = new NotesRecycleViewAdapter(notes_list, this, this);
         adapter.notifyDataSetChanged();
         recyclerView.setAdapter(adapter);
 
@@ -96,6 +100,9 @@ public class MainActivity extends AppCompatActivity
 
         // Navigation menu
         drawer = findViewById(R.id.drawer_layout);
+
+        // Toolbar menu btn
+        menuBtn = findViewById(R.id.menuBtn);
 
     }
 
@@ -155,7 +162,7 @@ public class MainActivity extends AppCompatActivity
                             // Delete notes
                             for (NoteEntity note: adapter.getSelectedItems()) {
                                 // Remove from adapter
-                                items.remove(note);
+                                notes_list.remove(note);
                                 // Remove from db
                                 db_dao.deleteNote(note);
 
@@ -223,7 +230,7 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-    public void showMenuAction(View v) {
+    public void showDrawerAction(View v) {
         drawer.openDrawer(Gravity.LEFT);
     }
 
@@ -234,6 +241,50 @@ public class MainActivity extends AppCompatActivity
         startActivity(intent);
     }
 
+
+    // For toolbar's menu button
+    // Showes popup menu for sorting notes
+    public void showMenuAction(View view) {
+
+        PopupMenu popup = new PopupMenu(this, menuBtn);
+        popup.getMenuInflater()
+                .inflate(R.menu.menu_main_activity_toolbar, popup.getMenu());
+
+        // Click listener for menu items
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            public boolean onMenuItemClick(MenuItem item) {
+
+                switch (item.getItemId()) {
+                    case R.id.sort_new_first:
+                        Log.d(LOG_TAG, "SORTING: default (new first)");
+                        notes_list.clear();
+                        notes_list.addAll(db_dao.getAllNotes());
+                        adapter.notifyDataSetChanged();
+                        return true;
+
+
+                    case R.id.sort_old_first:
+                        Log.d(LOG_TAG, "SORTING: old first");
+                        notes_list.clear();
+                        notes_list.addAll(db_dao.getAllNotesOldFirst());
+                        adapter.notifyDataSetChanged();
+                        return true;
+
+                    case R.id.sort_by_header:
+                        Log.d(LOG_TAG, "SORTING: sort by header");
+                        notes_list.clear();
+                        //notes_list.addAll( ... ));
+                        adapter.notifyDataSetChanged();
+                        return true;
+                }
+
+                return true;
+            }
+
+        });
+
+        popup.show();
+    }
 
     // Generate activity's title
     // (depending on notes count)

@@ -24,4 +24,9 @@
     <string name="dialog_delete_note_positive">Да</string>
     <string name="dialog_delete_note_negative">Нет</string>
 
+    <!-- Main menu -->
+    <string name="menu_sort_old_first">Сначала старые</string>
+    <string name="menu_sort_new_first">Сначала новые</string>
+    <string name="menu_sort_by_header">Сортировать по заголовку</string>
+
 </resources>

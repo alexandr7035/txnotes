@@ -19,6 +19,10 @@ public interface NotesDao {
     @Query("SELECT * FROM notes ORDER BY id DESC")
     List<NoteEntity> getAllNotes();
 
+    // "Old first" sorting
+    @Query("SELECT * FROM notes ORDER BY id")
+    List<NoteEntity> getAllNotesOldFirst();
+
     @Query("SELECT * FROM notes WHERE id = (:id)")
     NoteEntity getNoteById(int id);
 

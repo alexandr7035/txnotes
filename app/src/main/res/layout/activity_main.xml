@@ -30,11 +30,11 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageButton
-                android:id="@+id/menuBtn"
+                android:id="@+id/drawerBtn"
                 android:layout_width="40dp"
                 android:layout_height="match_parent"
                 android:background="@drawable/toolbar_button_background"
-                android:onClick="showMenuAction"
+                android:onClick="showDrawerAction"
                 android:paddingTop="20dp"
                 android:paddingBottom="16dp"
                 android:scaleType="fitCenter"
@@ -54,7 +54,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/newNoteButton"
                 app:layout_constraintHorizontal_bias="0.051"
-                app:layout_constraintStart_toEndOf="@+id/menuBtn"
+                app:layout_constraintStart_toEndOf="@+id/drawerBtn"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="@string/app_name" />
 
@@ -69,10 +69,25 @@
                 android:paddingBottom="10dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/new_note_btn_default"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintEnd_toStartOf="@+id/menuBtn"
+                app:layout_constraintHorizontal_bias="0.975"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/menuBtn"
+                android:layout_width="30dp"
+                android:layout_height="60dp"
+                android:background="@drawable/toolbar_button_background"
+                android:onClick="showMenuAction"
+                android:paddingTop="17dp"
+                android:paddingBottom="17dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/menu"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/toolbar_button_background" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
