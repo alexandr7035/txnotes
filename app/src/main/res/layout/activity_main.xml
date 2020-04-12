@@ -52,27 +52,9 @@
                 android:textSize="@dimen/app_tile_font_size"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/newNoteButton"
-                app:layout_constraintHorizontal_bias="0.051"
                 app:layout_constraintStart_toEndOf="@+id/drawerBtn"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="@string/app_name" />
-
-            <ImageButton
-                android:id="@+id/newNoteButton"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_weight="0"
-                android:background="@drawable/toolbar_button_background"
-                android:onClick="createNewNoteAction"
-                android:paddingTop="15dp"
-                android:paddingBottom="10dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/new_note_btn_default"
-                app:layout_constraintEnd_toStartOf="@+id/menuBtn"
-                app:layout_constraintHorizontal_bias="0.975"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageButton
                 android:id="@+id/menuBtn"
@@ -109,6 +91,17 @@
             android:layout_gravity="end|bottom"
             android:layout_margin="10dp"
             android:src="@drawable/delete_note_btn"
+            app:layout_constraintBottom_toBottomOf="@+id/notesRecycleView"
+            app:layout_constraintEnd_toEndOf="@+id/notesRecycleView" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/createNoteButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:layout_margin="10dp"
+            android:onClick="createNewNoteAction"
+            android:src="@drawable/plus"
             app:layout_constraintBottom_toBottomOf="@+id/notesRecycleView"
             app:layout_constraintEnd_toEndOf="@+id/notesRecycleView" />
 

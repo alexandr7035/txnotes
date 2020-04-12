@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity
     private ConstraintLayout mainLayout;
     private TextView app_title;
     private FloatingActionButton delete_note_btn;
+    private FloatingActionButton createNoteButton;
     private Snackbar snackbar;
     private DrawerLayout drawer;
     private ImageButton menuBtn;
@@ -91,6 +92,9 @@ public class MainActivity extends AppCompatActivity
         adapter.notifyDataSetChanged();
         recyclerView.setAdapter(adapter);
 
+        // A button to create note
+        createNoteButton = findViewById(R.id.createNoteButton);
+
         // A button to delete note (hidden by default, shown when note is selected)
         delete_note_btn = findViewById(R.id.deleteNoteButton);
         delete_note_btn.hide();
@@ -113,6 +117,7 @@ public class MainActivity extends AppCompatActivity
         // Hide button if visible
         if (delete_note_btn.getVisibility() == View.VISIBLE && adapter.getSelectedItems().size() == 0) {
             delete_note_btn.hide();
+            createNoteButton.show();
             return;
         }
 
@@ -127,6 +132,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onLongNoteClick(int note_id, int position) {
 
+        createNoteButton.hide();
         delete_note_btn.show();
         delete_note_btn.setOnClickListener(new DeleteBtnClickListener());
 
@@ -187,6 +193,8 @@ public class MainActivity extends AppCompatActivity
                             delete_note_btn.hide();
 
                     }
+
+                    createNoteButton.show();
                 }
             };
 
@@ -226,6 +234,7 @@ public class MainActivity extends AppCompatActivity
         else {
             adapter.unselectAllItems();
             delete_note_btn.hide();
+            createNoteButton.show();
         }
     }
 
