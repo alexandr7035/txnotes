@@ -12,6 +12,7 @@
     <color name="colorNoteWidgetPressed">#9B9B9B</color>
     <color name="colorNoteWidgetSelected">#BD7070</color>
     <color name="colorNoteText">#000000</color>
+    <color name="colorNoteWidgetSeparator">#848484</color>
 
     <color name="colorDefaultField">#E8E5E5</color>
 

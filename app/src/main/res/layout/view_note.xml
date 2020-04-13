@@ -12,11 +12,19 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:paddingLeft="15dp"
-        android:paddingRight="20dp"
+        android:paddingRight="10dp"
         android:text=""
         android:textSize="@dimen/note_date_font_size"
         android:gravity="center|left"
         />
+
+    <View
+        android:layout_width="2dp"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/colorNoteWidgetSeparator"
+        android:layout_marginRight="10dp"/>
 
     <TextView
         android:id="@+id/noteTitleView"
