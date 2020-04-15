@@ -51,14 +51,17 @@
         <com.alexandr7035.txnotes.views.NavigationMenuItem
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:item_text="@string/menu_export_to_txt"
-            app:item_icon="@drawable/txt"/>
+            app:item_icon="@drawable/txt"
+            app:item_text="@string/menu_export_to_txt" />
 
         <com.alexandr7035.txnotes.views.NavigationMenuItem
+            android:id="@+id/recycleBinMenuButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:item_text="@string/menu_trash_can"
-            app:item_icon="@drawable/trash"/>
+            android:clickable="false"
+            android:onClick="recycleBinAction"
+            app:item_icon="@drawable/trash"
+            app:item_text="@string/menu_trash_can" />
 
         <View
             android:layout_width="match_parent"

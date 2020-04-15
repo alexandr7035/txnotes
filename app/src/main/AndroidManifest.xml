@@ -2,17 +2,20 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.alexandr7035.txnotes">
 
+    <uses-permission android:name="android.permission.VIBRATE" />
+
     <application
-        android:name="com.alexandr7035.txnotes.TXNotesApplication"
+        android:name=".TXNotesApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.alexandr7035.txnotes.activities.EditNoteActivity"></activity>
-        <activity android:name="com.alexandr7035.txnotes.activities.ShowNoteActivity" />
-        <activity android:name="com.alexandr7035.txnotes.activities.MainActivity">
+        <activity android:name=".activities.RecycleBinActivity"></activity>
+        <activity android:name=".activities.EditNoteActivity" />
+        <activity android:name=".activities.ShowNoteActivity" />
+        <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,9 +23,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.alexandr7035.txnotes.activities.CreateNewNoteActivity"
-            android:parentActivityName="com.alexandr7035.txnotes.activities.MainActivity" />
+            android:name=".activities.CreateNewNoteActivity"
+            android:parentActivityName=".activities.MainActivity" />
     </application>
 
-	<uses-permission android:name="android.permission.VIBRATE"/>
 </manifest>

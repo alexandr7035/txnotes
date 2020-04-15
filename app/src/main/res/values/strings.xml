@@ -12,6 +12,7 @@
     <string name="activity_create_note_title">Новая заметка</string>
     <string name="activity_show_note_title">Просмотр</string>
     <string name="activity_edit_note_title">Редактирование</string>
+    <string name="activity_recycle_bin_title">Корзина%1$s</string>
 
     <!-- Hint text -->
     <string name="hint_set_note_text">Текст заметки</string>

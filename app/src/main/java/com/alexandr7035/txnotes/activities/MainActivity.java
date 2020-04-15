@@ -29,6 +29,7 @@ import com.alexandr7035.txnotes.adapters.NotesRecycleViewAdapter;
 import com.alexandr7035.txnotes.db.NoteEntity;
 import com.alexandr7035.txnotes.db.NotesDao;
 import com.alexandr7035.txnotes.db.NotesDatabase;
+import com.alexandr7035.txnotes.views.NavigationMenuItem;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -57,6 +58,8 @@ public class MainActivity extends AppCompatActivity
     private Snackbar snackbar;
     private DrawerLayout drawer;
     private ImageButton menuBtn;
+
+    private NavigationMenuItem recycleBinMenuButton;
 
     private Vibrator vibrator;
 
@@ -104,6 +107,14 @@ public class MainActivity extends AppCompatActivity
 
         // Navigation menu
         drawer = findViewById(R.id.drawer_layout);
+
+        recycleBinMenuButton = findViewById(R.id.recycleBinMenuButton);
+        recycleBinMenuButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, RecycleBinActivity.class);
+                startActivity(intent);
+            }
+        });
 
         // Toolbar menu btn
         menuBtn = findViewById(R.id.menuBtn);
@@ -301,4 +312,6 @@ public class MainActivity extends AppCompatActivity
         int notes_count = db_dao.getNotesCount();
         return getString(R.string.activity_main_title, " (" + notes_count + ")");
     }
+
+
 }
