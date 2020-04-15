@@ -47,7 +47,7 @@ public class ShowNoteActivity extends AppCompatActivity {
         // Modification date string
         String modification_date_string;
         modification_date_string = "<br><b> Изменена: </b>";
-        if (modification_date == 0) {
+        if (modification_date == creation_date) {
             modification_date_string += "-";
         }
         else {

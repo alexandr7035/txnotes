@@ -91,14 +91,10 @@ public class NotesRecycleViewAdapter extends RecyclerView.Adapter<NotesRecycleVi
         holder.note_title_view.setText(note_data.getNoteText());
 
         // Set formatted note's modification date to textview
-        // (Set creation date if note wasn't modified yet)
+
         long date;
-        if (note_data.getNoteModificationDate() == 0) {
-            date = note_data.getNoteCreationDate();
-        }
-        else {
-            date = note_data.getNoteModificationDate();
-        }
+        date = note_data.getNoteModificationDate();
+
 
         String string_note_date = "<b>" + DateFormat.format("dd-MM-yyyy", date*1000).toString()
                 + "</b><br>" + DateFormat.format("HH:mm", date*1000).toString();
