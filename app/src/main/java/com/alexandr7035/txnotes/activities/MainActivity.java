@@ -29,6 +29,7 @@ import com.alexandr7035.txnotes.adapters.NotesRecycleViewAdapter;
 import com.alexandr7035.txnotes.db.NoteEntity;
 import com.alexandr7035.txnotes.db.NotesDao;
 import com.alexandr7035.txnotes.db.NotesDatabase;
+import com.alexandr7035.txnotes.utils.NotesSorter;
 import com.alexandr7035.txnotes.views.NavigationMenuItem;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -90,6 +91,7 @@ public class MainActivity extends AppCompatActivity
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         // Notes data from database
         notes_list = db_dao.getAllNotes();
+        NotesSorter.sortByModificatonDateDesc(notes_list);
         // Pass "this" as click listener (MainActivity implements click listeners from NotesRecycleViewAdapter)
         adapter = new NotesRecycleViewAdapter(notes_list, this, this);
         adapter.notifyDataSetChanged();
@@ -277,23 +279,20 @@ public class MainActivity extends AppCompatActivity
                 switch (item.getItemId()) {
                     case R.id.sort_new_first:
                         Log.d(LOG_TAG, "SORTING: default (new first)");
-                        notes_list.clear();
-                        notes_list.addAll(db_dao.getAllNotes());
+                        NotesSorter.sortByModificatonDateDesc(notes_list);
                         adapter.notifyDataSetChanged();
                         return true;
 
 
                     case R.id.sort_old_first:
                         Log.d(LOG_TAG, "SORTING: old first");
-                        notes_list.clear();
-                        notes_list.addAll(db_dao.getAllNotesOldFirst());
+                        NotesSorter.sortByModificatonDate(notes_list);
                         adapter.notifyDataSetChanged();
                         return true;
 
                     case R.id.sort_by_header:
                         Log.d(LOG_TAG, "SORTING: sort by header");
-                        notes_list.clear();
-                        //notes_list.addAll( ... ));
+                        NotesSorter.sortByText(notes_list);
                         adapter.notifyDataSetChanged();
                         return true;
                 }
