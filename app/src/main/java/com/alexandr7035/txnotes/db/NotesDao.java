@@ -15,13 +15,8 @@ public interface NotesDao {
     @Query("SELECT COUNT(*) FROM notes")
     int getNotesCount();
 
-    // Reverse by default (show new ones first)
-    @Query("SELECT * FROM notes ORDER BY note_modification_date DESC")
+    @Query("SELECT * FROM notes ORDER BY id")
     List<NoteEntity> getAllNotes();
-
-    // "Old first" sorting
-    @Query("SELECT * FROM notes ORDER BY note_modification_date")
-    List<NoteEntity> getAllNotesOldFirst();
 
     @Query("SELECT * FROM notes WHERE id = (:id)")
     NoteEntity getNoteById(int id);
