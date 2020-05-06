@@ -15,11 +15,15 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,10 +34,13 @@ import com.alexandr7035.txnotes.db.NoteEntity;
 import com.alexandr7035.txnotes.db.NotesDao;
 import com.alexandr7035.txnotes.db.NotesDatabase;
 import com.alexandr7035.txnotes.utils.NotesSorter;
+import com.alexandr7035.txnotes.viewmodel.MainViewModel;
+import com.alexandr7035.txnotes.viewmodel.MainViewModelFactory;
 import com.alexandr7035.txnotes.views.NavigationMenuItem;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity
@@ -66,6 +73,10 @@ public class MainActivity extends AppCompatActivity
 
     private String LOG_TAG;
 
+
+    private LiveData<List<NoteEntity>> notesListLiveData;
+    private MainViewModel viewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,7 +101,7 @@ public class MainActivity extends AppCompatActivity
         recyclerView = (RecyclerView) findViewById(R.id.notesRecycleView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         // Notes data from database
-        notes_list = db_dao.getAllNotes();
+        notes_list = new ArrayList<>();
         NotesSorter.sortByModificatonDateDesc(notes_list);
         // Pass "this" as click listener (MainActivity implements click listeners from NotesRecycleViewAdapter)
         adapter = new NotesRecycleViewAdapter(notes_list, this, this);
@@ -120,6 +131,18 @@ public class MainActivity extends AppCompatActivity
 
         // Toolbar menu btn
         menuBtn = findViewById(R.id.menuBtn);
+
+
+        viewModel = new ViewModelProvider(this, new MainViewModelFactory(this.getApplication())).get(MainViewModel.class);
+        notesListLiveData = viewModel.getNotesList();
+
+        // Update RecyclerView when chats are changed
+        notesListLiveData.observe(this, new Observer<List<NoteEntity>>() {
+            @Override
+            public void onChanged(@Nullable List<NoteEntity> notes) {
+                Log.d(LOG_TAG, "LIVEDATA CHANGED");
+            }
+        });
 
     }
 

@@ -22,6 +22,8 @@ public class MainViewModel extends AndroidViewModel {
         super(application);
 
         repository = new NotesRepository(application);
+
+        notesList = repository.getAllNotesFromDb();
     }
 
     public LiveData<List<NoteEntity>> getNotesList()  {
@@ -43,12 +45,15 @@ class NotesRepository {
 
     private NotesDao dao;
     private Executor executor;
+    private LiveData<List<NoteEntity>> notesList;
 
     NotesRepository(Application application) {
         dao = NotesDatabase.getDatabase(application).getNotesDao();
 
         // To run background tasks
         executor = Executors.newSingleThreadExecutor();
+
+        notesList = dao.getAllNotes();
     }
 
     void addNoteToDb(final NoteEntity note) {
@@ -67,6 +72,10 @@ class NotesRepository {
                 dao.deleteNote(note);
             }
         });
+    }
+
+    LiveData<List<NoteEntity>> getAllNotesFromDb() {
+        return notesList;
     }
 
 }
