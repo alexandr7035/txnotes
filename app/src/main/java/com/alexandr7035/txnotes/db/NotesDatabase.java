@@ -19,7 +19,7 @@ public abstract class NotesDatabase extends RoomDatabase {
             synchronized (NotesDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            NotesDatabase.class, "chats_cache")
+                            NotesDatabase.class, "notes")
                             // FixMe
                             // Wipes and rebuilds instead of migrating
                             // if no Migration object.

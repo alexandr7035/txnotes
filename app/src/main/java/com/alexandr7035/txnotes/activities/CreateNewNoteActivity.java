@@ -11,10 +11,6 @@ import android.widget.ImageButton;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.alexandr7035.txnotes.R;
-import com.alexandr7035.txnotes.TXNotesApplication;
-import com.alexandr7035.txnotes.db.NotesDao;
-import com.alexandr7035.txnotes.db.NotesDatabase;
-import com.alexandr7035.txnotes.db.NoteEntity;
 
 
 public class CreateNewNoteActivity extends AppCompatActivity {
@@ -82,10 +78,10 @@ public class CreateNewNoteActivity extends AppCompatActivity {
         long note_creation_date = System.currentTimeMillis() / 1000;
 
         // Add note to db
-        NotesDatabase db = ((TXNotesApplication) this.getApplication()).getDatabaseInstance();
-        NotesDao db_dao = db.getNotesDao();
+        //NotesDatabase db = ((TXNotesApplication) this.getApplication()).getDatabaseInstance();
+        //NotesDao db_dao = db.getNotesDao();
 
-        db_dao.addNote(new NoteEntity(note_text, note_creation_date));
+        //db_dao.addNote(new NoteEntity(note_text, note_creation_date));
 
         // Go to CreateNewNoteActivity
         Intent intent = new Intent(this, MainActivity.class);

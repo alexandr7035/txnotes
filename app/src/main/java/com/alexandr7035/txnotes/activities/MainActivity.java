@@ -31,8 +31,6 @@ import com.alexandr7035.txnotes.R;
 import com.alexandr7035.txnotes.TXNotesApplication;
 import com.alexandr7035.txnotes.adapters.NotesRecycleViewAdapter;
 import com.alexandr7035.txnotes.db.NoteEntity;
-import com.alexandr7035.txnotes.db.NotesDao;
-import com.alexandr7035.txnotes.db.NotesDatabase;
 import com.alexandr7035.txnotes.utils.NotesSorter;
 import com.alexandr7035.txnotes.viewmodel.MainViewModel;
 import com.alexandr7035.txnotes.viewmodel.MainViewModelFactory;
@@ -40,7 +38,6 @@ import com.alexandr7035.txnotes.views.NavigationMenuItem;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity
@@ -55,8 +52,8 @@ public class MainActivity extends AppCompatActivity
     private List<NoteEntity> notes_list;
 
     // Database
-    private NotesDatabase db;
-    private NotesDao db_dao;
+    //private NotesDatabase db;
+    //private NotesDao db_dao;
 
     // Views
     private ConstraintLayout mainLayout;
@@ -90,23 +87,13 @@ public class MainActivity extends AppCompatActivity
         mainLayout = findViewById(R.id.mainLayout);
 
         // DB
-        db = app.getDatabaseInstance();
-        db_dao = db.getNotesDao();
+        //db = app.getDatabaseInstance();
+        //db_dao = db.getNotesDao();
 
         // Set activity's title, see setTitle method
         app_title = findViewById(R.id.appTitleView);
         app_title.setText(getActivityTitleText());
 
-        // Recycleview settings
-        recyclerView = (RecyclerView) findViewById(R.id.notesRecycleView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        // Notes data from database
-        notes_list = new ArrayList<>();
-        NotesSorter.sortByModificatonDateDesc(notes_list);
-        // Pass "this" as click listener (MainActivity implements click listeners from NotesRecycleViewAdapter)
-        adapter = new NotesRecycleViewAdapter(notes_list, this, this);
-        adapter.notifyDataSetChanged();
-        recyclerView.setAdapter(adapter);
 
         // A button to create note
         createNoteButton = findViewById(R.id.createNoteButton);
@@ -132,17 +119,41 @@ public class MainActivity extends AppCompatActivity
         // Toolbar menu btn
         menuBtn = findViewById(R.id.menuBtn);
 
+        prepareRecyclerView();
 
         viewModel = new ViewModelProvider(this, new MainViewModelFactory(this.getApplication())).get(MainViewModel.class);
         notesListLiveData = viewModel.getNotesList();
 
-        // Update RecyclerView when chats are changed
+
         notesListLiveData.observe(this, new Observer<List<NoteEntity>>() {
             @Override
             public void onChanged(@Nullable List<NoteEntity> notes) {
-                Log.d(LOG_TAG, "LIVEDATA CHANGED");
+
+                // Log.d(LOG_TAG, notes.toString());
+
+             //   if (notes != null) {
+
+                    Log.d(LOG_TAG, "SET ITEMS " + notes.toString());
+
+                 //   if (! notes.isEmpty()) {
+                        adapter.setItems(notes);
+                   // }
+
+                //}
             }
         });
+
+
+
+
+    }
+
+    private void prepareRecyclerView() {
+        recyclerView = findViewById(R.id.notesRecycleView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new NotesRecycleViewAdapter(this, this);
+
+        recyclerView.setAdapter(adapter);
 
     }
 
@@ -206,7 +217,7 @@ public class MainActivity extends AppCompatActivity
                                 // Remove from adapter
                                 notes_list.remove(note);
                                 // Remove from db
-                                db_dao.deleteNote(note);
+                                //db_dao.deleteNote(note);
 
                             }
 
@@ -331,8 +342,9 @@ public class MainActivity extends AppCompatActivity
     // Generate activity's title
     // (depending on notes count)
     public String getActivityTitleText() {
-        int notes_count = db_dao.getNotesCount();
-        return getString(R.string.activity_main_title, " (" + notes_count + ")");
+        //int notes_count = db_dao.getNotesCount();
+        //return getString(R.string.activity_main_title, " (" + notes_count + ")");
+        return "";
     }
 
 
