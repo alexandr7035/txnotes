@@ -8,7 +8,6 @@ import android.os.Vibrator;
 import android.text.Html;
 import android.util.Log;
 import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -20,7 +19,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -55,7 +53,7 @@ public class MainActivity extends AppCompatActivity
     private FloatingActionButton delete_note_btn;
     private FloatingActionButton createNoteButton;
     private Snackbar snackbar;
-    private DrawerLayout drawer;
+
     private ImageButton menuBtn;
 
     private NavigationMenuItem recycleBinMenuButton;
@@ -89,16 +87,6 @@ public class MainActivity extends AppCompatActivity
         // Vibrator
         vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
-        // Navigation menu
-        drawer = findViewById(R.id.drawer_layout);
-
-        recycleBinMenuButton = findViewById(R.id.recycleBinMenuButton);
-        recycleBinMenuButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, RecycleBinActivity.class);
-                startActivity(intent);
-            }
-        });
 
         // Toolbar menu btn
         menuBtn = findViewById(R.id.menuBtn);
@@ -266,9 +254,6 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-    public void showDrawerAction(View v) {
-        drawer.openDrawer(Gravity.LEFT);
-    }
 
     // Shows NewNoteActivity
     public void createNewNoteAction(View view) {
