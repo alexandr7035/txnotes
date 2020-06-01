@@ -29,7 +29,6 @@ import com.alexandr7035.txnotes.adapters.NotesRecycleViewAdapter;
 import com.alexandr7035.txnotes.db.NoteEntity;
 import com.alexandr7035.txnotes.viewmodel.MainViewModel;
 import com.alexandr7035.txnotes.viewmodel.MainViewModelFactory;
-import com.alexandr7035.txnotes.views.NavigationMenuItem;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -54,8 +53,6 @@ public class MainActivity extends AppCompatActivity
     private Toolbar toolbar;
 
     private ImageButton menuBtn;
-
-    private NavigationMenuItem recycleBinMenuButton;
 
     private Vibrator vibrator;
 
