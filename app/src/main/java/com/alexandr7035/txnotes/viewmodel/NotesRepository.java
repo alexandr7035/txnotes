@@ -21,7 +21,10 @@ public class NotesRepository {
     private LiveData<List<NoteEntity>> notesList;
 
     NotesRepository(Application application) {
-        dao = NotesDatabase.getDatabase(application).getNotesDao();
+
+        NotesDatabase db = NotesDatabase.getDatabase(application);
+
+        dao = db.getNotesDao();
 
         // To run background tasks
         executor = Executors.newSingleThreadExecutor();
@@ -49,7 +52,7 @@ public class NotesRepository {
         });
     }
 
-    LiveData<List<NoteEntity>> getAllNotesFromDb() {
+    public LiveData<List<NoteEntity>> getAllNotesFromDb() {
         return notesList;
     }
 

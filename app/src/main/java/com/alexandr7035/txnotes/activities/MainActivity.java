@@ -28,7 +28,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alexandr7035.txnotes.R;
-import com.alexandr7035.txnotes.TXNotesApplication;
 import com.alexandr7035.txnotes.adapters.NotesRecycleViewAdapter;
 import com.alexandr7035.txnotes.db.NoteEntity;
 import com.alexandr7035.txnotes.utils.NotesSorter;
@@ -44,16 +43,11 @@ public class MainActivity extends AppCompatActivity
                           implements NotesRecycleViewAdapter.NoteClickListener,
                                      NotesRecycleViewAdapter.NoteLongClickListener {
 
-    private TXNotesApplication app;
 
     // Recycleviw for list of notes
     public static RecyclerView recyclerView;
     public static NotesRecycleViewAdapter adapter;
     private List<NoteEntity> notes_list;
-
-    // Database
-    //private NotesDatabase db;
-    //private NotesDao db_dao;
 
     // Views
     private ConstraintLayout mainLayout;
@@ -68,7 +62,7 @@ public class MainActivity extends AppCompatActivity
 
     private Vibrator vibrator;
 
-    private String LOG_TAG;
+    private final String LOG_TAG = "LOG_TAG";
 
 
     private LiveData<List<NoteEntity>> notesListLiveData;
@@ -79,21 +73,11 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        this.app = (TXNotesApplication) this.getApplication();
-
-        // Set log tag
-        this.LOG_TAG = app.getLogTag();
-
         mainLayout = findViewById(R.id.mainLayout);
-
-        // DB
-        //db = app.getDatabaseInstance();
-        //db_dao = db.getNotesDao();
 
         // Set activity's title, see setTitle method
         app_title = findViewById(R.id.appTitleView);
         app_title.setText(getActivityTitleText());
-
 
         // A button to create note
         createNoteButton = findViewById(R.id.createNoteButton);
@@ -122,6 +106,7 @@ public class MainActivity extends AppCompatActivity
         prepareRecyclerView();
 
         viewModel = new ViewModelProvider(this, new MainViewModelFactory(this.getApplication())).get(MainViewModel.class);
+
         notesListLiveData = viewModel.getNotesList();
 
 
@@ -129,20 +114,15 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onChanged(@Nullable List<NoteEntity> notes) {
 
-                // Log.d(LOG_TAG, notes.toString());
-
-             //   if (notes != null) {
-
-                    Log.d(LOG_TAG, "SET ITEMS " + notes.toString());
+                Log.d(LOG_TAG, "SET ITEMS " + notes.toString());
 
                  //   if (! notes.isEmpty()) {
                         adapter.setItems(notes);
                    // }
-
+                Log.d(LOG_TAG, "items in adapter: " + adapter.getItemCount());
                 //}
             }
         });
-
 
 
 
