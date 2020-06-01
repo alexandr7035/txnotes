@@ -8,7 +8,6 @@ import android.os.Vibrator;
 import android.text.Html;
 import android.util.Log;
 import android.util.TypedValue;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -17,7 +16,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.PopupMenu;
+import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
@@ -28,7 +27,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.alexandr7035.txnotes.R;
 import com.alexandr7035.txnotes.adapters.NotesRecycleViewAdapter;
 import com.alexandr7035.txnotes.db.NoteEntity;
-import com.alexandr7035.txnotes.utils.NotesSorter;
 import com.alexandr7035.txnotes.viewmodel.MainViewModel;
 import com.alexandr7035.txnotes.viewmodel.MainViewModelFactory;
 import com.alexandr7035.txnotes.views.NavigationMenuItem;
@@ -49,10 +47,11 @@ public class MainActivity extends AppCompatActivity
 
     // Views
     private ConstraintLayout mainLayout;
-    private TextView app_title;
+    private TextView toolbarTitle;
     private FloatingActionButton delete_note_btn;
     private FloatingActionButton createNoteButton;
     private Snackbar snackbar;
+    private Toolbar toolbar;
 
     private ImageButton menuBtn;
 
@@ -73,10 +72,6 @@ public class MainActivity extends AppCompatActivity
 
         mainLayout = findViewById(R.id.mainLayout);
 
-        // Set activity's title, see setTitle method
-        app_title = findViewById(R.id.appTitleView);
-        app_title.setText(getActivityTitleText());
-
         // A button to create note
         createNoteButton = findViewById(R.id.createNoteButton);
 
@@ -87,9 +82,11 @@ public class MainActivity extends AppCompatActivity
         // Vibrator
         vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
+        // Toolbar
+        toolbar = findViewById(R.id.toolbar);
+        toolbar.inflateMenu(R.menu.menu_main_activity_toolbar);
+        toolbarTitle = findViewById(R.id.toolbarTitle);
 
-        // Toolbar menu btn
-        menuBtn = findViewById(R.id.menuBtn);
 
         prepareRecyclerView();
 
@@ -196,7 +193,7 @@ public class MainActivity extends AppCompatActivity
                             // Also vibrate and show the snackbar
                             adapter.unselectAllItems();
                             delete_note_btn.hide();
-                            app_title.setText(getActivityTitleText());
+
                             vibrator.vibrate(100);
                             snackbar.show();
                             
@@ -263,46 +260,6 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-    // For toolbar's menu button
-    // Showes popup menu for sorting notes
-    public void showMenuAction(View view) {
-
-        PopupMenu popup = new PopupMenu(this, menuBtn);
-        popup.getMenuInflater()
-                .inflate(R.menu.menu_main_activity_toolbar, popup.getMenu());
-
-        // Click listener for menu items
-        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            public boolean onMenuItemClick(MenuItem item) {
-
-                switch (item.getItemId()) {
-                    case R.id.sort_new_first:
-                        Log.d(LOG_TAG, "SORTING: default (new first)");
-                        NotesSorter.sortByModificatonDateDesc(notes_list);
-                        adapter.notifyDataSetChanged();
-                        return true;
-
-
-                    case R.id.sort_old_first:
-                        Log.d(LOG_TAG, "SORTING: old first");
-                        NotesSorter.sortByModificatonDate(notes_list);
-                        adapter.notifyDataSetChanged();
-                        return true;
-
-                    case R.id.sort_by_header:
-                        Log.d(LOG_TAG, "SORTING: sort by header");
-                        NotesSorter.sortByText(notes_list);
-                        adapter.notifyDataSetChanged();
-                        return true;
-                }
-
-                return true;
-            }
-
-        });
-
-        popup.show();
-    }
 
     // Generate activity's title
     // (depending on notes count)

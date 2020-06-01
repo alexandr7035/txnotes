@@ -9,58 +9,39 @@
     android:layout_margin="0dp"
     tools:context=".activities.MainActivity">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/mainBar"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:background="@color/colorPrimary"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="409dp"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/toolbarTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="19dp">
+
+        </TextView>
 
 
-            <TextView
-                android:id="@+id/appTitleView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0"
-                android:text="@string/app_name"
-                android:textColor="@color/colorActivityTitle"
-                android:textSize="@dimen/app_tile_font_size"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/menuBtn"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="@string/app_name" />
+    </androidx.appcompat.widget.Toolbar>
 
-            <ImageButton
-                android:id="@+id/menuBtn"
-                android:layout_width="30dp"
-                android:layout_height="60dp"
-                android:background="@drawable/toolbar_button_background"
-                android:onClick="showMenuAction"
-                android:paddingTop="20dp"
-                android:paddingBottom="20dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/menu"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/toolbar_button_background" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/notesRecycleView"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_margin="10dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mainBar" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/notesRecycleView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/deleteNoteButton"
@@ -83,4 +64,6 @@
             app:layout_constraintBottom_toBottomOf="@+id/notesRecycleView"
             app:layout_constraintEnd_toEndOf="@+id/notesRecycleView" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
