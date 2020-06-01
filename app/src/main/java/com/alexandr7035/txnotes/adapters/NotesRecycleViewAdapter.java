@@ -25,12 +25,19 @@ public class NotesRecycleViewAdapter extends RecyclerView.Adapter<NotesRecycleVi
     private NoteClickListener noteClickListener;
     private NoteLongClickListener noteLongClickListener;
 
-    public NotesRecycleViewAdapter(List<NoteEntity> items, NoteClickListener noteClickListener,
+    public NotesRecycleViewAdapter(NoteClickListener noteClickListener,
                                                             NoteLongClickListener noteLongClickListener) {
-        this.items = items;
+
+        this.items = new ArrayList<>();
         this.selectedItems = new ArrayList<>();
         this.noteClickListener = noteClickListener;
         this.noteLongClickListener = noteLongClickListener;
+    }
+
+    public void setItems(List<NoteEntity> items) {
+        this.items = items;
+        Log.d("DEBUG_TXNOTES", "SETITEMS CALLED " + items.toString());
+        notifyDataSetChanged();
     }
 
     // Add item to list of selected

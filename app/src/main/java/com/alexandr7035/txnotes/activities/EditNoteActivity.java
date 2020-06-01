@@ -11,16 +11,12 @@ import android.widget.ImageButton;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.alexandr7035.txnotes.R;
-import com.alexandr7035.txnotes.TXNotesApplication;
-import com.alexandr7035.txnotes.activities.MainActivity;
-import com.alexandr7035.txnotes.db.NotesDao;
-import com.alexandr7035.txnotes.db.NotesDatabase;
 import com.alexandr7035.txnotes.db.NoteEntity;
 
 public class EditNoteActivity extends AppCompatActivity {
 
-    NotesDatabase db;
-    NotesDao db_dao;
+    //NotesDatabase db;
+    //NotesDao db_dao;
     NoteEntity note_data;
     int note_id;
     EditText note_edit_field;
@@ -31,15 +27,15 @@ public class EditNoteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_note);
 
         // DB
-        db = ((TXNotesApplication) this.getApplication()).getDatabaseInstance();
-        db_dao = db.getNotesDao();
+        //db = ((TXNotesApplication) this.getApplication()).getDatabaseInstance();
+        //db_dao = db.getNotesDao();
 
         // Get note_id
         Intent intent = getIntent();
         note_id = intent.getIntExtra("edited_note_id", 0);
 
         // Get note's entity
-        this.note_data = db_dao.getNoteById(note_id);
+        //this.note_data = db_dao.getNoteById(note_id);
 
         // Set old text to textedit field
         final String old_note_text = this.note_data.getNoteText();
@@ -97,7 +93,7 @@ public class EditNoteActivity extends AppCompatActivity {
         note_data.setNoteText(updated_text);
 
         // Update NoteEntity
-        db_dao.updateNote(note_data);
+        //db_dao.updateNote(note_data);
 
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
