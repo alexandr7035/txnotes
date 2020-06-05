@@ -59,22 +59,12 @@ public class NotesRecycleViewAdapter extends RecyclerView.Adapter<NotesRecycleVi
     }
 
     public boolean checkIfItemSelected(int position) {
-        if (selectedItems.contains(items.get(position))) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        return selectedItems.contains(items.get(position));
     }
 
     // Returns true if selectedItems list is not empty
     public boolean checkIfAnyItemSelected() {
-        if (selectedItems.size() > 0) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        return selectedItems.size() > 0;
     }
 
     // Returns whole selectedItems list
