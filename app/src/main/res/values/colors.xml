@@ -6,7 +6,7 @@
 
     <color name="colorToolbarButtonPressed">#E47E5830</color>
 
-    <color name="colorActivityTitle">#FFFFFF</color>
+    <color name="colorToolbarTitle">#FFFFFF</color>
 
     <color name="colorNoteWidget">#C5C2C2</color>
     <color name="colorNoteWidgetPressed">#9B9B9B</color>
