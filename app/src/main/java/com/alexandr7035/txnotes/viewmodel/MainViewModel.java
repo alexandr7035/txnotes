@@ -11,18 +11,26 @@ import java.util.List;
 
 public class MainViewModel extends ViewModel {
 
-    private LiveData<List<NoteEntity>> notesList;
     private NotesRepository repository;
+
+    private LiveData<List<NoteEntity>> notesList;
+    private LiveData<Integer> notesCount;
 
     public MainViewModel(Application application){
 
         repository = new NotesRepository(application);
 
+        // Init data (from repo)
         notesList = repository.getAllNotesFromDb();
+        notesCount = repository.getNotesCount();
     }
 
     public LiveData<List<NoteEntity>> getNotesList()  {
         return notesList;
+    }
+
+    public LiveData<Integer> getNotesCount() {
+        return notesCount;
     }
 
     public void addNote(NoteEntity note) {

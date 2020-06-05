@@ -18,7 +18,9 @@ public class NotesRepository {
 
     private NotesDao dao;
     private Executor executor;
+
     private LiveData<List<NoteEntity>> notesList;
+    private LiveData<Integer> notesCount;
 
     NotesRepository(Application application) {
 
@@ -30,7 +32,11 @@ public class NotesRepository {
         executor = Executors.newSingleThreadExecutor();
 
         Log.d("DEBUG_TXNOTES", "all notes " + dao.getAllNotes().getValue());
+
+        // Init data
         notesList = dao.getAllNotes();
+        notesCount = dao.getNotesCount();
+
 
     }
 
@@ -52,8 +58,12 @@ public class NotesRepository {
         });
     }
 
-    public LiveData<List<NoteEntity>> getAllNotesFromDb() {
+    LiveData<List<NoteEntity>> getAllNotesFromDb() {
         return notesList;
+    }
+
+    LiveData<Integer> getNotesCount() {
+        return notesCount;
     }
 
 }

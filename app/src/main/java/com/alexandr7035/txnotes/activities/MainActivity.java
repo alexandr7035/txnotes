@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity
 
 
     private LiveData<List<NoteEntity>> notesListLiveData;
+    private LiveData<Integer> notesCountLiveData;
     private MainViewModel viewModel;
 
     @Override
@@ -90,8 +91,10 @@ public class MainActivity extends AppCompatActivity
         viewModel = new ViewModelProvider(this, new MainViewModelFactory(this.getApplication())).get(MainViewModel.class);
 
         notesListLiveData = viewModel.getNotesList();
+        notesCountLiveData = viewModel.getNotesCount();
 
 
+        // Watch for notes list and update the UI
         notesListLiveData.observe(this, new Observer<List<NoteEntity>>() {
             @Override
             public void onChanged(@Nullable List<NoteEntity> notes) {
@@ -104,6 +107,17 @@ public class MainActivity extends AppCompatActivity
                 Log.d(LOG_TAG, "items in adapter: " + adapter.getItemCount());
                 //}
             }
+        });
+
+
+        // Watch for notes count and update the ui
+        notesCountLiveData.observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer notesCount) {
+                // Change toolbar title
+                toolbarTitle.setText(getString(R.string.activity_main_title, notesCount));
+            }
+
         });
 
 

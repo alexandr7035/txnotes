@@ -14,7 +14,7 @@ public interface NotesDao {
 
 
     @Query("SELECT COUNT(*) FROM notes")
-    int getNotesCount();
+    LiveData<Integer> getNotesCount();
 
     @Query("SELECT * FROM notes ORDER BY id")
     LiveData<List<NoteEntity>> getAllNotes();
