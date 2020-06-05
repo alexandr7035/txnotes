@@ -52,8 +52,6 @@ public class MainActivity extends AppCompatActivity
     private Snackbar snackbar;
     private Toolbar toolbar;
 
-    private ImageButton menuBtn;
-
     private Vibrator vibrator;
 
     private final String LOG_TAG = "LOG_TAG";
