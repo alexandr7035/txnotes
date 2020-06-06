@@ -10,7 +10,6 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -96,14 +95,10 @@ public class MainActivity extends AppCompatActivity
         notesListLiveData.observe(this, new Observer<List<NoteEntity>>() {
             @Override
             public void onChanged(@Nullable List<NoteEntity> notes) {
-
-                Log.d(LOG_TAG, "SET ITEMS " + notes.toString());
-
-                 //   if (! notes.isEmpty()) {
+                 // Update items in adapter
+                 if (notes != null && ! notes.isEmpty()) {
                         adapter.setItems(notes);
-                   // }
-                Log.d(LOG_TAG, "items in adapter: " + adapter.getItemCount());
-                //}
+                 }
             }
         });
 
