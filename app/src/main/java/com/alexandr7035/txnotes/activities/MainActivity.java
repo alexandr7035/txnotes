@@ -82,9 +82,13 @@ public class MainActivity extends AppCompatActivity
         toolbar.inflateMenu(R.menu.menu_main_activity_toolbar);
         toolbarTitle = findViewById(R.id.toolbarTitle);
 
+        // Init recyclerview
+        recyclerView = findViewById(R.id.notesRecycleView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new NotesRecycleViewAdapter(this, this);
+        recyclerView.setAdapter(adapter);
 
-        prepareRecyclerView();
-
+        // Viewmodel & livedata
         viewModel = new ViewModelProvider(this, new MainViewModelFactory(this.getApplication())).get(MainViewModel.class);
 
         notesListLiveData = viewModel.getNotesList();
@@ -114,15 +118,6 @@ public class MainActivity extends AppCompatActivity
         });
 
 
-
-    }
-
-    private void prepareRecyclerView() {
-        recyclerView = findViewById(R.id.notesRecycleView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new NotesRecycleViewAdapter(this, this);
-
-        recyclerView.setAdapter(adapter);
 
     }
 
