@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -31,6 +32,7 @@ import com.alexandr7035.txnotes.viewmodel.MainViewModelFactory;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity
@@ -53,12 +55,15 @@ public class MainActivity extends AppCompatActivity
 
     private Vibrator vibrator;
 
-    private final String LOG_TAG = "LOG_TAG";
+    private final String LOG_TAG = "DEBUG_TXNOTES";
 
 
     private LiveData<List<NoteEntity>> notesListLiveData;
     private LiveData<Integer> notesCountLiveData;
     private MainViewModel viewModel;
+
+    private MutableLiveData<List<NoteEntity>> selectedNotesLiveData;
+    private List<NoteEntity> selectedNotes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,9 +98,11 @@ public class MainActivity extends AppCompatActivity
 
         notesListLiveData = viewModel.getNotesList();
         notesCountLiveData = viewModel.getNotesCount();
+        selectedNotesLiveData = viewModel.getSelectedNotes();
 
+        selectedNotes = new ArrayList<>();
 
-        // Watch for notes list and update the UI
+                // Watch for notes list and update the UI
         notesListLiveData.observe(this, new Observer<List<NoteEntity>>() {
             @Override
             public void onChanged(@Nullable List<NoteEntity> notes) {
@@ -116,6 +123,16 @@ public class MainActivity extends AppCompatActivity
             }
 
         });
+
+        // Watch fr notes selection and update the ui
+        selectedNotesLiveData.observe(this, new Observer<List<NoteEntity>>() {
+            @Override
+            public void onChanged(List<NoteEntity> selectedNotes) {
+                Log.d(LOG_TAG, "selected notes livedata state" + selectedNotes.toString());
+
+            }
+        });
+
 
 
 
@@ -138,6 +155,7 @@ public class MainActivity extends AppCompatActivity
             intent.putExtra("clicked_note_id", note_id);
             startActivity(intent);
         }
+
     }
 
     @Override
@@ -146,6 +164,10 @@ public class MainActivity extends AppCompatActivity
         createNoteButton.hide();
         delete_note_btn.show();
         delete_note_btn.setOnClickListener(new DeleteBtnClickListener());
+
+        Log.d(LOG_TAG, "SET VALUES TO LIVEDATA selected notss");
+        selectedNotes.add(new NoteEntity("1", 123));
+        selectedNotesLiveData.setValue(selectedNotes);
 
     }
 
@@ -248,7 +270,6 @@ public class MainActivity extends AppCompatActivity
             createNoteButton.show();
         }
     }
-
 
 
     // Shows NewNoteActivity

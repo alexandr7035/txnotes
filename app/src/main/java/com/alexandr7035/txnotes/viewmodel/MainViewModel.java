@@ -3,10 +3,12 @@ package com.alexandr7035.txnotes.viewmodel;
 import android.app.Application;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.alexandr7035.txnotes.db.NoteEntity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainViewModel extends ViewModel {
@@ -15,6 +17,7 @@ public class MainViewModel extends ViewModel {
 
     private LiveData<List<NoteEntity>> notesList;
     private LiveData<Integer> notesCount;
+    private MutableLiveData<List<NoteEntity>> selectedNotes;
 
     public MainViewModel(Application application){
 
@@ -23,6 +26,10 @@ public class MainViewModel extends ViewModel {
         // Init data (from repo)
         notesList = repository.getAllNotesFromDb();
         notesCount = repository.getNotesCount();
+
+        selectedNotes = new MutableLiveData<>();
+        selectedNotes.postValue(new ArrayList<NoteEntity>());
+
     }
 
     public LiveData<List<NoteEntity>> getNotesList()  {
@@ -31,6 +38,10 @@ public class MainViewModel extends ViewModel {
 
     public LiveData<Integer> getNotesCount() {
         return notesCount;
+    }
+
+    public MutableLiveData<List<NoteEntity>> getSelectedNotes() {
+        return selectedNotes;
     }
 
     public void addNote(NoteEntity note) {
