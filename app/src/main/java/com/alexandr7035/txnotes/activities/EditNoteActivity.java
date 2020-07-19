@@ -9,36 +9,47 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.alexandr7035.txnotes.R;
 import com.alexandr7035.txnotes.db.NoteEntity;
+import com.alexandr7035.txnotes.viewmodel.EditNoteViewModel;
+import com.alexandr7035.txnotes.viewmodel.EditNoteViewModelFactory;
+
+import java.util.concurrent.ExecutionException;
 
 public class EditNoteActivity extends AppCompatActivity {
 
     //NotesDatabase db;
     //NotesDao db_dao;
-    NoteEntity note_data;
+    NoteEntity note;
     int note_id;
     EditText note_edit_field;
+    private EditNoteViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_note);
 
-        // DB
-        //db = ((TXNotesApplication) this.getApplication()).getDatabaseInstance();
-        //db_dao = db.getNotesDao();
+        // ViewModel
+        viewModel = new ViewModelProvider(this, new EditNoteViewModelFactory(this.getApplication())).get(EditNoteViewModel.class);
 
         // Get note_id
         Intent intent = getIntent();
         note_id = intent.getIntExtra("edited_note_id", 0);
 
-        // Get note's entity
-        //this.note_data = db_dao.getNoteById(note_id);
+        // Get edited note
+        try {
+            this.note = viewModel.getNote(note_id);
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         // Set old text to textedit field
-        final String old_note_text = this.note_data.getNoteText();
+        final String old_note_text = this.note.getNoteText();
         note_edit_field = findViewById(R.id.editedNoteTextField);
         note_edit_field.setText(old_note_text);
 
@@ -60,11 +71,6 @@ public class EditNoteActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start,
                                       int before, int count) {
 
-                // Set hint text to the noteTitle field
-                // If user doesn't specify the title. it will be taken from the
-                // first 10 characters of the main text
-                ;;;;;;;;;;;;;;;;;;;;;;
-
                 String text = s.toString();
 
                 // Disable saveNote button if noteText is empty
@@ -82,25 +88,20 @@ public class EditNoteActivity extends AppCompatActivity {
 
     public void btnSaveEditedNote(View view) {
 
-        // FIXME
         // Get modification date and update it in the db
         long note_updated_date = System.currentTimeMillis() / 1000;
-        note_data.setNoteModificationDate(note_updated_date);
+        note.setNoteModificationDate(note_updated_date);
 
-        // FIXME
         // Get updated text and set in the db
         String updated_text = note_edit_field.getText().toString();
-        note_data.setNoteText(updated_text);
+        note.setNoteText(updated_text);
 
-        // Update NoteEntity
-        //db_dao.updateNote(note_data);
+        // Update note
+        viewModel.updateNote(note);
 
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
-
-
-
 
 
     public void btnCancelEditNote(View view) {

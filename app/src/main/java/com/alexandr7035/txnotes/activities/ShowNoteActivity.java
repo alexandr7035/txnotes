@@ -34,7 +34,6 @@ public class ShowNoteActivity extends AppCompatActivity {
         this.note_id = intent.getIntExtra("clicked_note_id", 0);
 
         // ViewModel
-        // Viewmodel & livedata
         viewModel = new ViewModelProvider(this, new ShowNoteViewModelFactory(this.getApplication())).get(ShowNoteViewModel.class);
 
         // Get note data

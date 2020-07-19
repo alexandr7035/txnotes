@@ -60,6 +60,15 @@ public class NotesRepository {
         });
     }
 
+    void updateNoteInDb(final NoteEntity note) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                dao.updateNote(note);
+            }
+        });
+    }
+
     LiveData<List<NoteEntity>> getAllNotesFromDb() {
         return notesList;
     }
@@ -79,4 +88,6 @@ public class NotesRepository {
 
         return (NoteEntity) foo.get();
     }
+
+
 }
