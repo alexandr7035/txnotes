@@ -10,14 +10,17 @@ import com.alexandr7035.txnotes.db.NotesDao;
 import com.alexandr7035.txnotes.db.NotesDatabase;
 
 import java.util.List;
-import java.util.concurrent.Executor;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 // May be moved to separate file if needed
 public class NotesRepository {
 
     private NotesDao dao;
-    private Executor executor;
+    private ExecutorService executor;
 
     private LiveData<List<NoteEntity>> notesList;
     private LiveData<Integer> notesCount;
@@ -36,7 +39,6 @@ public class NotesRepository {
         // Init data
         notesList = dao.getAllNotes();
         notesCount = dao.getNotesCount();
-
 
     }
 
@@ -66,4 +68,15 @@ public class NotesRepository {
         return notesCount;
     }
 
+    NoteEntity getNoteFromDb(final int id) throws ExecutionException, InterruptedException {
+        Future foo = executor.submit(new Callable() {
+            @Override
+            public NoteEntity call() {
+                return dao.getNoteById(id);
+            }
+        });
+
+
+        return (NoteEntity) foo.get();
+    }
 }
