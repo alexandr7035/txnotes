@@ -9,11 +9,17 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.alexandr7035.txnotes.R;
+import com.alexandr7035.txnotes.db.NoteEntity;
+import com.alexandr7035.txnotes.viewmodel.CreateNoteViewModel;
+import com.alexandr7035.txnotes.viewmodel.CreateNoteViewModelFactory;
 
 
 public class CreateNewNoteActivity extends AppCompatActivity {
+
+    private CreateNoteViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,11 +83,10 @@ public class CreateNewNoteActivity extends AppCompatActivity {
 
         long note_creation_date = System.currentTimeMillis() / 1000;
 
-        // Add note to db
-        //NotesDatabase db = ((TXNotesApplication) this.getApplication()).getDatabaseInstance();
-        //NotesDao db_dao = db.getNotesDao();
+        // ViewModel
+        viewModel = new ViewModelProvider(this, new CreateNoteViewModelFactory(this.getApplication())).get(CreateNoteViewModel.class);
 
-        //db_dao.addNote(new NoteEntity(note_text, note_creation_date));
+        viewModel.createNote(new NoteEntity(note_text, note_creation_date));
 
         // Go to CreateNewNoteActivity
         Intent intent = new Intent(this, MainActivity.class);
