@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class NotesRecycleViewAdapter extends RecyclerView.Adapter<NotesRecycleViewAdapter.ViewHolder> {
+public class NotesRecyclerViewAdapter extends RecyclerView.Adapter<NotesRecyclerViewAdapter.ViewHolder> {
 
     private List<NoteEntity> items;
     private List<NoteEntity> selectedItems;
@@ -25,13 +25,12 @@ public class NotesRecycleViewAdapter extends RecyclerView.Adapter<NotesRecycleVi
     private NoteClickListener noteClickListener;
     private NoteLongClickListener noteLongClickListener;
 
-    public NotesRecycleViewAdapter(NoteClickListener noteClickListener,
-                                                            NoteLongClickListener noteLongClickListener) {
+    private final String LOG_TAG = "DEBUG_TXNOTES";
+
+    public NotesRecyclerViewAdapter() {
 
         this.items = new ArrayList<>();
         this.selectedItems = new ArrayList<>();
-        this.noteClickListener = noteClickListener;
-        this.noteLongClickListener = noteLongClickListener;
     }
 
     public void setItems(List<NoteEntity> items) {
@@ -73,13 +72,13 @@ public class NotesRecycleViewAdapter extends RecyclerView.Adapter<NotesRecycleVi
     }
 
     @Override
-    public NotesRecycleViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public NotesRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_note,parent,false);
-        return new ViewHolder(view, this.noteClickListener, this.noteLongClickListener);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(NotesRecycleViewAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(NotesRecyclerViewAdapter.ViewHolder holder, int position) {
 
         // Note's entity from the db
         NoteEntity note_data = items.get(position);
@@ -129,19 +128,14 @@ public class NotesRecycleViewAdapter extends RecyclerView.Adapter<NotesRecycleVi
 
         public TextView note_title_view;
         public TextView note_date_view;
-        NoteClickListener noteClickListener;
-        NoteLongClickListener noteLongClickListener;
+
         int note_id;
 
-        public ViewHolder(View itemView, NoteClickListener noteClickListener,
-                                         NoteLongClickListener noteLongClickListener) {
+        public ViewHolder(View itemView) {
 
             super(itemView);
             note_title_view = itemView.findViewById(R.id.noteTitleView);
             note_date_view = itemView.findViewById(R.id.noteDateView);
-
-            this.noteClickListener = noteClickListener;
-            this.noteLongClickListener = noteLongClickListener;
 
             // Use this because ViewHolder implements
             // View.OnClickListener and View.OnLongClickListener interfaces
@@ -149,35 +143,18 @@ public class NotesRecycleViewAdapter extends RecyclerView.Adapter<NotesRecycleVi
             itemView.setOnLongClickListener(this);
         }
 
-        // If no items selected, show note
-        // Else unselect or select the item
+
         @Override
         public void onClick(View v) {
-            Log.d("DEBUG_DB", "clicked " + this.note_id);
 
-            if (checkIfAnyItemSelected()) {
-                if (checkIfItemSelected(getAdapterPosition())) {
-                    unselectItem(getAdapterPosition());
-                } else {
-                    selectItem(getAdapterPosition());
-                }
-            }
-
-            // Open note. See method in MainActivity
-            noteClickListener.onNoteClick(this.note_id, getAdapterPosition());
+            noteClickListener.onNoteClick(note_id, getAdapterPosition());
 
         }
 
         @Override
         public boolean onLongClick(View view) {
-            Log.d("DEBUG_DB", "clicked LONG " + this.note_id);
 
-            if (! checkIfItemSelected(getAdapterPosition())) {
-                // Select item
-                selectItem(getAdapterPosition());
-                noteLongClickListener.onLongNoteClick(this.note_id, getAdapterPosition());
-            }
-
+            noteLongClickListener.onLongNoteClick(note_id, getAdapterPosition());
             return true;
         }
 
@@ -193,5 +170,20 @@ public class NotesRecycleViewAdapter extends RecyclerView.Adapter<NotesRecycleVi
 
         void onLongNoteClick(int note_id, int position);
     }
+
+    // Allows to change click listener
+    // For simple selection implementation
+    public void setItemClickListener(NoteClickListener noteClickListener) {
+        Log.d(LOG_TAG, "CHANGE CLICK LISTENER");
+        this.noteClickListener = noteClickListener;
+
+    }
+
+    public void setItemLongClickListener(NoteLongClickListener noteLongClickListener) {
+        Log.d(LOG_TAG, "CHANGE LONG CLICK LISTENER");
+        this.noteLongClickListener = noteLongClickListener;
+
+    }
+
 }
 

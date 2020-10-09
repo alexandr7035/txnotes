@@ -17,7 +17,7 @@ public class MainViewModel extends ViewModel {
 
     private LiveData<List<NoteEntity>> notesList;
     private LiveData<Integer> notesCount;
-    private MutableLiveData<List<NoteEntity>> selectedNotes;
+    private MutableLiveData<List<NoteEntity>> selectedNotesLiveData;
 
     public MainViewModel(Application application){
 
@@ -27,8 +27,8 @@ public class MainViewModel extends ViewModel {
         notesList = repository.getAllNotesFromDb();
         notesCount = repository.getNotesCount();
 
-        selectedNotes = new MutableLiveData<>();
-        selectedNotes.postValue(new ArrayList<NoteEntity>());
+        selectedNotesLiveData = new MutableLiveData<List<NoteEntity>>(new ArrayList<NoteEntity>());
+
 
     }
 
@@ -40,8 +40,8 @@ public class MainViewModel extends ViewModel {
         return notesCount;
     }
 
-    public MutableLiveData<List<NoteEntity>> getSelectedNotes() {
-        return selectedNotes;
+    public MutableLiveData<List<NoteEntity>> getSelectedNotesLiveData() {
+        return selectedNotesLiveData;
     }
 
     public void addNote(NoteEntity note) {

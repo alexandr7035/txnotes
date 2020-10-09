@@ -25,7 +25,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alexandr7035.txnotes.R;
-import com.alexandr7035.txnotes.adapters.NotesRecycleViewAdapter;
+import com.alexandr7035.txnotes.adapters.NotesRecyclerViewAdapter;
 import com.alexandr7035.txnotes.db.NoteEntity;
 import com.alexandr7035.txnotes.viewmodel.MainViewModel;
 import com.alexandr7035.txnotes.viewmodel.MainViewModelFactory;
@@ -35,21 +35,23 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity
-                          implements NotesRecycleViewAdapter.NoteClickListener,
-                                     NotesRecycleViewAdapter.NoteLongClickListener {
+public class MainActivity extends AppCompatActivity {
 
 
     // Recycleviw for list of notes
     public static RecyclerView recyclerView;
-    public static NotesRecycleViewAdapter adapter;
+    public static NotesRecyclerViewAdapter adapter;
     private List<NoteEntity> notes_list;
+
+    private DefaultClickListener defaultClickListener;
+    private SelectionClickListener selectionClickListener;
+
 
     // Views
     private ConstraintLayout mainLayout;
     private TextView toolbarTitle;
-    private FloatingActionButton delete_note_btn;
-    private FloatingActionButton createNoteButton;
+    private FloatingActionButton deleteNoteBtn;
+    private FloatingActionButton createNoteBtn;
     private Snackbar snackbar;
     private Toolbar toolbar;
 
@@ -73,11 +75,11 @@ public class MainActivity extends AppCompatActivity
         mainLayout = findViewById(R.id.mainLayout);
 
         // A button to create note
-        createNoteButton = findViewById(R.id.createNoteButton);
+        createNoteBtn = findViewById(R.id.createNoteButton);
 
         // A button to delete note (hidden by default, shown when note is selected)
-        delete_note_btn = findViewById(R.id.deleteNoteButton);
-        delete_note_btn.hide();
+        deleteNoteBtn = findViewById(R.id.deleteNoteButton);
+        deleteNoteBtn.hide();
 
         // Vibrator
         vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
@@ -90,15 +92,27 @@ public class MainActivity extends AppCompatActivity
         // Init recyclerview
         recyclerView = findViewById(R.id.notesRecycleView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new NotesRecycleViewAdapter(this, this);
+
+        // Click listeners for recyclerview items
+        selectionClickListener = new SelectionClickListener();
+        defaultClickListener = new DefaultClickListener();
+
+        adapter = new NotesRecyclerViewAdapter();
+
+        // Set default click listeners
+        adapter.setItemClickListener(defaultClickListener);
+        adapter.setItemLongClickListener(defaultClickListener);
+
         recyclerView.setAdapter(adapter);
+
+
 
         // Viewmodel & livedata
         viewModel = new ViewModelProvider(this, new MainViewModelFactory(this.getApplication())).get(MainViewModel.class);
 
         notesListLiveData = viewModel.getNotesList();
         notesCountLiveData = viewModel.getNotesCount();
-        selectedNotesLiveData = viewModel.getSelectedNotes();
+        selectedNotesLiveData = viewModel.getSelectedNotesLiveData();
 
         selectedNotes = new ArrayList<>();
 
@@ -127,8 +141,36 @@ public class MainActivity extends AppCompatActivity
         // Watch fr notes selection and update the ui
         selectedNotesLiveData.observe(this, new Observer<List<NoteEntity>>() {
             @Override
-            public void onChanged(List<NoteEntity> selectedNotes) {
-                Log.d(LOG_TAG, "selected notes livedata state" + selectedNotes.toString());
+            public void onChanged(@Nullable List<NoteEntity> selectedNotes) {
+               // Log.d(LOG_TAG, "selected notes livedata state" + selectedNotes.toString());
+
+                if (selectedNotes != null) {
+
+                    if (! selectedNotes.isEmpty()) {
+                        Log.d(LOG_TAG, "some items are selected: " + selectedNotes);
+
+                        createNoteBtn.hide();
+                        deleteNoteBtn.show();
+
+                        Log.d(LOG_TAG, "set selection click listener");
+
+
+                        adapter.setItemClickListener(selectionClickListener);
+                        adapter.setItemLongClickListener(selectionClickListener);
+
+
+                    } else {
+                        Log.d(LOG_TAG, "no items selected now");
+
+                        deleteNoteBtn.hide();
+                        createNoteBtn.show();
+
+                        Log.d(LOG_TAG, " set default click listener");
+                        adapter.setItemClickListener(defaultClickListener);
+                        adapter.setItemLongClickListener(defaultClickListener);
+
+                    }
+                }
 
             }
         });
@@ -139,37 +181,72 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-    @Override
-    public void onNoteClick(int note_id, int position) {
 
-        // Hide button if visible
-        if (delete_note_btn.getVisibility() == View.VISIBLE && adapter.getSelectedItems().size() == 0) {
-            delete_note_btn.hide();
-            createNoteButton.show();
-            return;
-        }
 
-        if ( ! adapter.checkIfAnyItemSelected()) {
-            Intent intent = new Intent(this, ShowNoteActivity.class);
-            Log.d("DEBUG_DB", "MainActivity: passed to show note: " + note_id);
-            intent.putExtra("clicked_note_id", note_id);
+    // Default click listener for recyclerview items
+    class DefaultClickListener implements NotesRecyclerViewAdapter.NoteClickListener,
+           NotesRecyclerViewAdapter.NoteLongClickListener {
+
+
+        @Override
+        public void onNoteClick(int skill_id, int position) {
+            //Log.d(LOG_TAG, "clicked position " + position + " id " + skill_id);
+
+            Log.d(LOG_TAG, "called defult onCLick");
+            Log.d(LOG_TAG, "start new activity (SHOW)");
+
+            Intent intent = new Intent(MainActivity.this, ShowNoteActivity.class);
+            intent.putExtra("clicked_note_id", skill_id);
             startActivity(intent);
         }
 
+        @Override
+        public void onLongNoteClick(int skill_id, int position) {
+            //Log.d(LOG_TAG, "clicked (LONG) position " + position + " id " + skill_id);
+
+            adapter.selectItem(position);
+            selectedNotesLiveData.postValue(adapter.getSelectedItems());
+
+        }
     }
 
-    @Override
-    public void onLongNoteClick(int note_id, int position) {
 
-        createNoteButton.hide();
-        delete_note_btn.show();
-        delete_note_btn.setOnClickListener(new DeleteBtnClickListener());
+    // Set if at least one item in RecyclerView is selected
+    // Replaced by default click listener when no items selected
+    class SelectionClickListener implements NotesRecyclerViewAdapter.NoteClickListener,
+            NotesRecyclerViewAdapter.NoteLongClickListener {
 
-        Log.d(LOG_TAG, "SET VALUES TO LIVEDATA selected notss");
-        selectedNotes.add(new NoteEntity("1", 123));
-        selectedNotesLiveData.setValue(selectedNotes);
 
+        @Override
+        public void onNoteClick(int skill_id, int position) {
+            //Log.d(LOG_TAG, "SELECTED_CL: click item " + position + " skill_id " + skill_id);
+
+            // Select item if not selected
+            // Else unselect
+
+            Log.d(LOG_TAG, "ON_CLICK SELECTION CALLED");
+
+            if (adapter.checkIfItemSelected(position)) {
+                adapter.unselectItem(position);
+            }
+            else {
+               adapter.selectItem(position);
+            }
+
+            // Update livedata
+           selectedNotesLiveData.postValue(adapter.getSelectedItems());
+
+        }
+
+        @Override
+        public void onLongNoteClick(int skill_id, int position) {
+            //Log.d(LOG_TAG, "SELECTED_CL: LONG click item " + position + " skill_id " + skill_id);
+
+            // Do nothing
+            // May be changed later
+        }
     }
+
 
 
     // DeleteNoteButton is shown where any note is selected by long click
@@ -213,7 +290,7 @@ public class MainActivity extends AppCompatActivity
                             // Update activity's title (notes count changed)
                             // Also vibrate and show the snackbar
                             adapter.unselectAllItems();
-                            delete_note_btn.hide();
+                            deleteNoteBtn.hide();
 
                             vibrator.vibrate(100);
                             snackbar.show();
@@ -223,11 +300,11 @@ public class MainActivity extends AppCompatActivity
 
                             // // Hide the button and clear list of selected items
                             adapter.unselectAllItems();
-                            delete_note_btn.hide();
+                            deleteNoteBtn.hide();
 
                     }
 
-                    createNoteButton.show();
+                    createNoteBtn.show();
                 }
             };
 
@@ -266,8 +343,8 @@ public class MainActivity extends AppCompatActivity
         }
         else {
             adapter.unselectAllItems();
-            delete_note_btn.hide();
-            createNoteButton.show();
+            deleteNoteBtn.hide();
+            createNoteBtn.show();
         }
     }
 
