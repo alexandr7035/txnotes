@@ -324,14 +324,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-        if ( ! adapter.checkIfAnyItemSelected()) {
-            // Minimize the app
-            this.moveTaskToBack(true);
+        if (adapter.checkIfAnyItemSelected()) {
+            adapter.unselectAllItems();
+            selectedNotesLiveData.setValue(adapter.getSelectedItems());
         }
         else {
-            adapter.unselectAllItems();
-            deleteNoteBtn.hide();
-            createNoteBtn.show();
+            super.onBackPressed();
         }
     }
 
