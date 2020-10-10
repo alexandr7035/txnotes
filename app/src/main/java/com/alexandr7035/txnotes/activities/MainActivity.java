@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
     // Recycleviw for list of notes
     public static RecyclerView recyclerView;
     public static NotesRecyclerViewAdapter adapter;
-    private List<NoteEntity> notes_list;
 
     private DefaultClickListener defaultClickListener;
     private SelectionClickListener selectionClickListener;
@@ -121,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChanged(@Nullable List<NoteEntity> notes) {
                  // Update items in adapter
-                 if (notes != null && ! notes.isEmpty()) {
+                 if (notes != null) {
                         adapter.setItems(notes);
                  }
             }
@@ -249,12 +248,8 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    // DeleteNoteButton is shown where any note is selected by long click
-    // Deletes note
-    public class DeleteBtnClickListener implements View.OnClickListener {
-
-        @Override
-        public void onClick(View v) {
+    // DeleteNoteButton
+    public void deleteNoteBtnAction(View v) {
 
             int deleting_notes_count = adapter.getSelectedItems().size();
 
@@ -277,20 +272,12 @@ public class MainActivity extends AppCompatActivity {
 
                             // Delete notes
                             for (NoteEntity note: adapter.getSelectedItems()) {
-                                // Remove from adapter
-                                notes_list.remove(note);
                                 // Remove from db
-                                //db_dao.deleteNote(note);
-
+                                viewModel.removeNote(note);
                             }
 
-                            adapter.notifyDataSetChanged();
-
-                            // Hide the button and clear list of selected items
-                            // Update activity's title (notes count changed)
-                            // Also vibrate and show the snackbar
                             adapter.unselectAllItems();
-                            deleteNoteBtn.hide();
+                            selectedNotesLiveData.setValue(adapter.getSelectedItems());
 
                             vibrator.vibrate(100);
                             snackbar.show();
@@ -298,13 +285,13 @@ public class MainActivity extends AppCompatActivity {
                         // "No" button clicked
                         case DialogInterface.BUTTON_NEGATIVE:
 
-                            // // Hide the button and clear list of selected items
+
                             adapter.unselectAllItems();
-                            deleteNoteBtn.hide();
+                            selectedNotesLiveData.setValue(adapter.getSelectedItems());
+
 
                     }
 
-                    createNoteBtn.show();
                 }
             };
 
@@ -327,7 +314,7 @@ public class MainActivity extends AppCompatActivity {
             msgTxt.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.dialog_message_text));
             posBtn.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.dialog_message_btn));
             negBtn.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.dialog_message_btn));
-        }
+
 
     }
 
