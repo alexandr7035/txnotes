@@ -337,7 +337,7 @@ public class MainActivity extends AppCompatActivity {
     // Shows NewNoteActivity
     public void createNewNoteAction(View view) {
         // Go to CreateNewNoteActivity
-        Intent intent = new Intent(this, CreateNewNoteActivity.class);
+        Intent intent = new Intent(this,NoteActivity.class);
         startActivity(intent);
     }
 

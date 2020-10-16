@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.alexandr7035.txnotes.R;
@@ -20,6 +21,7 @@ import java.util.concurrent.ExecutionException;
 public class ShowNoteActivity extends AppCompatActivity {
 
     int note_id;
+    private Toolbar toolbar;
     private ShowNoteViewModel viewModel;
 
     private final String LOG_TAG = "DEBUG_TXNOTES";
@@ -28,6 +30,8 @@ public class ShowNoteActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_note);
+
+        toolbar = findViewById(R.id.toolbar);
 
         // Get note_id
         Intent intent = getIntent();
@@ -75,6 +79,14 @@ public class ShowNoteActivity extends AppCompatActivity {
         TextView note_view = findViewById(R.id.showNoteView);
         note_view.setText(note_text);
 
+
+        // Close activity on navigation btn click
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
     }
 
