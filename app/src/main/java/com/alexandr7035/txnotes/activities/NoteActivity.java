@@ -54,8 +54,6 @@ public class NoteActivity extends AppCompatActivity
         toolbar.inflateMenu(R.menu.menu_note_activity_toolbar);
         toolbar.setOnMenuItemClickListener(this);
 
-        invalidateOptionsMenu();
-
         // Init state LiveData
         activityStateLiveData = new MutableLiveData<String>();
 
@@ -117,9 +115,7 @@ public class NoteActivity extends AppCompatActivity
     @Override
     public boolean onMenuItemClick(MenuItem item) {
 
-
-        // FIXME
-        // Simplify later
+        
         if (item.getItemId() == R.id.item_save_note) {
 
             if (activityStateLiveData.getValue() != null) {
