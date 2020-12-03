@@ -86,7 +86,7 @@ public class CreateNewNoteActivity extends AppCompatActivity {
         // ViewModel
         viewModel = new ViewModelProvider(this, new CreateNoteViewModelFactory(this.getApplication())).get(CreateNoteViewModel.class);
 
-        viewModel.createNote(new NoteEntity(note_text, note_creation_date));
+        viewModel.createNote(new NoteEntity());
 
         // Go to CreateNewNoteActivity
         Intent intent = new Intent(this, MainActivity.class);
