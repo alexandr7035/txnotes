@@ -13,8 +13,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.alexandr7035.txnotes.R;
+import com.alexandr7035.txnotes.db.NoteEntity;
+import com.alexandr7035.txnotes.viewmodel.NoteViewModel;
+import com.alexandr7035.txnotes.viewmodel.NoteViewModelFactory;
 
 public class NoteActivity extends AppCompatActivity
                           implements Toolbar.OnMenuItemClickListener {
@@ -26,6 +30,9 @@ public class NoteActivity extends AppCompatActivity
 
     private TextView toolbarTitle;
 
+    private MutableLiveData<NoteEntity> noteLiveData;
+
+    private NoteViewModel viewModel;
 
     private int note_id;
 
@@ -35,6 +42,10 @@ public class NoteActivity extends AppCompatActivity
         setContentView(R.layout.activity_note);
 
         Log.d(LOG_TAG, "start NoteActivity");
+
+        // ViewModel
+        viewModel = new ViewModelProvider(this, new NoteViewModelFactory(this.getApplication())).get(NoteViewModel.class);
+
 
         // Views
         final Toolbar toolbar = findViewById(R.id.toolbar);
@@ -56,6 +67,32 @@ public class NoteActivity extends AppCompatActivity
 
         // Init state LiveData
         activityStateLiveData = new MutableLiveData<String>();
+
+
+        // Get note_id
+        // 0 means a new note is creating
+        Intent intent = getIntent();
+        note_id = intent.getIntExtra("passed_note_id", 0);
+
+        // Init note object
+        // Set initial activity state
+        if (note_id == 0) {
+            noteLiveData = new MutableLiveData<>();
+
+            NoteEntity note = new NoteEntity();
+            note.setNoteText("123");
+            noteLiveData.postValue(note);
+
+            activityStateLiveData.postValue("STATE_CREATING");
+        }
+
+        else {
+            noteLiveData = viewModel.getNoteLiveData(note_id);
+            activityStateLiveData.postValue("STATE_SHOWING");
+        }
+
+
+
 
 
         activityStateLiveData.observe(this, new Observer<String>() {
@@ -95,19 +132,14 @@ public class NoteActivity extends AppCompatActivity
         });
 
 
-        // Get note_id
-        // 0 means a new note is creating
-        Intent intent = getIntent();
-        note_id = intent.getIntExtra("passed_note_id", 0);
+        noteLiveData.observe(this, new Observer<NoteEntity>() {
+            @Override
+            public void onChanged(@Nullable NoteEntity note) {
+                noteTextView.setText(note.getNoteText());
 
+            }
+        });
 
-        // Set initial activity state
-        if (note_id == 0) {
-            activityStateLiveData.postValue("STATE_CREATING");
-        }
-        else {
-            activityStateLiveData.postValue("STATE_SHOWING");
-        }
 
     }
 

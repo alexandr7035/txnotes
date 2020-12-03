@@ -2,6 +2,7 @@ package com.alexandr7035.txnotes.viewmodel;
 
 import android.app.Application;
 
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.alexandr7035.txnotes.db.NoteEntity;
@@ -18,6 +19,10 @@ public class NoteViewModel extends ViewModel {
 
     public NoteEntity getNote(int id) throws ExecutionException, InterruptedException {
         return repository.getNoteFromDb(id);
+    }
+
+    public MutableLiveData<NoteEntity> getNoteLiveData(int id) {
+        return repository.getNoteLiveDataFromDb(id);
     }
 
     public void updateNote(NoteEntity note) {

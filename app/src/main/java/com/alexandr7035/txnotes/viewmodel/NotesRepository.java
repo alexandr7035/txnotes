@@ -4,6 +4,7 @@ import android.app.Application;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.alexandr7035.txnotes.db.NoteEntity;
 import com.alexandr7035.txnotes.db.NotesDao;
@@ -89,5 +90,10 @@ public class NotesRepository {
         return (NoteEntity) foo.get();
     }
 
+    MutableLiveData<NoteEntity> getNoteLiveDataFromDb(int id) {
+        MutableLiveData<NoteEntity> data = (MutableLiveData<NoteEntity>) dao.getNoteLiveDataById(id);
+
+        return data;
+    }
 
 }
