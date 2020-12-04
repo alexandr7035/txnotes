@@ -44,19 +44,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
-            <EditText
-                android:id="@+id/noteTextView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+        <EditText
+            android:id="@+id/noteTextView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
 
-                android:background="@drawable/default_field_background"
-                android:ems="10"
-                android:enabled="false"
-                android:gravity="start|top"
-                android:hint="@string/hint_set_note_text"
-                android:inputType="textMultiLine"
-                android:padding="10dp"
-                android:textSize="@dimen/show_note_text" />
+            android:background="@drawable/default_field_background"
+            android:ems="10"
+            android:enabled="false"
+            android:gravity="start|top"
+            android:hint="@string/hint_set_note_text"
+            android:inputType="textMultiLine"
+            android:padding="10dp"
+            android:textColor="@drawable/color_note_text"
+            android:textSize="@dimen/show_note_text" />
 
 
     </ScrollView>
