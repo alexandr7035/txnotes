@@ -165,7 +165,10 @@ public class NoteActivity extends AppCompatActivity
 
             }
             else {
+                Log.d(LOG_TAG, "EDITED NOTE ID " + note_id);
                 note.setNoteModificationDate(System.currentTimeMillis() / 1000);
+                note.setId(note_id);
+                viewModel.updateNote(note);
             }
 
 
