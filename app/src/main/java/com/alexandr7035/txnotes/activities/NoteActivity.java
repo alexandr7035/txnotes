@@ -20,6 +20,8 @@ import com.alexandr7035.txnotes.db.NoteEntity;
 import com.alexandr7035.txnotes.viewmodel.NoteViewModel;
 import com.alexandr7035.txnotes.viewmodel.NoteViewModelFactory;
 
+import java.util.concurrent.ExecutionException;
+
 public class NoteActivity extends AppCompatActivity
                           implements Toolbar.OnMenuItemClickListener {
 
@@ -34,7 +36,7 @@ public class NoteActivity extends AppCompatActivity
 
     private NoteViewModel viewModel;
 
-    private int note_id;
+    private long note_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,17 +74,12 @@ public class NoteActivity extends AppCompatActivity
         // Get note_id
         // 0 means a new note is creating
         Intent intent = getIntent();
-        note_id = intent.getIntExtra("passed_note_id", 0);
+        note_id = intent.getLongExtra("passed_note_id", 0);
 
         // Init note object
         // Set initial activity state
         if (note_id == 0) {
             noteLiveData = new MutableLiveData<>();
-
-            NoteEntity note = new NoteEntity();
-            note.setNoteText("123");
-            noteLiveData.postValue(note);
-
             activityStateLiveData.postValue("STATE_CREATING");
         }
 
@@ -136,7 +133,6 @@ public class NoteActivity extends AppCompatActivity
             @Override
             public void onChanged(@Nullable NoteEntity note) {
                 noteTextView.setText(note.getNoteText());
-
             }
         });
 
@@ -150,8 +146,32 @@ public class NoteActivity extends AppCompatActivity
         
         if (item.getItemId() == R.id.item_save_note) {
 
+            // Init note object
+            NoteEntity note = new NoteEntity();
+            Log.d(LOG_TAG, "note_id " + note.getId());
+            note.setNoteText(noteTextView.getText().toString());
+
+            if (note_id == 0) {
+                note.setNoteCreationDate(System.currentTimeMillis() / 1000);
+
+                try {
+                    note_id = viewModel.createNote(note);
+                    Log.d(LOG_TAG, "CREATED NOTE ID " + note_id);
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+            }
+            else {
+                note.setNoteModificationDate(System.currentTimeMillis() / 1000);
+            }
+
+
+
             if (activityStateLiveData.getValue() != null) {
-                    activityStateLiveData.postValue("STATE_SHOWING");
+                activityStateLiveData.postValue("STATE_SHOWING");
             }
 
         }

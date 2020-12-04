@@ -43,13 +43,17 @@ public class NotesRepository {
 
     }
 
-    void addNoteToDb(final NoteEntity note) {
-        executor.execute(new Runnable() {
+    long addNoteToDb(final NoteEntity note) throws ExecutionException, InterruptedException {
+
+        Future foo = executor.submit(new Callable() {
             @Override
-            public void run() {
-                dao.addNote(note);
+            public Long call() {
+                return dao.addNote(note);
             }
         });
+
+        return (Long) foo.get();
+
     }
 
     void removeNoteFromDb(final NoteEntity note) {
@@ -90,7 +94,7 @@ public class NotesRepository {
         return (NoteEntity) foo.get();
     }
 
-    MutableLiveData<NoteEntity> getNoteLiveDataFromDb(int id) {
+    MutableLiveData<NoteEntity> getNoteLiveDataFromDb(Long id) {
         MutableLiveData<NoteEntity> data = (MutableLiveData<NoteEntity>) dao.getNoteLiveDataById(id);
 
         return data;

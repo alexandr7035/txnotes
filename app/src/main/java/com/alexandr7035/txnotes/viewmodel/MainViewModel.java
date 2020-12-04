@@ -44,9 +44,6 @@ public class MainViewModel extends ViewModel {
         return selectedNotesLiveData;
     }
 
-    public void addNote(NoteEntity note) {
-        repository.addNoteToDb(note);
-    }
 
     public void removeNote(NoteEntity note) {
         repository.removeNoteFromDb(note);

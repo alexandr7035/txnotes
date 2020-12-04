@@ -11,7 +11,7 @@ public class NoteEntity {
 
     @PrimaryKey(autoGenerate = true)
     @NonNull
-    public int id;
+    public long id;
 
     @ColumnInfo(name = "note_text")
     public String note_text;
@@ -47,7 +47,7 @@ public class NoteEntity {
     }
 
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 

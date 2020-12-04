@@ -23,10 +23,10 @@ public interface NotesDao {
     NoteEntity getNoteById(int id);
 
     @Query("SELECT * FROM notes WHERE id = (:id)")
-    LiveData<NoteEntity> getNoteLiveDataById(int id);
+    LiveData<NoteEntity> getNoteLiveDataById(long id);
 
     @Insert
-    void addNote(NoteEntity... notesEntities);
+    long addNote(NoteEntity note);
 
     @Update
     void updateNote(NoteEntity noteEntity);

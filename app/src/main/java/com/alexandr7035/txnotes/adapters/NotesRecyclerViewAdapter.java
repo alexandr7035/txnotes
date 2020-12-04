@@ -129,7 +129,7 @@ public class NotesRecyclerViewAdapter extends RecyclerView.Adapter<NotesRecycler
         public TextView note_title_view;
         public TextView note_date_view;
 
-        int note_id;
+        long note_id;
 
         public ViewHolder(View itemView) {
 
@@ -163,12 +163,12 @@ public class NotesRecyclerViewAdapter extends RecyclerView.Adapter<NotesRecycler
 
     public interface NoteClickListener {
 
-        void onNoteClick(int note_id, int position);
+        void onNoteClick(long note_id, int position);
     }
 
     public interface NoteLongClickListener {
 
-        void onLongNoteClick(int note_id, int position);
+        void onLongNoteClick(long note_id, int position);
     }
 
     // Allows to change click listener

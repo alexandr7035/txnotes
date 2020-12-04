@@ -21,7 +21,7 @@ public class CreateNoteViewModel extends ViewModel {
     }
 
     public void createNote(NoteEntity note) {
-        repository.addNoteToDb(note);
+        //repository.addNoteToDb(note);
     }
 
 }

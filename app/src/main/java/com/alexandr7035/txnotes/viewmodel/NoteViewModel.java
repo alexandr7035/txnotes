@@ -21,8 +21,12 @@ public class NoteViewModel extends ViewModel {
         return repository.getNoteFromDb(id);
     }
 
-    public MutableLiveData<NoteEntity> getNoteLiveData(int id) {
+    public MutableLiveData<NoteEntity> getNoteLiveData(Long id) {
         return repository.getNoteLiveDataFromDb(id);
+    }
+
+    public long createNote(NoteEntity note) throws ExecutionException, InterruptedException {
+        return repository.addNoteToDb(note);
     }
 
     public void updateNote(NoteEntity note) {

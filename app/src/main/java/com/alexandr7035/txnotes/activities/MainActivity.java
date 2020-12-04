@@ -188,7 +188,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         @Override
-        public void onNoteClick(int skill_id, int position) {
+        public void onNoteClick(long skill_id, int position) {
             //Log.d(LOG_TAG, "clicked position " + position + " id " + skill_id);
 
             Log.d(LOG_TAG, "called defult onCLick");
@@ -200,7 +200,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onLongNoteClick(int skill_id, int position) {
+        public void onLongNoteClick(long skill_id, int position) {
             //Log.d(LOG_TAG, "clicked (LONG) position " + position + " id " + skill_id);
 
             adapter.selectItem(position);
@@ -217,7 +217,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         @Override
-        public void onNoteClick(int skill_id, int position) {
+        public void onNoteClick(long skill_id, int position) {
             //Log.d(LOG_TAG, "SELECTED_CL: click item " + position + " skill_id " + skill_id);
 
             // Select item if not selected
@@ -238,7 +238,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onLongNoteClick(int skill_id, int position) {
+        public void onLongNoteClick(long skill_id, int position) {
             //Log.d(LOG_TAG, "SELECTED_CL: LONG click item " + position + " skill_id " + skill_id);
 
             // Do nothing
