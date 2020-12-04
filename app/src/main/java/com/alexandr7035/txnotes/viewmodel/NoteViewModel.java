@@ -2,7 +2,6 @@ package com.alexandr7035.txnotes.viewmodel;
 
 import android.app.Application;
 
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.alexandr7035.txnotes.db.NoteEntity;
@@ -17,12 +16,8 @@ public class NoteViewModel extends ViewModel {
         repository = new NotesRepository(application);
     }
 
-    public NoteEntity getNote(int id) throws ExecutionException, InterruptedException {
+    public NoteEntity getNote(long id) throws ExecutionException, InterruptedException {
         return repository.getNoteFromDb(id);
-    }
-
-    public MutableLiveData<NoteEntity> getNoteLiveData(Long id) {
-        return repository.getNoteLiveDataFromDb(id);
     }
 
     public long createNote(NoteEntity note) throws ExecutionException, InterruptedException {

@@ -78,13 +78,20 @@ public class NoteActivity extends AppCompatActivity
 
         // Init note object
         // Set initial activity state
+        noteLiveData = new MutableLiveData<>();
         if (note_id == 0) {
-            noteLiveData = new MutableLiveData<>();
+
             activityStateLiveData.postValue("STATE_CREATING");
         }
 
         else {
-            noteLiveData = viewModel.getNoteLiveData(note_id);
+            try {
+                noteLiveData.postValue(viewModel.getNote(note_id));
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             activityStateLiveData.postValue("STATE_SHOWING");
         }
 

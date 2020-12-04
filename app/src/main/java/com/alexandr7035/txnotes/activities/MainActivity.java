@@ -194,8 +194,8 @@ public class MainActivity extends AppCompatActivity {
             Log.d(LOG_TAG, "called defult onCLick");
             Log.d(LOG_TAG, "start new activity (SHOW)");
 
-            Intent intent = new Intent(MainActivity.this, ShowNoteActivity.class);
-            intent.putExtra("clicked_note_id", skill_id);
+            Intent intent = new Intent(MainActivity.this, NoteActivity.class);
+            intent.putExtra("passed_note_id", skill_id);
             startActivity(intent);
         }
 
