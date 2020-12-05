@@ -30,4 +30,5 @@
     <string name="menu_sort_new_first">Сначала новые</string>
     <string name="menu_sort_by_header">Сортировать по тексту</string>
 
+    <string name="menu_info">Информация</string>
 </resources>

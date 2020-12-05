@@ -8,10 +8,20 @@
         <item name="colorAccent">@color/colorAccent</item>
 
         <item name="android:textColorSecondary">#FFFFFF</item>
+
+        <item name="android:actionButtonStyle">@style/ActionButtonStyle</item>
     </style>
 
     <style name="ToolbarTheme" parent="AppTheme">
         <item name="android:textColorSecondary">#FFFFFF</item>
+    </style>
+
+
+
+    <style name="ActionButtonStyle" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:minWidth">0dip</item>
+        <item name="android:paddingLeft">0dip</item>
+        <item name="android:paddingRight">0dip</item>
     </style>
 
 </resources>
