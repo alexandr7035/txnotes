@@ -25,4 +25,7 @@
     <color name="colorNavigationMenuHeaderText">#FFFFFF</color>
     <color name="colorNavigationMenuHeaderVersionField">#BFAB94</color>
 
+    <!-- Info dialog -->
+    <color name="color_separator">#545454</color>
+
 </resources>

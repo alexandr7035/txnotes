@@ -2,6 +2,7 @@ package com.alexandr7035.txnotes.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +20,7 @@ import com.alexandr7035.txnotes.R;
 import com.alexandr7035.txnotes.db.NoteEntity;
 import com.alexandr7035.txnotes.viewmodel.NoteViewModel;
 import com.alexandr7035.txnotes.viewmodel.NoteViewModelFactory;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.concurrent.ExecutionException;
 
@@ -35,6 +37,8 @@ public class NoteActivity extends AppCompatActivity
     private MutableLiveData<NoteEntity> noteLiveData;
 
     private NoteViewModel viewModel;
+
+    private BottomSheetDialog infoDialog;
 
     private long note_id;
 
@@ -66,6 +70,11 @@ public class NoteActivity extends AppCompatActivity
 
         toolbar.inflateMenu(R.menu.menu_note_activity_toolbar);
         toolbar.setOnMenuItemClickListener(this);
+
+        // Init info dialog
+        infoDialog = new BottomSheetDialog(this);
+        infoDialog.setContentView(R.layout.dialog_note_info);
+
 
         // Init state LiveData
         activityStateLiveData = new MutableLiveData<String>();
@@ -139,7 +148,24 @@ public class NoteActivity extends AppCompatActivity
         noteLiveData.observe(this, new Observer<NoteEntity>() {
             @Override
             public void onChanged(@Nullable NoteEntity note) {
+
                 noteTextView.setText(note.getNoteText());
+
+                // Views
+                TextView creationDateView = infoDialog.findViewById(R.id.note_info_creation_date_value);
+                TextView modificationDateView = infoDialog.findViewById(R.id.note_info_modification_date_value);
+                TextView modificationsCountView = infoDialog.findViewById(R.id.note_info_changes_count_value);
+                TextView wordsCountView = infoDialog.findViewById(R.id.note_info_words_count_value);
+                TextView symbolsCountView = infoDialog.findViewById(R.id.note_info_symbols_count_value);
+
+                creationDateView.setText(DateFormat.format("dd.MM.yyyy HH:mm", note.getNoteCreationDate() * 1000).toString());
+
+                if (note.getNoteModificationDate() != 0) {
+                    modificationDateView.setText(DateFormat.format("dd.MM.yyyy HH:mm", note.getNoteModificationDate() * 1000).toString());
+                }
+                else {
+                    modificationDateView.setText("-");
+                }
             }
         });
 
@@ -150,48 +176,80 @@ public class NoteActivity extends AppCompatActivity
     @Override
     public boolean onMenuItemClick(MenuItem item) {
 
-        
-        if (item.getItemId() == R.id.item_save_note) {
 
-            // Init note object
-            NoteEntity note = new NoteEntity();
-            Log.d(LOG_TAG, "note_id " + note.getId());
-            note.setNoteText(noteTextView.getText().toString());
+        switch (item.getItemId()) {
+            case R.id.item_save_note:
 
-            if (note_id == 0) {
-                note.setNoteCreationDate(System.currentTimeMillis() / 1000);
+                // Init note object
 
+
+                // Create a new note
+                // Learn id of created note in order to correctly update state livedata
+                if (note_id == 0) {
+
+                    NoteEntity note = new NoteEntity();
+                    note.setNoteCreationDate(System.currentTimeMillis() / 1000);
+                    note.setNoteText(noteTextView.getText().toString());
+
+                    try {
+                        note_id = viewModel.createNote(note);
+                        Log.d(LOG_TAG, "CREATED NOTE ID " + note_id);
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+
+                else {
+                    Log.d(LOG_TAG, "EDITED NOTE ID " + note_id);
+
+                    try {
+                        NoteEntity note = viewModel.getNote(note_id);
+                        note.setNoteModificationDate(System.currentTimeMillis() / 1000);
+                        note.setNoteText(noteTextView.getText().toString());
+                        viewModel.updateNote(note);
+
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+
+
+                // Update LiveData
                 try {
-                    note_id = viewModel.createNote(note);
-                    Log.d(LOG_TAG, "CREATED NOTE ID " + note_id);
+                    NoteEntity note = viewModel.getNote(note_id);
+                    noteLiveData.postValue(note);
                 } catch (ExecutionException e) {
                     e.printStackTrace();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
 
-            }
-            else {
-                Log.d(LOG_TAG, "EDITED NOTE ID " + note_id);
-                note.setNoteModificationDate(System.currentTimeMillis() / 1000);
-                note.setId(note_id);
-                viewModel.updateNote(note);
-            }
 
+                if (activityStateLiveData.getValue() != null) {
+                    activityStateLiveData.postValue("STATE_SHOWING");
+                }
 
+                break;
 
-            if (activityStateLiveData.getValue() != null) {
-                activityStateLiveData.postValue("STATE_SHOWING");
-            }
+            case R.id.item_edit_note:
 
-        }
+                if (activityStateLiveData.getValue() != null) {
+                    activityStateLiveData.postValue("STATE_EDITING");
+                }
 
-        else if (item.getItemId() == R.id.item_edit_note) {
+                break;
 
-            if (activityStateLiveData.getValue() != null) {
-                activityStateLiveData.postValue("STATE_EDITING");
-            }
-
+            case R.id.item_show_info:
+                // Show info dialog
+                // The info is updating inside noteLiveData observer
+                infoDialog.show();
+                break;
         }
 
         return super.onOptionsItemSelected(item);

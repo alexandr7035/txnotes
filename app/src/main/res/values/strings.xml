@@ -25,10 +25,18 @@
     <string name="dialog_delete_note_positive">Да</string>
     <string name="dialog_delete_note_negative">Нет</string>
 
+    <string name="dialog_note_info_created">Создана:</string>
+    <string name="dialog_note_info_modified">Изменена:</string>
+    <string name="dialog_note_info_modifications_count">Всего изменений:</string>
+
+    <string name="dialog_note_info_words_count">Слов:</string>
+    <string name="dialog_note_info_symbols_count">Символов:</string>
+
     <!-- Main menu -->
     <string name="menu_sort_old_first">Сначала старые</string>
     <string name="menu_sort_new_first">Сначала новые</string>
     <string name="menu_sort_by_header">Сортировать по тексту</string>
 
     <string name="menu_info">Информация</string>
+
 </resources>
