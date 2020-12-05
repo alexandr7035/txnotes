@@ -11,13 +11,6 @@
     <dimen name="noteViewRoundedCornersDimen">4dp</dimen>
     <dimen name="defaultFieldRoundedCornersDimen">4dp</dimen>
 
-    <dimen name="navigationMenuWith">270dp</dimen>
-    <dimen name="navigationMenuItemHeight">50dp</dimen>
-    <dimen name="navigationMenuSpaceBetweenItems">3dp</dimen>
-    <dimen name="navigationMenuItemTextSize">18sp</dimen>
-    <dimen name="navigationMenuItemImagePadding">10dp</dimen>
-    <dimen name="navigationMenuHeaderText">24sp</dimen>
-
     <dimen name="dialog_note_info_text">18sp</dimen>
 
 </resources>

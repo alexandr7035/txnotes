@@ -16,15 +16,6 @@
 
     <color name="colorDefaultField">#E8E5E5</color>
 
-    <!-- Navigation menu -->
-    <color name="colorNavigationMenu">#FFFFFF</color>
-    <color name="colorNavigationMenuHeader">#E4875E2D</color>
-    <color name="colorNavigationMenuBody">#FFFFFF</color>
-    <color name="colorNavigationMenuItem">#FFFFFF</color>
-    <color name="colorNavigationMenuItemPressed">#B8B7B6</color>
-    <color name="colorNavigationMenuHeaderText">#FFFFFF</color>
-    <color name="colorNavigationMenuHeaderVersionField">#BFAB94</color>
-
     <!-- Info dialog -->
     <color name="color_separator">#545454</color>
 
