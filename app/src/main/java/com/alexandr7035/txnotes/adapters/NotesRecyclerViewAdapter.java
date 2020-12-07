@@ -39,6 +39,11 @@ public class NotesRecyclerViewAdapter extends RecyclerView.Adapter<NotesRecycler
         notifyDataSetChanged();
     }
 
+    public List<NoteEntity> getItems() {
+        return this.items;
+    }
+
+
     // Add item to list of selected
     public void selectItem(int position) {
         selectedItems.add(items.get(position));

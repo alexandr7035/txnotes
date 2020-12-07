@@ -91,6 +91,7 @@ public class MainActivity extends AppCompatActivity
         // Toolbar
         toolbar = findViewById(R.id.toolbar);
         toolbar.inflateMenu(R.menu.menu_main_activity_toolbar);
+        toolbar.setOnMenuItemClickListener(this);
         toolbarTitle = findViewById(R.id.toolbarTitle);
 
         // Disable submenu title
@@ -189,10 +190,25 @@ public class MainActivity extends AppCompatActivity
             public void onChanged(@Nullable String sortingState) {
                 Log.d(LOG_TAG, "sorting state changed '" + sortingState + "'");
 
-                if (sortingState.equals("SORT_BY_MDATE")) {
-                    NotesSorter.sortByModificationDate(adapter.getItems());
+                if (sortingState != null) {
+
+                    if (sortingState.equals("SORT_BY_MDATE_DESC")) {
+                        List<NoteEntity> items = adapter.getItems();
+                        NotesSorter.sortByModificationDateDesc(items);
+                        adapter.setItems(items);
+                    } else if (sortingState.equals("SORT_BY_MDATE")) {
+                        List<NoteEntity> items = adapter.getItems();
+                        NotesSorter.sortByModificationDate(items);
+                        adapter.setItems(items);
+                    } else if (sortingState.equals("SORT_BY_TEXT")) {
+                        List<NoteEntity> items = adapter.getItems();
+                        NotesSorter.sortByText(items);
+                        adapter.setItems(items);
+                    }
+
                 }
-            }
+
+             }
         });
 
     }
@@ -365,12 +381,18 @@ public class MainActivity extends AppCompatActivity
         switch (item.getItemId()) {
 
             case R.id.item_sort_by_mdtate_new_first:
+                Log.d(LOG_TAG, "sort by mdate desc clicked");
+                sortingStateLiveData.postValue("SORT_BY_MDATE_DESC");
                 break;
 
             case R.id.item_sort_by_mdtate_old_first:
+                Log.d(LOG_TAG, "sort by mdate clicked");
+                sortingStateLiveData.postValue("SORT_BY_MDATE");
                 break;
 
             case R.id.item_sort_by_text:
+                Log.d(LOG_TAG, "sort by text clicked");
+                sortingStateLiveData.postValue("SORT_BY_TEXT");
                 break;
 
 
