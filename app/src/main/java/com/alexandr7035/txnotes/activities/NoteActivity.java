@@ -154,9 +154,6 @@ public class NoteActivity extends AppCompatActivity
                 // Views
                 TextView creationDateView = infoDialog.findViewById(R.id.note_info_creation_date_value);
                 TextView modificationDateView = infoDialog.findViewById(R.id.note_info_modification_date_value);
-                TextView modificationsCountView = infoDialog.findViewById(R.id.note_info_changes_count_value);
-                TextView wordsCountView = infoDialog.findViewById(R.id.note_info_words_count_value);
-                TextView symbolsCountView = infoDialog.findViewById(R.id.note_info_symbols_count_value);
 
                 creationDateView.setText(DateFormat.format("dd.MM.yyyy HH:mm", note.getNoteCreationDate() * 1000).toString());
 
