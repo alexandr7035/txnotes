@@ -117,7 +117,9 @@ public class NoteActivity extends AppCompatActivity
                         toolbarTitle.setText(getString(R.string.activity_create_note_title));
                         noteTextView.setEnabled(true);
 
+                        toolbar.getMenu().findItem(R.id.item_edit_note).setVisible(false);
                         toolbar.getMenu().findItem(R.id.item_save_note).setVisible(true);
+                        toolbar.getMenu().findItem(R.id.item_show_info).setVisible(false);
 
                     }
 
@@ -127,6 +129,8 @@ public class NoteActivity extends AppCompatActivity
 
                         toolbar.getMenu().findItem(R.id.item_edit_note).setVisible(true);
                         toolbar.getMenu().findItem(R.id.item_save_note).setVisible(false);
+                        toolbar.getMenu().findItem(R.id.item_show_info).setVisible(true);
+
 
                     }
 
@@ -136,6 +140,7 @@ public class NoteActivity extends AppCompatActivity
 
                         toolbar.getMenu().findItem(R.id.item_edit_note).setVisible(false);
                         toolbar.getMenu().findItem(R.id.item_save_note).setVisible(true);
+                        toolbar.getMenu().findItem(R.id.item_show_info).setVisible(false);
 
                     }
 
