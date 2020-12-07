@@ -162,7 +162,9 @@ public class NoteActivity extends AppCompatActivity
 
                 creationDateView.setText(DateFormat.format("dd.MM.yyyy HH:mm", note.getNoteCreationDate() * 1000).toString());
 
-                if (note.getNoteModificationDate() != 0) {
+                // Hide modification date if same as creation date
+                // (that means note wasn't modified)
+                if (note.getNoteModificationDate() != note.getNoteCreationDate()) {
                     modificationDateView.setText(DateFormat.format("dd.MM.yyyy HH:mm", note.getNoteModificationDate() * 1000).toString());
                 }
                 else {
@@ -190,7 +192,14 @@ public class NoteActivity extends AppCompatActivity
                 if (note_id == 0) {
 
                     NoteEntity note = new NoteEntity();
-                    note.setNoteCreationDate(System.currentTimeMillis() / 1000);
+
+                    // Set modification date same as creation date
+                    // In order to implement correct sorting by date
+                    // If 2 dates are equal, just hide modification date on a view level
+                    long creation_date = System.currentTimeMillis() / 1000;
+                    note.setNoteCreationDate(creation_date);
+                    note.setNoteModificationDate(creation_date);
+
                     note.setNoteText(noteTextView.getText().toString());
 
                     try {
