@@ -44,4 +44,6 @@
 
     <string name="shared_pref_key_sorting">SORTING_MODE</string>
 
+
+    <string name="toast_cant_save_empty_note">Нельзя сохранить пустую заметку</string>
 </resources>

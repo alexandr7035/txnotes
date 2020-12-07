@@ -1,13 +1,16 @@
 package com.alexandr7035.txnotes.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -39,6 +42,8 @@ public class NoteActivity extends AppCompatActivity
     private NoteViewModel viewModel;
 
     private BottomSheetDialog infoDialog;
+
+    private Vibrator vibrator;
 
     private long note_id;
 
@@ -79,6 +84,8 @@ public class NoteActivity extends AppCompatActivity
         // Init state LiveData
         activityStateLiveData = new MutableLiveData<String>();
 
+        // Init vibrator
+        vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
         // Get note_id
         // 0 means a new note is creating
@@ -184,7 +191,17 @@ public class NoteActivity extends AppCompatActivity
         switch (item.getItemId()) {
             case R.id.item_save_note:
 
-                // Init note object
+
+                // Prohibit saving empty notes
+                if (noteTextView.getText().toString().trim().equals("")) {
+                    vibrator.vibrate(300);
+
+                    Toast toast = Toast.makeText(this, getString(R.string.toast_cant_save_empty_note),
+                                Toast.LENGTH_SHORT);
+                    toast.show();
+                    break;
+
+                }
 
 
                 // Create a new note
