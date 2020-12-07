@@ -8,6 +8,8 @@ import android.os.Vibrator;
 import android.text.Html;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -87,6 +89,9 @@ public class MainActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         toolbar.inflateMenu(R.menu.menu_main_activity_toolbar);
         toolbarTitle = findViewById(R.id.toolbarTitle);
+
+        // Disable submenu title
+        toolbar.getMenu().findItem(R.id.item_sort_submenu).getSubMenu().clearHeader();
 
         // Init recyclerview
         recyclerView = findViewById(R.id.notesRecycleView);
@@ -173,8 +178,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-
 
 
     }
@@ -341,5 +344,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    
 
 }

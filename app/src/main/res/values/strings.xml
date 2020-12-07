@@ -33,9 +33,11 @@
     <string name="dialog_note_info_symbols_count">Символов:</string>
 
     <!-- Main menu -->
-    <string name="menu_sort_old_first">Сначала старые</string>
-    <string name="menu_sort_new_first">Сначала новые</string>
-    <string name="menu_sort_by_header">Сортировать по тексту</string>
+    <string name="menu_exit">Выход</string>
+    <string name="menu_sort_submenu">Сортировать</string>
+    <string name="menu_sort_by_mdate_old_first">Сначала старые</string>
+    <string name="menu_sort_by_mdate_new_first">Сначала новые</string>
+    <string name="menu_sort_by_text">По тексту</string>
 
     <string name="menu_info">Информация</string>
 
