@@ -29,6 +29,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.alexandr7035.txnotes.R;
 import com.alexandr7035.txnotes.adapters.NotesRecyclerViewAdapter;
 import com.alexandr7035.txnotes.db.NoteEntity;
+import com.alexandr7035.txnotes.utils.NotesSorter;
 import com.alexandr7035.txnotes.viewmodel.MainViewModel;
 import com.alexandr7035.txnotes.viewmodel.MainViewModelFactory;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -37,7 +38,8 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+                            implements Toolbar.OnMenuItemClickListener {
 
 
     // Recycleviw for list of notes
@@ -63,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
     private LiveData<List<NoteEntity>> notesListLiveData;
     private LiveData<Integer> notesCountLiveData;
+    private MutableLiveData<String> sortingStateLiveData;
     private MainViewModel viewModel;
 
     private MutableLiveData<List<NoteEntity>> selectedNotesLiveData;
@@ -110,13 +113,13 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
 
-
         // Viewmodel & livedata
         viewModel = new ViewModelProvider(this, new MainViewModelFactory(this.getApplication())).get(MainViewModel.class);
 
         notesListLiveData = viewModel.getNotesList();
         notesCountLiveData = viewModel.getNotesCount();
         selectedNotesLiveData = viewModel.getSelectedNotesLiveData();
+        sortingStateLiveData = new MutableLiveData<>();
 
         selectedNotes = new ArrayList<>();
 
@@ -180,9 +183,19 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+        // Livedata that updates sorting
+        sortingStateLiveData.observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String sortingState) {
+                Log.d(LOG_TAG, "sorting state changed '" + sortingState + "'");
+
+                if (sortingState.equals("SORT_BY_MDATE")) {
+                    NotesSorter.sortByModificationDate(adapter.getItems());
+                }
+            }
+        });
+
     }
-
-
 
 
     // Default click listener for recyclerview items
@@ -344,6 +357,27 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    
+
+    // A click hadnler for toolbar menu items
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+
+        switch (item.getItemId()) {
+
+            case R.id.item_sort_by_mdtate_new_first:
+                break;
+
+            case R.id.item_sort_by_mdtate_old_first:
+                break;
+
+            case R.id.item_sort_by_text:
+                break;
+
+
+        }
+
+
+        return super.onOptionsItemSelected(item);
+    }
 
 }

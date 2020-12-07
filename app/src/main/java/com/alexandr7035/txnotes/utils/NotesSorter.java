@@ -8,7 +8,7 @@ import java.util.List;
 
 public class NotesSorter {
 
-    public static void sortByModificatonDate(List<NoteEntity> notesList) {
+    public static void sortByModificationDate(List<NoteEntity> notesList) {
         Collections.sort(notesList, new Comparator<NoteEntity>() {
             @Override
             public int compare(NoteEntity lhs, NoteEntity rhs) {
@@ -26,7 +26,7 @@ public class NotesSorter {
         });
     }
 
-    public static void sortByModificatonDateDesc(List<NoteEntity> notesList) {
+    public static void sortByModificationDateDesc(List<NoteEntity> notesList) {
         Collections.sort(notesList, new Comparator<NoteEntity>() {
             @Override
             public int compare(NoteEntity lhs, NoteEntity rhs) {
