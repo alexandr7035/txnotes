@@ -3,12 +3,12 @@ package com.alexandr7035.txnotes.activities;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.text.Html;
 import android.util.Log;
 import android.util.TypedValue;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -71,6 +71,9 @@ public class MainActivity extends AppCompatActivity
     private MutableLiveData<List<NoteEntity>> selectedNotesLiveData;
     private List<NoteEntity> selectedNotes;
 
+    private SharedPreferences sharedPreferences;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,6 +99,11 @@ public class MainActivity extends AppCompatActivity
 
         // Disable submenu title
         toolbar.getMenu().findItem(R.id.item_sort_submenu).getSubMenu().clearHeader();
+
+
+        // Init SharedPreferences
+        sharedPreferences = this.getPreferences(Context.MODE_PRIVATE);
+
 
         // Init recyclerview
         recyclerView = findViewById(R.id.notesRecycleView);
@@ -130,7 +138,14 @@ public class MainActivity extends AppCompatActivity
             public void onChanged(@Nullable List<NoteEntity> notes) {
                  // Update items in adapter
                  if (notes != null) {
-                        adapter.setItems(notes);
+
+                     String sortingMode = sharedPreferences.getString(getString(R.string.shared_pref_key_sorting),
+                                                                      "SORT_BY_MDATE_DESC");
+
+                     adapter.setItems(notes);
+
+                     sortingStateLiveData.postValue(sortingMode);
+
                  }
             }
         });
@@ -190,6 +205,7 @@ public class MainActivity extends AppCompatActivity
             public void onChanged(@Nullable String sortingState) {
                 Log.d(LOG_TAG, "sorting state changed '" + sortingState + "'");
 
+
                 if (sortingState != null) {
 
                     if (sortingState.equals("SORT_BY_MDATE_DESC")) {
@@ -205,6 +221,13 @@ public class MainActivity extends AppCompatActivity
                         NotesSorter.sortByText(items);
                         adapter.setItems(items);
                     }
+
+
+                    // Save sorting state in memory
+                    SharedPreferences.Editor prefEditor = sharedPreferences.edit();
+                    prefEditor.putString(getString(R.string.shared_pref_key_sorting),
+                                        sortingState);
+                    prefEditor.apply();
 
                 }
 
