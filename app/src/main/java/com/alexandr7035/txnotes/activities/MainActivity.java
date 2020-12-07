@@ -418,6 +418,9 @@ public class MainActivity extends AppCompatActivity
                 sortingStateLiveData.postValue("SORT_BY_TEXT");
                 break;
 
+            case R.id.item_exit:
+                finish();
+
 
         }
 
