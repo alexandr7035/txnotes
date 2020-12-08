@@ -10,6 +10,7 @@
         <item name="android:textColorSecondary">#FFFFFF</item>
 
         <item name="android:actionButtonStyle">@style/ActionButtonStyle</item>
+        <item name="android:navigationBarColor">@color/colorNavigationBar</item>
     </style>
 
     <style name="ToolbarTheme" parent="AppTheme">
