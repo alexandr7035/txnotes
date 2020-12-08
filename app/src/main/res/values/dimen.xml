@@ -13,4 +13,8 @@
 
     <dimen name="dialog_note_info_text">18sp</dimen>
 
+    <dimen name="dialog_button_text">20sp</dimen>
+    <dimen name="dialog_text">18sp</dimen>
+    <dimen name="dialog_title_text">20sp</dimen>
+
 </resources>

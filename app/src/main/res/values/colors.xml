@@ -3,6 +3,7 @@
     <color name="colorPrimary">#E49B6A2E</color>
     <color name="colorPrimaryDark">#E4603F1E</color>
     <color name="colorAccent">#E4603F1E</color>
+    <color name="colorNavigationBar">#000000</color>
 
     <color name="colorToolbarButtonPressed">#E47E5830</color>
 
@@ -16,7 +17,9 @@
 
     <color name="colorDefaultField">#E8E5E5</color>
 
-    <!-- Info dialog -->
-    <color name="color_separator">#545454</color>
+     <color name="color_dialog_button">@android:color/transparent</color>
+     <color name="color_dialog_button_pressed">#C5C5C5</color>
+    <color name="color_dialog_button_text">@color/colorPrimaryDark</color>
+
 
 </resources>

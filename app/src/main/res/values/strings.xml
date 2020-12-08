@@ -46,4 +46,8 @@
 
 
     <string name="toast_cant_save_empty_note">Нельзя сохранить пустую заметку</string>
+
+    <string name="dialog_exit_confirmation_positive">Выход</string>
+    <string name="dialog_exit_confirmation_negative">Отмена</string>
+    <string name="dialog_exit_confirmation_text">Выйти без сохранения?</string>
 </resources>

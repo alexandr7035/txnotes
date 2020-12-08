@@ -21,6 +21,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.alexandr7035.txnotes.R;
 import com.alexandr7035.txnotes.db.NoteEntity;
+import com.alexandr7035.txnotes.dialogs.ExitConfirmationDialog;
 import com.alexandr7035.txnotes.viewmodel.NoteViewModel;
 import com.alexandr7035.txnotes.viewmodel.NoteViewModelFactory;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -28,7 +29,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import java.util.concurrent.ExecutionException;
 
 public class NoteActivity extends AppCompatActivity
-                          implements Toolbar.OnMenuItemClickListener {
+                          implements Toolbar.OnMenuItemClickListener, ExitConfirmationDialog.ExitConfirmationDialogClickListener {
 
     private final String LOG_TAG = "DEBUG_TXNOTES";
 
@@ -44,6 +45,8 @@ public class NoteActivity extends AppCompatActivity
     private BottomSheetDialog infoDialog;
 
     private Vibrator vibrator;
+
+    private ExitConfirmationDialog exitConfirmationDialog;
 
     private long note_id;
 
@@ -83,6 +86,11 @@ public class NoteActivity extends AppCompatActivity
 
         // Init state LiveData
         activityStateLiveData = new MutableLiveData<String>();
+
+        // Exit confirmation dialog
+        // Shown if note is not saved
+        exitConfirmationDialog = new ExitConfirmationDialog(this);
+        exitConfirmationDialog.setOnButtonClickListener(this);
 
         // Init vibrator
         vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
@@ -180,6 +188,22 @@ public class NoteActivity extends AppCompatActivity
             }
         });
 
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(LOG_TAG, "back arrow pressed");
+
+                if (activityStateLiveData.getValue() != null) {
+                    if (activityStateLiveData.getValue().equals("STATE_EDITING") || activityStateLiveData.getValue().equals("STATE_CREATING")) {
+                        exitConfirmationDialog.show();
+                        return;
+                    }
+                }
+
+                finish();
+            }
+        });
 
     }
 
@@ -285,6 +309,28 @@ public class NoteActivity extends AppCompatActivity
     }
 
 
+    // Handle exit confirmation dialog
+    @Override
+    public void exitConfirmationDialogPositiveClick() {
+
+        String ACTIVITY_STATE = activityStateLiveData.getValue();
+
+        if (ACTIVITY_STATE != null) {
+            if (ACTIVITY_STATE.equals("STATE_EDITING")) {
+                activityStateLiveData.postValue("STATE_SHOWING");
+                exitConfirmationDialog.dismiss();
+            }
+            else if (ACTIVITY_STATE.equals("STATE_CREATING")) {
+                finish();
+            }
+        }
+
+    }
+
+    @Override
+    public void exitConfirmationDialogNegativeClick() {
+        exitConfirmationDialog.dismiss();
+    }
 }
 
 
