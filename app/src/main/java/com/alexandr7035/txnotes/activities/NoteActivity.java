@@ -227,61 +227,7 @@ public class NoteActivity extends AppCompatActivity
 
                 }
 
-
-                // Create a new note
-                // Learn id of created note in order to correctly update state livedata
-                if (note_id == 0) {
-
-                    NoteEntity note = new NoteEntity();
-
-                    // Set modification date same as creation date
-                    // In order to implement correct sorting by date
-                    // If 2 dates are equal, just hide modification date on a view level
-                    long creation_date = System.currentTimeMillis() / 1000;
-                    note.setNoteCreationDate(creation_date);
-                    note.setNoteModificationDate(creation_date);
-
-                    note.setNoteText(noteTextView.getText().toString());
-
-                    try {
-                        note_id = viewModel.createNote(note);
-                        Log.d(LOG_TAG, "CREATED NOTE ID " + note_id);
-                    } catch (ExecutionException e) {
-                        e.printStackTrace();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-
-                else {
-                    Log.d(LOG_TAG, "EDITED NOTE ID " + note_id);
-
-                    try {
-                        NoteEntity note = viewModel.getNote(note_id);
-                        note.setNoteModificationDate(System.currentTimeMillis() / 1000);
-                        note.setNoteText(noteTextView.getText().toString());
-                        viewModel.updateNote(note);
-
-                    } catch (ExecutionException e) {
-                        e.printStackTrace();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-
-
-                // Update LiveData
-                try {
-                    NoteEntity note = viewModel.getNote(note_id);
-                    noteLiveData.postValue(note);
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
+                saveNote();
 
                 if (activityStateLiveData.getValue() != null) {
                     activityStateLiveData.postValue("STATE_SHOWING");
@@ -330,6 +276,64 @@ public class NoteActivity extends AppCompatActivity
     @Override
     public void exitConfirmationDialogNegativeClick() {
         exitConfirmationDialog.dismiss();
+    }
+
+
+    // Saves note or creates a new one 
+    private void saveNote() {
+        // Create a new note
+        // Learn id of created note in order to correctly update state livedata
+        if (note_id == 0) {
+
+            NoteEntity note = new NoteEntity();
+
+            // Set modification date same as creation date
+            // In order to implement correct sorting by date
+            // If 2 dates are equal, just hide modification date on a view level
+            long creation_date = System.currentTimeMillis() / 1000;
+            note.setNoteCreationDate(creation_date);
+            note.setNoteModificationDate(creation_date);
+
+            note.setNoteText(noteTextView.getText().toString());
+
+            try {
+                note_id = viewModel.createNote(note);
+                Log.d(LOG_TAG, "CREATED NOTE ID " + note_id);
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        else {
+            Log.d(LOG_TAG, "EDITED NOTE ID " + note_id);
+
+            try {
+                NoteEntity note = viewModel.getNote(note_id);
+                note.setNoteModificationDate(System.currentTimeMillis() / 1000);
+                note.setNoteText(noteTextView.getText().toString());
+                viewModel.updateNote(note);
+
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+
+        // Update LiveData
+        try {
+            NoteEntity note = viewModel.getNote(note_id);
+            noteLiveData.postValue(note);
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }
 
