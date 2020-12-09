@@ -15,9 +15,13 @@
 
     <style name="ToolbarTheme" parent="AppTheme">
         <item name="android:textColorSecondary">#FFFFFF</item>
+        <item name="popupTheme">@style/ToolbarMenu</item>
+
     </style>
 
-
+    <style name="ToolbarMenu" parent="Widget.AppCompat.Light.PopupMenu.Overflow" >
+        <item name="android:textColorSecondary">#000000</item>
+    </style>
 
     <style name="ActionButtonStyle" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:minWidth">0dip</item>
