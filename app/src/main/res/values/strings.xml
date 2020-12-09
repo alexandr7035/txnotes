@@ -40,12 +40,13 @@
     <string name="menu_sort_by_text">По тексту</string>
 
     <string name="menu_info">Информация</string>
-
+    <string name="menu_copy_text">Копировать текст</string>
 
     <string name="shared_pref_key_sorting">SORTING_MODE</string>
 
 
     <string name="toast_cant_save_empty_note">Нельзя сохранить пустую заметку</string>
+    <string name="toast_text_copied">Текст скопирован</string>
 
     <string name="dialog_exit_confirmation_positive">Выход</string>
     <string name="dialog_exit_confirmation_negative">Отмена</string>

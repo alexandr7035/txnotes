@@ -1,5 +1,7 @@
 package com.alexandr7035.txnotes.activities;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -126,6 +128,7 @@ public class NoteActivity extends AppCompatActivity
                         toolbar.getMenu().findItem(R.id.item_edit_note).setVisible(false);
                         toolbar.getMenu().findItem(R.id.item_save_note).setVisible(true);
                         toolbar.getMenu().findItem(R.id.item_show_info).setVisible(false);
+                        toolbar.getMenu().findItem(R.id.item_copy_text).setVisible(false);
 
                     }
 
@@ -142,6 +145,7 @@ public class NoteActivity extends AppCompatActivity
                         toolbar.getMenu().findItem(R.id.item_edit_note).setVisible(true);
                         toolbar.getMenu().findItem(R.id.item_save_note).setVisible(false);
                         toolbar.getMenu().findItem(R.id.item_show_info).setVisible(true);
+                        toolbar.getMenu().findItem(R.id.item_copy_text).setVisible(true);
 
                     }
 
@@ -152,6 +156,7 @@ public class NoteActivity extends AppCompatActivity
                         toolbar.getMenu().findItem(R.id.item_edit_note).setVisible(false);
                         toolbar.getMenu().findItem(R.id.item_save_note).setVisible(true);
                         toolbar.getMenu().findItem(R.id.item_show_info).setVisible(false);
+                        toolbar.getMenu().findItem(R.id.item_copy_text).setVisible(false);
 
                     }
 
@@ -275,6 +280,17 @@ public class NoteActivity extends AppCompatActivity
                 // The info is updating inside noteLiveData observer
                 infoDialog.show();
                 break;
+
+            case R.id.item_copy_text:
+                // Copy note text to clipboard
+                ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText("note_text", noteTextView.getText().toString());
+                if (clipboard != null) {
+                    clipboard.setPrimaryClip(clip);
+                    Toast toast = Toast.makeText(this, getString(R.string.toast_text_copied),
+                            Toast.LENGTH_SHORT);
+                    toast.show();
+                }
         }
 
         return super.onOptionsItemSelected(item);
