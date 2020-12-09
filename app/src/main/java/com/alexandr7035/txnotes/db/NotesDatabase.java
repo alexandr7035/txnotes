@@ -20,11 +20,6 @@ public abstract class NotesDatabase extends RoomDatabase {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             NotesDatabase.class, "notes.db")
-                            // FixMe
-                            // Wipes and rebuilds instead of migrating
-                            // if no Migration object.
-                            // Migration is not part of this practical.
-                            .fallbackToDestructiveMigration()
                             .build();
                 }
             }
