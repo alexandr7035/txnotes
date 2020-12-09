@@ -185,6 +185,7 @@ public class NoteActivity extends AppCompatActivity
         });
 
 
+        // Show confirmation dialog if exit activity in EDITING or CREATING state
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -203,6 +204,22 @@ public class NoteActivity extends AppCompatActivity
 
     }
 
+
+    // Show confirmation dialog if exit activity in EDITING or CREATING state
+    @Override
+    public void onBackPressed() {
+        Log.d(LOG_TAG, "back in navigation pressed");
+
+        if (activityStateLiveData.getValue() != null) {
+            if (activityStateLiveData.getValue().equals("STATE_EDITING") || activityStateLiveData.getValue().equals("STATE_CREATING")) {
+                exitConfirmationDialog.show();
+                return;
+            }
+        }
+
+        super.onBackPressed();
+    }
+    
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
