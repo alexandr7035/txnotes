@@ -104,18 +104,9 @@ public class NoteActivity extends AppCompatActivity
         // Set initial activity state
         noteLiveData = new MutableLiveData<>();
         if (note_id == 0) {
-
             activityStateLiveData.postValue("STATE_CREATING");
         }
-
         else {
-            try {
-                noteLiveData.postValue(viewModel.getNote(note_id));
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
             activityStateLiveData.postValue("STATE_SHOWING");
         }
 
@@ -142,10 +133,15 @@ public class NoteActivity extends AppCompatActivity
                         toolbarTitle.setText(getString(R.string.activity_show_note_title));
                         noteTextView.setEnabled(false);
 
+                        try {
+                            noteLiveData.postValue(viewModel.getNote(note_id));
+                        } catch (ExecutionException | InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
                         toolbar.getMenu().findItem(R.id.item_edit_note).setVisible(true);
                         toolbar.getMenu().findItem(R.id.item_save_note).setVisible(false);
                         toolbar.getMenu().findItem(R.id.item_show_info).setVisible(true);
-
 
                     }
 
@@ -299,9 +295,7 @@ public class NoteActivity extends AppCompatActivity
             try {
                 note_id = viewModel.createNote(note);
                 Log.d(LOG_TAG, "CREATED NOTE ID " + note_id);
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
+            } catch (ExecutionException | InterruptedException e) {
                 e.printStackTrace();
             }
 
@@ -316,9 +310,7 @@ public class NoteActivity extends AppCompatActivity
                 note.setNoteText(noteTextView.getText().toString());
                 viewModel.updateNote(note);
 
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
+            } catch (ExecutionException | InterruptedException e) {
                 e.printStackTrace();
             }
 
@@ -329,9 +321,7 @@ public class NoteActivity extends AppCompatActivity
         try {
             NoteEntity note = viewModel.getNote(note_id);
             noteLiveData.postValue(note);
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+        } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
     }
