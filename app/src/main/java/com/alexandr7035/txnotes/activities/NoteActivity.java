@@ -192,9 +192,16 @@ public class NoteActivity extends AppCompatActivity
                 Log.d(LOG_TAG, "back arrow pressed");
 
                 if (activityStateLiveData.getValue() != null) {
-                    if (activityStateLiveData.getValue().equals("STATE_EDITING") || activityStateLiveData.getValue().equals("STATE_CREATING")) {
+                    if (activityStateLiveData.getValue().equals("STATE_EDITING")) {
                         exitConfirmationDialog.show();
                         return;
+                    }
+                    else if (activityStateLiveData.getValue().equals("STATE_CREATING")) {
+                        if (! noteTextView.getText().toString().equals("")) {
+                            exitConfirmationDialog.show();
+                            return;
+                        }
+
                     }
                 }
 
@@ -211,9 +218,16 @@ public class NoteActivity extends AppCompatActivity
         Log.d(LOG_TAG, "back in navigation pressed");
 
         if (activityStateLiveData.getValue() != null) {
-            if (activityStateLiveData.getValue().equals("STATE_EDITING") || activityStateLiveData.getValue().equals("STATE_CREATING")) {
+            if (activityStateLiveData.getValue().equals("STATE_EDITING")) {
                 exitConfirmationDialog.show();
                 return;
+            }
+            else if (activityStateLiveData.getValue().equals("STATE_CREATING")) {
+                if (! noteTextView.getText().toString().equals("")) {
+                    exitConfirmationDialog.show();
+                    return;
+                }
+
             }
         }
 
