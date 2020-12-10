@@ -1,0 +1,44 @@
+<resources>
+    <string name="app_name">TXNotes</string>
+
+    <!-- Activities' titles -->
+    <string name="activity_main_title">TXNotes (%1$s)</string>
+    <string name="activity_create_note_title">Новая заметка</string>
+    <string name="activity_show_note_title">Просмотр</string>
+    <string name="activity_edit_note_title">Редактирование</string>
+
+    <!-- Hint text -->
+    <string name="hint_set_note_text">Текст заметки</string>
+
+    <!-- Snacks -->
+    <string name="snack_delete_notes">Заметки удалены (%1$s)</string>
+
+    <!-- Dialogs -->
+    <string name="dialog_delete_note_message"><![CDATA[<b>Удалить заметки?</b> [%1$s]]]></string>
+    <string name="dialog_delete_note_positive">Да</string>
+    <string name="dialog_delete_note_negative">Нет</string>
+
+    <string name="dialog_note_info_created">Создана:</string>
+    <string name="dialog_note_info_modified">Изменена:</string>
+    <string name="dialog_note_info_modifications_count">Всего изменений:</string>
+
+    <!-- Main menu -->
+    <string name="menu_exit">Выход</string>
+    <string name="menu_sort_submenu">Сортировать</string>
+    <string name="menu_sort_by_mdate_old_first">Сначала старые</string>
+    <string name="menu_sort_by_mdate_new_first">Сначала новые</string>
+    <string name="menu_sort_by_text">По тексту</string>
+
+    <string name="menu_info">Информация</string>
+    <string name="menu_copy_text">Копировать текст</string>
+
+    <string name="shared_pref_key_sorting">SORTING_MODE</string>
+
+
+    <string name="toast_cant_save_empty_note">Нельзя сохранить пустую заметку</string>
+    <string name="toast_text_copied">Текст скопирован</string>
+
+    <string name="dialog_exit_confirmation_positive">Выход</string>
+    <string name="dialog_exit_confirmation_negative">Отмена</string>
+    <string name="dialog_exit_confirmation_text">Выйти без сохранения?</string>
+</resources>
