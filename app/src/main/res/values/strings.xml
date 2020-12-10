@@ -1,18 +1,11 @@
 <resources>
     <string name="app_name">TXNotes</string>
 
-    <!-- Navigation menu -->
-    <string name="menu_trash_can">Корзина</string>
-    <string name="menu_export_to_txt">Экспорт в TXT</string>
-    <string name="menu_about_app">О приложении</string>
-    <string name="menu_header_text">TXNotes</string>
-
     <!-- Activities' titles -->
     <string name="activity_main_title">TXNotes (%1$s)</string>
     <string name="activity_create_note_title">Новая заметка</string>
     <string name="activity_show_note_title">Просмотр</string>
     <string name="activity_edit_note_title">Редактирование</string>
-    <string name="activity_recycle_bin_title">Корзина%1$s</string>
 
     <!-- Hint text -->
     <string name="hint_set_note_text">Текст заметки</string>
@@ -28,9 +21,6 @@
     <string name="dialog_note_info_created">Создана:</string>
     <string name="dialog_note_info_modified">Изменена:</string>
     <string name="dialog_note_info_modifications_count">Всего изменений:</string>
-
-    <string name="dialog_note_info_words_count">Слов:</string>
-    <string name="dialog_note_info_symbols_count">Символов:</string>
 
     <!-- Main menu -->
     <string name="menu_exit">Выход</string>
