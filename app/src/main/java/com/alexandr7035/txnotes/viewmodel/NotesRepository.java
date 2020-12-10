@@ -34,7 +34,7 @@ public class NotesRepository {
         // To run background tasks
         executor = Executors.newSingleThreadExecutor();
 
-        Log.d("DEBUG_TXNOTES", "all notes " + dao.getAllNotes().getValue());
+        //Log.d("DEBUG_TXNOTES", "all notes " + dao.getAllNotes().getValue());
 
         // Init data
         notesList = dao.getAllNotes();

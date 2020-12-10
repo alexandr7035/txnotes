@@ -57,7 +57,7 @@ public class NoteActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note);
 
-        Log.d(LOG_TAG, "start NoteActivity");
+        //Log.d(LOG_TAG, "start NoteActivity");
 
         // ViewModel
         viewModel = new ViewModelProvider(this, new NoteViewModelFactory(this.getApplication())).get(NoteViewModel.class);
@@ -194,7 +194,7 @@ public class NoteActivity extends AppCompatActivity
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(LOG_TAG, "back arrow pressed");
+                //Log.d(LOG_TAG, "back arrow pressed");
 
                 if (activityStateLiveData.getValue() != null) {
                     if (activityStateLiveData.getValue().equals("STATE_EDITING")) {
@@ -220,7 +220,7 @@ public class NoteActivity extends AppCompatActivity
     // Show confirmation dialog if exit activity in EDITING or CREATING state
     @Override
     public void onBackPressed() {
-        Log.d(LOG_TAG, "back in navigation pressed");
+        //Log.d(LOG_TAG, "back in navigation pressed");
 
         if (activityStateLiveData.getValue() != null) {
             if (activityStateLiveData.getValue().equals("STATE_EDITING")) {
@@ -341,7 +341,7 @@ public class NoteActivity extends AppCompatActivity
 
             try {
                 note_id = viewModel.createNote(note);
-                Log.d(LOG_TAG, "CREATED NOTE ID " + note_id);
+                //Log.d(LOG_TAG, "CREATED NOTE ID " + note_id);
             } catch (ExecutionException | InterruptedException e) {
                 e.printStackTrace();
             }
@@ -349,7 +349,7 @@ public class NoteActivity extends AppCompatActivity
         }
 
         else {
-            Log.d(LOG_TAG, "EDITED NOTE ID " + note_id);
+            //Log.d(LOG_TAG, "EDITED NOTE ID " + note_id);
 
             try {
                 NoteEntity note = viewModel.getNote(note_id);

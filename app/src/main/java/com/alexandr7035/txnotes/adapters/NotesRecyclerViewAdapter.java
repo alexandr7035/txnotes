@@ -35,7 +35,7 @@ public class NotesRecyclerViewAdapter extends RecyclerView.Adapter<NotesRecycler
 
     public void setItems(List<NoteEntity> items) {
         this.items = items;
-        Log.d("DEBUG_TXNOTES", "SETITEMS CALLED " + items.toString());
+        //Log.d("DEBUG_TXNOTES", "SETITEMS CALLED " + items.toString());
         notifyDataSetChanged();
     }
 
@@ -108,12 +108,12 @@ public class NotesRecyclerViewAdapter extends RecyclerView.Adapter<NotesRecycler
 
         // Note's id
         holder.note_id = note_data.getId();
-        Log.d("DEBUG_DB", "holder " + holder.note_id);
+        //Log.d("DEBUG_DB", "holder " + holder.note_id);
 
 
         // Mark item if selected
         if (checkIfItemSelected(position)) {
-            Log.d("DEBUG_TXNOTES", position + " is selected");
+            //Log.d("DEBUG_TXNOTES", position + " is selected");
             holder.itemView.setBackgroundResource(R.drawable.note_view_background_selected);
         }
         else {
@@ -179,13 +179,13 @@ public class NotesRecyclerViewAdapter extends RecyclerView.Adapter<NotesRecycler
     // Allows to change click listener
     // For simple selection implementation
     public void setItemClickListener(NoteClickListener noteClickListener) {
-        Log.d(LOG_TAG, "CHANGE CLICK LISTENER");
+        //Log.d(LOG_TAG, "CHANGE CLICK LISTENER");
         this.noteClickListener = noteClickListener;
 
     }
 
     public void setItemLongClickListener(NoteLongClickListener noteLongClickListener) {
-        Log.d(LOG_TAG, "CHANGE LONG CLICK LISTENER");
+        //Log.d(LOG_TAG, "CHANGE LONG CLICK LISTENER");
         this.noteLongClickListener = noteLongClickListener;
 
     }

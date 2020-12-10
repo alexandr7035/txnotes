@@ -165,17 +165,17 @@ public class MainActivity extends AppCompatActivity
         selectedNotesLiveData.observe(this, new Observer<List<NoteEntity>>() {
             @Override
             public void onChanged(@Nullable List<NoteEntity> selectedNotes) {
-               // Log.d(LOG_TAG, "selected notes livedata state" + selectedNotes.toString());
+               // //Log.d(LOG_TAG, "selected notes livedata state" + selectedNotes.toString());
 
                 if (selectedNotes != null) {
 
                     if (! selectedNotes.isEmpty()) {
-                        Log.d(LOG_TAG, "some items are selected: " + selectedNotes);
+                        //Log.d(LOG_TAG, "some items are selected: " + selectedNotes);
 
                         createNoteBtn.hide();
                         deleteNoteBtn.show();
 
-                        Log.d(LOG_TAG, "set selection click listener");
+                        //Log.d(LOG_TAG, "set selection click listener");
 
 
                         adapter.setItemClickListener(selectionClickListener);
@@ -183,12 +183,12 @@ public class MainActivity extends AppCompatActivity
 
 
                     } else {
-                        Log.d(LOG_TAG, "no items selected now");
+                        //Log.d(LOG_TAG, "no items selected now");
 
                         deleteNoteBtn.hide();
                         createNoteBtn.show();
 
-                        Log.d(LOG_TAG, " set default click listener");
+                        //Log.d(LOG_TAG, " set default click listener");
                         adapter.setItemClickListener(defaultClickListener);
                         adapter.setItemLongClickListener(defaultClickListener);
 
@@ -203,7 +203,7 @@ public class MainActivity extends AppCompatActivity
         sortingStateLiveData.observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String sortingState) {
-                Log.d(LOG_TAG, "sorting state changed '" + sortingState + "'");
+                //Log.d(LOG_TAG, "sorting state changed '" + sortingState + "'");
 
 
                 if (sortingState != null) {
@@ -244,10 +244,10 @@ public class MainActivity extends AppCompatActivity
 
         @Override
         public void onNoteClick(long skill_id, int position) {
-            //Log.d(LOG_TAG, "clicked position " + position + " id " + skill_id);
+            ////Log.d(LOG_TAG, "clicked position " + position + " id " + skill_id);
 
-            Log.d(LOG_TAG, "called defult onCLick");
-            Log.d(LOG_TAG, "start new activity (SHOW)");
+            //Log.d(LOG_TAG, "called defult onCLick");
+            //Log.d(LOG_TAG, "start new activity (SHOW)");
 
             Intent intent = new Intent(MainActivity.this, NoteActivity.class);
             intent.putExtra("passed_note_id", skill_id);
@@ -256,7 +256,7 @@ public class MainActivity extends AppCompatActivity
 
         @Override
         public void onLongNoteClick(long skill_id, int position) {
-            //Log.d(LOG_TAG, "clicked (LONG) position " + position + " id " + skill_id);
+            ////Log.d(LOG_TAG, "clicked (LONG) position " + position + " id " + skill_id);
 
             adapter.selectItem(position);
             selectedNotesLiveData.postValue(adapter.getSelectedItems());
@@ -273,12 +273,12 @@ public class MainActivity extends AppCompatActivity
 
         @Override
         public void onNoteClick(long skill_id, int position) {
-            //Log.d(LOG_TAG, "SELECTED_CL: click item " + position + " skill_id " + skill_id);
+            ////Log.d(LOG_TAG, "SELECTED_CL: click item " + position + " skill_id " + skill_id);
 
             // Select item if not selected
             // Else unselect
 
-            Log.d(LOG_TAG, "ON_CLICK SELECTION CALLED");
+            //Log.d(LOG_TAG, "ON_CLICK SELECTION CALLED");
 
             if (adapter.checkIfItemSelected(position)) {
                 adapter.unselectItem(position);
@@ -294,7 +294,7 @@ public class MainActivity extends AppCompatActivity
 
         @Override
         public void onLongNoteClick(long skill_id, int position) {
-            //Log.d(LOG_TAG, "SELECTED_CL: LONG click item " + position + " skill_id " + skill_id);
+            ////Log.d(LOG_TAG, "SELECTED_CL: LONG click item " + position + " skill_id " + skill_id);
 
             // Do nothing
             // May be changed later
@@ -404,17 +404,17 @@ public class MainActivity extends AppCompatActivity
         switch (item.getItemId()) {
 
             case R.id.item_sort_by_mdtate_new_first:
-                Log.d(LOG_TAG, "sort by mdate desc clicked");
+                //Log.d(LOG_TAG, "sort by mdate desc clicked");
                 sortingStateLiveData.postValue("SORT_BY_MDATE_DESC");
                 break;
 
             case R.id.item_sort_by_mdtate_old_first:
-                Log.d(LOG_TAG, "sort by mdate clicked");
+                //Log.d(LOG_TAG, "sort by mdate clicked");
                 sortingStateLiveData.postValue("SORT_BY_MDATE");
                 break;
 
             case R.id.item_sort_by_text:
-                Log.d(LOG_TAG, "sort by text clicked");
+                //Log.d(LOG_TAG, "sort by text clicked");
                 sortingStateLiveData.postValue("SORT_BY_TEXT");
                 break;
 
