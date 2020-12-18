@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -35,20 +34,18 @@ public class NoteActivity extends AppCompatActivity
 
     private final String LOG_TAG = "DEBUG_TXNOTES";
 
-    private EditText noteTextView;
+    private NoteViewModel viewModel;
     private MutableLiveData<String> activityStateLiveData;
-
-    private TextView toolbarTitle;
-
     private MutableLiveData<NoteEntity> noteLiveData;
 
-    private NoteViewModel viewModel;
+    private TextView toolbarTitle;
+    private EditText noteTitleView;
+    private EditText noteTextView;
 
     private BottomSheetDialog infoDialog;
+    private ExitConfirmationDialog exitConfirmationDialog;
 
     private Vibrator vibrator;
-
-    private ExitConfirmationDialog exitConfirmationDialog;
 
     private long note_id;
 
@@ -67,7 +64,7 @@ public class NoteActivity extends AppCompatActivity
         final Toolbar toolbar = findViewById(R.id.toolbar);
         toolbarTitle = findViewById(R.id.toolbarTitle);
         noteTextView = findViewById(R.id.noteTextView);
-
+        noteTitleView = findViewById(R.id.noteTitleView);
 
 
         // Close activity on navigation btn click
@@ -124,6 +121,7 @@ public class NoteActivity extends AppCompatActivity
                     if (activityState.equals("STATE_CREATING")) {
                         toolbarTitle.setText(getString(R.string.activity_create_note_title));
                         noteTextView.setEnabled(true);
+                        noteTitleView.setEnabled(true);
 
                         toolbar.getMenu().findItem(R.id.item_edit_note).setVisible(false);
                         toolbar.getMenu().findItem(R.id.item_save_note).setVisible(true);
@@ -135,6 +133,7 @@ public class NoteActivity extends AppCompatActivity
                     else if (activityState.equals("STATE_SHOWING")) {
                         toolbarTitle.setText(getString(R.string.activity_show_note_title));
                         noteTextView.setEnabled(false);
+                        noteTitleView.setEnabled(false);
 
                         try {
                             noteLiveData.postValue(viewModel.getNote(note_id));
@@ -152,6 +151,7 @@ public class NoteActivity extends AppCompatActivity
                     else if (activityState.equals("STATE_EDITING")) {
                         toolbarTitle.setText(getString(R.string.activity_edit_note_title));
                         noteTextView.setEnabled(true);
+                        noteTitleView.setEnabled(true);
 
                         toolbar.getMenu().findItem(R.id.item_edit_note).setVisible(false);
                         toolbar.getMenu().findItem(R.id.item_save_note).setVisible(true);
@@ -249,8 +249,8 @@ public class NoteActivity extends AppCompatActivity
 
 
                 // Prohibit saving empty notes
-                if (noteTextView.getText().toString().trim().equals("")) {
-                    vibrator.vibrate(300);
+                if (noteTextView.getText().toString().trim().equals("") && noteTitleView.getText().toString().trim().equals("")) {
+                    vibrator.vibrate(200);
 
                     Toast toast = Toast.makeText(this, getString(R.string.toast_cant_save_empty_note),
                                 Toast.LENGTH_SHORT);

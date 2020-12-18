@@ -9,6 +9,7 @@
 
     <!-- Hint text -->
     <string name="hint_set_note_text">Текст заметки</string>
+    <string name="hint_set_note_title_text">Заголовок заметки</string>
 
     <!-- Snacks -->
     <string name="snack_delete_notes">Заметки удалены (%1$s)</string>
@@ -35,7 +36,7 @@
     <string name="shared_pref_key_sorting">SORTING_MODE</string>
 
 
-    <string name="toast_cant_save_empty_note">Нельзя сохранить пустую заметку</string>
+    <string name="toast_cant_save_empty_note">Нельзя сохранить пустую заметку\nВведите заголовок и (или) текст заметки</string>
     <string name="toast_text_copied">Текст скопирован</string>
 
     <string name="dialog_exit_confirmation_positive">Выход</string>
