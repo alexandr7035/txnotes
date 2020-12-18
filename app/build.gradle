@@ -29,6 +29,7 @@ android {
             debuggable true
             minifyEnabled false
             versionNameSuffix ".alpha"
+            applicationIdSuffix ".alpha"
         }
     }
 }
