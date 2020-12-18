@@ -34,6 +34,21 @@
 
     </androidx.appcompat.widget.Toolbar>
 
+    <EditText
+        android:id="@+id/noteTitleView"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/default_field_background"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:maxLength="50"
+        android:padding="10dp"
+        android:textSize="@dimen/note_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -42,7 +57,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+        app:layout_constraintTop_toBottomOf="@+id/noteTitleView">
 
         <EditText
             android:id="@+id/noteTextView"
@@ -57,7 +72,7 @@
             android:inputType="textMultiLine"
             android:padding="10dp"
             android:textColor="@drawable/color_note_text"
-            android:textSize="@dimen/show_note_text" />
+            android:textSize="@dimen/note_text" />
 
 
     </ScrollView>
