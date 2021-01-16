@@ -7,7 +7,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.text.Html;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,7 +26,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alexandr7035.txnotes.R;
-import com.alexandr7035.txnotes.adapters.NotesRecyclerViewAdapter;
+import com.alexandr7035.txnotes.adapters.NotesAdapter;
 import com.alexandr7035.txnotes.db.NoteEntity;
 import com.alexandr7035.txnotes.utils.NotesSorter;
 import com.alexandr7035.txnotes.viewmodel.MainViewModel;
@@ -44,7 +43,7 @@ public class MainActivity extends AppCompatActivity
 
     // Recycleviw for list of notes
     public static RecyclerView recyclerView;
-    public static NotesRecyclerViewAdapter adapter;
+    public static NotesAdapter adapter;
 
     private DefaultClickListener defaultClickListener;
     private SelectionClickListener selectionClickListener;
@@ -113,7 +112,7 @@ public class MainActivity extends AppCompatActivity
         selectionClickListener = new SelectionClickListener();
         defaultClickListener = new DefaultClickListener();
 
-        adapter = new NotesRecyclerViewAdapter();
+        adapter = new NotesAdapter();
 
         // Set default click listeners
         adapter.setItemClickListener(defaultClickListener);
@@ -238,8 +237,8 @@ public class MainActivity extends AppCompatActivity
 
 
     // Default click listener for recyclerview items
-    class DefaultClickListener implements NotesRecyclerViewAdapter.NoteClickListener,
-           NotesRecyclerViewAdapter.NoteLongClickListener {
+    class DefaultClickListener implements NotesAdapter.NoteClickListener,
+           NotesAdapter.NoteLongClickListener {
 
 
         @Override
@@ -267,8 +266,8 @@ public class MainActivity extends AppCompatActivity
 
     // Set if at least one item in RecyclerView is selected
     // Replaced by default click listener when no items selected
-    class SelectionClickListener implements NotesRecyclerViewAdapter.NoteClickListener,
-            NotesRecyclerViewAdapter.NoteLongClickListener {
+    class SelectionClickListener implements NotesAdapter.NoteClickListener,
+            NotesAdapter.NoteLongClickListener {
 
 
         @Override

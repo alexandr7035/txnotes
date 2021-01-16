@@ -2,7 +2,6 @@ package com.alexandr7035.txnotes.adapters;
 
 import android.text.Html;
 import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class NotesRecyclerViewAdapter extends RecyclerView.Adapter<NotesRecyclerViewAdapter.ViewHolder> {
+public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> {
 
     private List<NoteEntity> items;
     private List<NoteEntity> selectedItems;
@@ -27,7 +26,7 @@ public class NotesRecyclerViewAdapter extends RecyclerView.Adapter<NotesRecycler
 
     private final String LOG_TAG = "DEBUG_TXNOTES";
 
-    public NotesRecyclerViewAdapter() {
+    public NotesAdapter() {
 
         this.items = new ArrayList<>();
         this.selectedItems = new ArrayList<>();
@@ -77,13 +76,13 @@ public class NotesRecyclerViewAdapter extends RecyclerView.Adapter<NotesRecycler
     }
 
     @Override
-    public NotesRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public NotesAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_note,parent,false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(NotesRecyclerViewAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(NotesAdapter.ViewHolder holder, int position) {
 
         // Note's entity from the db
         NoteEntity note_data = items.get(position);
