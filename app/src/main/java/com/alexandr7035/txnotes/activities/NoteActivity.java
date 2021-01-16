@@ -32,6 +32,7 @@ import java.util.concurrent.ExecutionException;
 public class NoteActivity extends AppCompatActivity
                           implements Toolbar.OnMenuItemClickListener, ExitConfirmationDialog.ExitConfirmationDialogClickListener {
 
+    private final int MAX_TITLE_LENGTH = 30;
     private final String LOG_TAG = "DEBUG_TXNOTES";
 
     private NoteViewModel viewModel;
@@ -171,6 +172,7 @@ public class NoteActivity extends AppCompatActivity
             public void onChanged(@Nullable NoteEntity note) {
 
                 noteTextView.setText(note.getNoteText());
+                noteTitleView.setText(note.getNoteTitle());
 
                 // Views
                 TextView creationDateView = infoDialog.findViewById(R.id.note_info_creation_date_value);
@@ -243,7 +245,7 @@ public class NoteActivity extends AppCompatActivity
     @Override
     public boolean onMenuItemClick(MenuItem item) {
 
-
+        // FIXME
         switch (item.getItemId()) {
             case R.id.item_save_note:
 
@@ -339,6 +341,16 @@ public class NoteActivity extends AppCompatActivity
 
             note.setNoteText(noteTextView.getText().toString());
 
+            String note_title_text = noteTitleView.getText().toString().trim();
+            if (note_title_text.equals("")) {
+                // If title is not specified get first 30 symbols from note text
+                note.setNoteTitle(getSubstring(noteTextView.getText().toString().trim(), 30));
+            }
+            else {
+                note.setNoteTitle(noteTitleView.getText().toString().trim());
+            }
+
+
             try {
                 note_id = viewModel.createNote(note);
                 //Log.d(LOG_TAG, "CREATED NOTE ID " + note_id);
@@ -355,6 +367,16 @@ public class NoteActivity extends AppCompatActivity
                 NoteEntity note = viewModel.getNote(note_id);
                 note.setNoteModificationDate(System.currentTimeMillis() / 1000);
                 note.setNoteText(noteTextView.getText().toString());
+
+                String note_title_text = noteTitleView.getText().toString().trim();
+                if (note_title_text.equals("")) {
+                    // If title is not specified get first 30 symbols from note text
+                    note.setNoteTitle(getSubstring(noteTextView.getText().toString().trim(), 30));
+                }
+                else {
+                    note.setNoteTitle(noteTitleView.getText().toString().trim());
+                }
+
                 viewModel.updateNote(note);
 
             } catch (ExecutionException | InterruptedException e) {
@@ -371,6 +393,11 @@ public class NoteActivity extends AppCompatActivity
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+
+    private String getSubstring(String s, int symbols) {
+        return s.substring(0, Math.min(s.length(), MAX_TITLE_LENGTH)).trim();
     }
 }
 
