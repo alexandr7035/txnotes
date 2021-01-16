@@ -11,6 +11,7 @@
 
         <item name="android:actionButtonStyle">@style/ActionButtonStyle</item>
         <item name="android:navigationBarColor">@color/colorNavigationBar</item>
+        <item name="android:spotShadowAlpha">0.5</item>
     </style>
 
     <style name="ToolbarTheme" parent="AppTheme">
