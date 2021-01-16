@@ -88,7 +88,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
         NoteEntity note_data = items.get(position);
 
         // Set note title
-        holder.note_title_view.setText(note_data.getNoteText());
+        holder.note_title_view.setText(note_data.getNoteTitle());
 
         // Set formatted note's modification date to textview
 

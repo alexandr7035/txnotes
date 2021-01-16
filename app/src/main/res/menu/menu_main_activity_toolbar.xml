@@ -14,8 +14,8 @@
                 android:title="@string/menu_sort_by_mdate_old_first" />
 
             <item
-                android:id="@+id/item_sort_by_text"
-                android:title="@string/menu_sort_by_text" />
+                android:id="@+id/item_sort_by_title"
+                android:title="@string/menu_sort_by_title" />
 
         </menu>
     </item>

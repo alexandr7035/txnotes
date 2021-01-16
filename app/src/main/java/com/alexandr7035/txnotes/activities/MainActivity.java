@@ -217,7 +217,7 @@ public class MainActivity extends AppCompatActivity
                         adapter.setItems(items);
                     } else if (sortingState.equals("SORT_BY_TEXT")) {
                         List<NoteEntity> items = adapter.getItems();
-                        NotesSorter.sortByText(items);
+                        NotesSorter.sortByTitle(items);
                         adapter.setItems(items);
                     }
 
@@ -412,7 +412,7 @@ public class MainActivity extends AppCompatActivity
                 sortingStateLiveData.postValue("SORT_BY_MDATE");
                 break;
 
-            case R.id.item_sort_by_text:
+            case R.id.item_sort_by_title:
                 //Log.d(LOG_TAG, "sort by text clicked");
                 sortingStateLiveData.postValue("SORT_BY_TEXT");
                 break;

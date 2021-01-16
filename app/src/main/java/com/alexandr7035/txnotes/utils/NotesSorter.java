@@ -44,12 +44,12 @@ public class NotesSorter {
         });
     }
 
-    public static void sortByText(List<NoteEntity> notesList) {
+    public static void sortByTitle(List<NoteEntity> notesList) {
         Collections.sort(notesList, new Comparator<NoteEntity>() {
             @Override
             public int compare(NoteEntity lhs, NoteEntity rhs) {
                 // FIXME use titles
-                return lhs.getNoteText().compareTo(rhs.getNoteText());
+                return lhs.getNoteTitle().compareTo(rhs.getNoteTitle());
             }
         });
     }

@@ -28,7 +28,7 @@
     <string name="menu_sort_submenu">Сортировать</string>
     <string name="menu_sort_by_mdate_old_first">Сначала старые</string>
     <string name="menu_sort_by_mdate_new_first">Сначала новые</string>
-    <string name="menu_sort_by_text">По тексту</string>
+    <string name="menu_sort_by_title">По заголовку</string>
 
     <string name="menu_info">Информация</string>
     <string name="menu_copy_text">Копировать текст</string>
