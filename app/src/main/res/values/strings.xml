@@ -38,6 +38,7 @@
 
     <string name="toast_cant_save_empty_note">Нельзя сохранить пустую заметку\nВведите заголовок и (или) текст заметки</string>
     <string name="toast_text_copied">Текст скопирован</string>
+    <string name="toast_saving_error">ОШИБКА: Не удалось сохранить заметку!</string>
 
     <string name="dialog_exit_confirmation_positive">Выход</string>
     <string name="dialog_exit_confirmation_negative">Отмена</string>

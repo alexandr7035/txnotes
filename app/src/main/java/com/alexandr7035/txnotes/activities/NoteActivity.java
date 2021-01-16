@@ -326,11 +326,13 @@ public class NoteActivity extends AppCompatActivity
 
     // Saves note or creates a new one 
     private void saveNote() {
-        // Create a new note
-        // Learn id of created note in order to correctly update state livedata
-        if (note_id == 0) {
+        // If note_id is 0, create a new note
+        // Else get existing from viewmodel and update it
 
-            NoteEntity note = new NoteEntity();
+        NoteEntity note;
+
+        if (note_id == 0) {
+            note = new NoteEntity();
 
             // Set modification date same as creation date
             // In order to implement correct sorting by date
@@ -338,61 +340,50 @@ public class NoteActivity extends AppCompatActivity
             long creation_date = System.currentTimeMillis() / 1000;
             note.setNoteCreationDate(creation_date);
             note.setNoteModificationDate(creation_date);
-
-            note.setNoteText(noteTextView.getText().toString());
-
-            String note_title_text = noteTitleView.getText().toString().trim();
-            if (note_title_text.equals("")) {
-                // If title is not specified get first 30 symbols from note text
-                note.setNoteTitle(getSubstring(noteTextView.getText().toString().trim(), 30));
-            }
-            else {
-                note.setNoteTitle(noteTitleView.getText().toString().trim());
-            }
-
-
+        }
+        else {
             try {
+                // Get existing note
+                note = viewModel.getNote(note_id);
+                note.setNoteModificationDate(System.currentTimeMillis() / 1000);
+            }
+            catch (InterruptedException | ExecutionException exception) {
+                Toast.makeText(this, getString(R.string.toast_saving_error), Toast.LENGTH_LONG).show();
+                return ;
+            }
+        }
+
+
+        note.setNoteText(noteTextView.getText().toString());
+
+        String note_title_text = noteTitleView.getText().toString().trim();
+        if (note_title_text.equals("")) {
+            // If title is not specified get first 30 symbols from note text
+            note.setNoteTitle(getSubstring(noteTextView.getText().toString().trim(), 30));
+        }
+        else {
+            note.setNoteTitle(noteTitleView.getText().toString().trim());
+        }
+
+
+        // Save new note
+        if (note_id == 0) {
+            try {
+                // Update note_id for next uses
                 note_id = viewModel.createNote(note);
                 //Log.d(LOG_TAG, "CREATED NOTE ID " + note_id);
             } catch (ExecutionException | InterruptedException e) {
-                e.printStackTrace();
+                Toast.makeText(this, getString(R.string.toast_saving_error), Toast.LENGTH_LONG).show();
+                return ;
             }
-
         }
-
+        // Update existing note
         else {
-            //Log.d(LOG_TAG, "EDITED NOTE ID " + note_id);
-
-            try {
-                NoteEntity note = viewModel.getNote(note_id);
-                note.setNoteModificationDate(System.currentTimeMillis() / 1000);
-                note.setNoteText(noteTextView.getText().toString());
-
-                String note_title_text = noteTitleView.getText().toString().trim();
-                if (note_title_text.equals("")) {
-                    // If title is not specified get first 30 symbols from note text
-                    note.setNoteTitle(getSubstring(noteTextView.getText().toString().trim(), 30));
-                }
-                else {
-                    note.setNoteTitle(noteTitleView.getText().toString().trim());
-                }
-
-                viewModel.updateNote(note);
-
-            } catch (ExecutionException | InterruptedException e) {
-                e.printStackTrace();
-            }
-
+            viewModel.updateNote(note);
         }
 
+        noteLiveData.postValue(note);
 
-        // Update LiveData
-        try {
-            NoteEntity note = viewModel.getNote(note_id);
-            noteLiveData.postValue(note);
-        } catch (ExecutionException | InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 
 
