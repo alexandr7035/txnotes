@@ -22,6 +22,9 @@ public class NoteEntity {
     @ColumnInfo(name = "note_modification_date")
     public long note_modification_date;
 
+    @ColumnInfo(name = "note_title")
+    public String note_title;
+
     public long getNoteCreationDate() {
         return this.note_creation_date;
     }
@@ -46,6 +49,13 @@ public class NoteEntity {
         this.note_text = text;
     }
 
+    public String getNoteTitle() {
+        return this.note_title;
+    }
+
+    public void setNoteTitle(String text) {
+        this.note_title = text;
+    }
 
     public long getId() {
         return id;
