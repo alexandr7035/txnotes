@@ -245,54 +245,47 @@ public class NoteActivity extends AppCompatActivity
     @Override
     public boolean onMenuItemClick(MenuItem item) {
 
-        // FIXME
-        switch (item.getItemId()) {
-            case R.id.item_save_note:
+        int itemId = item.getItemId();
+        
+        if (itemId == R.id.item_save_note) {// Prohibit saving empty notes
+            if (noteTextView.getText().toString().trim().equals("") && noteTitleView.getText().toString().trim().equals("")) {
+                vibrator.vibrate(200);
 
+                Toast toast = Toast.makeText(this, getString(R.string.toast_cant_save_empty_note),
+                        Toast.LENGTH_SHORT);
+                toast.show();
+                return super.onOptionsItemSelected(item);
 
-                // Prohibit saving empty notes
-                if (noteTextView.getText().toString().trim().equals("") && noteTitleView.getText().toString().trim().equals("")) {
-                    vibrator.vibrate(200);
+            }
 
-                    Toast toast = Toast.makeText(this, getString(R.string.toast_cant_save_empty_note),
-                                Toast.LENGTH_SHORT);
-                    toast.show();
-                    break;
+            saveNote();
 
-                }
+            if (activityStateLiveData.getValue() != null) {
+                activityStateLiveData.postValue("STATE_SHOWING");
+            }
 
-                saveNote();
+        }
 
-                if (activityStateLiveData.getValue() != null) {
-                    activityStateLiveData.postValue("STATE_SHOWING");
-                }
+        else if (itemId == R.id.item_edit_note) {
+            if (activityStateLiveData.getValue() != null) {
+                activityStateLiveData.postValue("STATE_EDITING");
+            }
+        }
 
-                break;
+        else if (itemId == R.id.item_show_info) {// Show info dialog
+            // The info is updating inside noteLiveData observer
+            infoDialog.show();
+        }
 
-            case R.id.item_edit_note:
-
-                if (activityStateLiveData.getValue() != null) {
-                    activityStateLiveData.postValue("STATE_EDITING");
-                }
-
-                break;
-
-            case R.id.item_show_info:
-                // Show info dialog
-                // The info is updating inside noteLiveData observer
-                infoDialog.show();
-                break;
-
-            case R.id.item_copy_text:
-                // Copy note text to clipboard
-                ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                ClipData clip = ClipData.newPlainText("note_text", noteTextView.getText().toString());
-                if (clipboard != null) {
-                    clipboard.setPrimaryClip(clip);
-                    Toast toast = Toast.makeText(this, getString(R.string.toast_text_copied),
-                            Toast.LENGTH_SHORT);
-                    toast.show();
-                }
+        else if (itemId == R.id.item_copy_text) {// Copy note text to clipboard
+            ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+            ClipData clip = ClipData.newPlainText("note_text", noteTextView.getText().toString());
+            if (clipboard != null) {
+                clipboard.setPrimaryClip(clip);
+                Toast toast = Toast.makeText(this, getString(R.string.toast_text_copied),
+                        Toast.LENGTH_SHORT);
+                toast.show();
+            }
         }
 
         return super.onOptionsItemSelected(item);
