@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.text.Editable;
 import android.text.Html;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
@@ -288,6 +290,44 @@ public class MainActivity extends AppCompatActivity
                     searchEditText.setText("");
 
                 }
+
+            }
+        });
+
+
+        searchEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                ArrayList<NoteEntity> filteredList = new ArrayList<>();
+
+                ArrayList<NoteEntity> notesList = (ArrayList<NoteEntity>) notesListLiveData.getValue();
+
+                if (notesList == null) {
+                    return ;
+                }
+
+                if (! charSequence.toString().equals("")) {
+                    for (NoteEntity note: notesList) {
+                        if (note.getNoteTitle().toLowerCase().contains(charSequence.toString().toLowerCase().trim())) {
+                            filteredList.add(note);
+                        }
+                    }
+                    adapter.setItems(filteredList);
+                }
+                else {
+                    adapter.setItems(notesList);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
 
             }
         });
