@@ -14,13 +14,14 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
+        android:elevation="5dp"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
-        android:elevation="5dp"
-        app:theme="@style/ToolbarTheme"
+        app:contentInsetStart="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:theme="@style/ToolbarTheme">
 
         <TextView
             android:id="@+id/toolbarTitle"
@@ -29,11 +30,56 @@
             android:textColor="@color/colorToolbarTitle"
             android:textSize="@dimen/toolbar_title_font_size"
             android:textStyle="bold"
+            android:layout_marginLeft="15dp"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="19dp">
 
         </TextView>
 
+        <LinearLayout
+            android:id="@+id/searchView"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="28dp"
+            tools:visibility="visible">
+
+            <ImageView
+                android:id="@+id/searchIcon"
+                android:layout_width="?attr/actionBarSize"
+                android:layout_height="match_parent"
+                android:padding="15dp"
+                android:scaleType="fitCenter"
+                android:scaleX="1"
+                android:scaleY="1"
+                app:srcCompat="@drawable/ic_search" />
+
+            <EditText
+                android:id="@+id/searchEditText"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:hint="@string/search_hint"
+                android:inputType="textNoSuggestions"
+                android:maxLines="1"
+                android:textColor="#FFFFFF"
+                android:textColorHint="@color/hint_search"
+                android:textSize="18sp"
+                tools:visibility="visible" />
+
+            <ImageView
+                android:id="@+id/closeSearchBtn"
+                android:clickable="true"
+                android:layout_width="?attr/actionBarSize"
+                android:layout_height="match_parent"
+                android:padding="15dp"
+                app:srcCompat="@drawable/ic_close" />
+
+        </LinearLayout>
 
     </androidx.appcompat.widget.Toolbar>
 

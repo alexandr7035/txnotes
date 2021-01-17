@@ -7,10 +7,15 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.text.Html;
+import android.util.Log;
 import android.util.TypedValue;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -18,6 +23,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
@@ -56,6 +62,9 @@ public class MainActivity extends AppCompatActivity
     private FloatingActionButton createNoteBtn;
     private Snackbar snackbar;
     private Toolbar toolbar;
+    private LinearLayout searchView;
+    private EditText searchEditText;
+    private ImageView closeSearchBtn;
 
     private Vibrator vibrator;
 
@@ -64,6 +73,7 @@ public class MainActivity extends AppCompatActivity
 
     private LiveData<List<NoteEntity>> notesListLiveData;
     private LiveData<Integer> notesCountLiveData;
+    private MutableLiveData<Boolean> searchVisibleLiveData;
     private MutableLiveData<String> sortingStateLiveData;
     private MainViewModel viewModel;
 
@@ -72,6 +82,7 @@ public class MainActivity extends AppCompatActivity
 
     private SharedPreferences sharedPreferences;
 
+    private Boolean isSearchVisible = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +106,17 @@ public class MainActivity extends AppCompatActivity
         toolbar.inflateMenu(R.menu.menu_main_activity_toolbar);
         toolbar.setOnMenuItemClickListener(this);
         toolbarTitle = findViewById(R.id.toolbarTitle);
+
+        searchView = findViewById(R.id.searchView);
+        searchEditText = findViewById(R.id.searchEditText);
+        closeSearchBtn = findViewById(R.id.closeSearchBtn);
+
+        closeSearchBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                searchVisibleLiveData.postValue(false);
+            }
+        });
 
         // Disable submenu title
         toolbar.getMenu().findItem(R.id.item_sort_submenu).getSubMenu().clearHeader();
@@ -128,10 +150,11 @@ public class MainActivity extends AppCompatActivity
         notesCountLiveData = viewModel.getNotesCount();
         selectedNotesLiveData = viewModel.getSelectedNotesLiveData();
         sortingStateLiveData = new MutableLiveData<>();
+        searchVisibleLiveData = new MutableLiveData<>(false);
 
         selectedNotes = new ArrayList<>();
 
-                // Watch for notes list and update the UI
+        // Watch for notes list and update the UI
         notesListLiveData.observe(this, new Observer<List<NoteEntity>>() {
             @Override
             public void onChanged(@Nullable List<NoteEntity> notes) {
@@ -231,6 +254,42 @@ public class MainActivity extends AppCompatActivity
                 }
 
              }
+        });
+
+
+        searchVisibleLiveData.observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean searchVisible) {
+
+                Menu menu = toolbar.getMenu();
+
+                if (searchVisible) {
+                    Log.d(LOG_TAG, "show search view");
+
+                    // Hide all menu items
+                    for (int i = 0; i < menu.size(); i++)
+                        menu.getItem(i).setVisible(false);
+
+                    toolbarTitle.setVisibility(View.GONE);
+                    searchView.setVisibility(View.VISIBLE);
+
+                }
+                else {
+                    // Show all items
+
+                    Log.d(LOG_TAG, "hide search view");
+
+                    for (int i = 0; i < menu.size(); i++)
+                        menu.getItem(i).setVisible(true);
+
+                    toolbarTitle.setVisibility(View.VISIBLE);
+                    searchView.setVisibility(View.GONE);
+
+                    searchEditText.setText("");
+
+                }
+
+            }
         });
 
     }
@@ -421,10 +480,14 @@ public class MainActivity extends AppCompatActivity
                 finish();
 
 
+            case R.id.item_search:
+                searchVisibleLiveData.postValue(true);
+
         }
 
 
         return super.onOptionsItemSelected(item);
     }
+
 
 }

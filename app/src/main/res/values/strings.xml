@@ -30,6 +30,8 @@
     <string name="menu_sort_by_mdate_new_first">Сначала новые</string>
     <string name="menu_sort_by_title">По заголовку</string>
 
+    <string name="menu_search">Поиск</string>
+
     <string name="menu_info">Информация</string>
     <string name="menu_copy_text">Копировать текст</string>
 
@@ -43,4 +45,7 @@
     <string name="dialog_exit_confirmation_positive">Выход</string>
     <string name="dialog_exit_confirmation_negative">Отмена</string>
     <string name="dialog_exit_confirmation_text">Выйти без сохранения?</string>
+
+
+    <string name="search_hint">Поиск</string>
 </resources>
