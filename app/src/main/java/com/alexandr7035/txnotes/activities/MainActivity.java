@@ -13,6 +13,7 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -122,7 +123,8 @@ public class MainActivity extends AppCompatActivity
 
         // Disable submenu title
         toolbar.getMenu().findItem(R.id.item_sort_submenu).getSubMenu().clearHeader();
-
+        // Make sorting items checkable
+        toolbar.getMenu().findItem(R.id.item_sort_submenu).getSubMenu().setGroupCheckable(0, true, true);
 
         // Init SharedPreferences
         sharedPreferences = this.getPreferences(Context.MODE_PRIVATE);
@@ -229,18 +231,25 @@ public class MainActivity extends AppCompatActivity
             public void onChanged(@Nullable String sortingState) {
                 //Log.d(LOG_TAG, "sorting state changed '" + sortingState + "'");
 
+                Menu menu = toolbar.getMenu();
+                MenuItem sortByMdateNewFirstItem = menu.findItem(R.id.item_sort_by_mdtate_new_first);
+                MenuItem sortByMdateOldFirstItem = menu.findItem(R.id.item_sort_by_mdtate_old_first);
+                MenuItem sortByTitleItem = menu.findItem(R.id.item_sort_by_title);
 
                 if (sortingState != null) {
 
                     if (sortingState.equals("SORT_BY_MDATE_DESC")) {
+                        sortByMdateNewFirstItem.setChecked(true);
                         List<NoteEntity> items = adapter.getItems();
                         NotesSorter.sortByModificationDateDesc(items);
                         adapter.setItems(items);
                     } else if (sortingState.equals("SORT_BY_MDATE")) {
+                        sortByMdateOldFirstItem.setChecked(true);
                         List<NoteEntity> items = adapter.getItems();
                         NotesSorter.sortByModificationDate(items);
                         adapter.setItems(items);
                     } else if (sortingState.equals("SORT_BY_TEXT")) {
+                        sortByTitleItem.setChecked(true);
                         List<NoteEntity> items = adapter.getItems();
                         NotesSorter.sortByTitle(items);
                         adapter.setItems(items);
@@ -495,7 +504,7 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-    // A click hadnler for toolbar menu items
+    // A click handler for toolbar menu items
     @Override
     public boolean onMenuItemClick(MenuItem item) {
 
