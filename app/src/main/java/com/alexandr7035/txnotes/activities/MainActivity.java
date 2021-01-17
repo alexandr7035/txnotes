@@ -438,8 +438,14 @@ public class MainActivity extends AppCompatActivity
                                 viewModel.removeNote(note);
                             }
 
+                            // Clear selection
                             adapter.unselectAllItems();
                             selectedNotesLiveData.setValue(adapter.getSelectedItems());
+
+                            // Hide searchview if shown
+                            if (searchVisibleLiveData.getValue()) {
+                                searchVisibleLiveData.postValue(false);
+                            }
 
                             vibrator.vibrate(100);
                             snackbar.show();
@@ -486,9 +492,13 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onBackPressed() {
 
+        // If items selected unselect them
         if (adapter.checkIfAnyItemSelected()) {
             adapter.unselectAllItems();
             selectedNotesLiveData.setValue(adapter.getSelectedItems());
+        }
+        else if (searchVisibleLiveData.getValue()) {
+            searchVisibleLiveData.postValue(false);
         }
         else {
             super.onBackPressed();
