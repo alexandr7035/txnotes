@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.text.format.DateFormat;
+import android.text.method.KeyListener;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -43,6 +44,10 @@ public class NoteActivity extends AppCompatActivity
     private EditText noteTitleView;
     private EditText noteTextView;
 
+    // Key listeners for editable fields
+    private KeyListener defaultKeyListener;
+    private final KeyListener showingKeyListener = null;
+
     private BottomSheetDialog infoDialog;
     private ExitConfirmationDialog exitConfirmationDialog;
 
@@ -67,6 +72,9 @@ public class NoteActivity extends AppCompatActivity
         noteTextView = findViewById(R.id.noteTextView);
         noteTitleView = findViewById(R.id.noteTitleView);
 
+        // Save key listener
+        // Key listeners are equal for all edit texts, so get 1
+        defaultKeyListener = noteTextView.getKeyListener();
 
         // Close activity on navigation btn click
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -121,8 +129,12 @@ public class NoteActivity extends AppCompatActivity
                 if (activityState != null) {
                     if (activityState.equals("STATE_CREATING")) {
                         toolbarTitle.setText(getString(R.string.activity_create_note_title));
-                        noteTextView.setEnabled(true);
-                        noteTitleView.setEnabled(true);
+
+                        noteTextView.setTextIsSelectable(true);
+                        noteTextView.setKeyListener(defaultKeyListener);
+
+                        noteTitleView.setTextIsSelectable(true);
+                        noteTitleView.setKeyListener(defaultKeyListener);
 
                         toolbar.getMenu().findItem(R.id.item_edit_note).setVisible(false);
                         toolbar.getMenu().findItem(R.id.item_save_note).setVisible(true);
@@ -133,8 +145,12 @@ public class NoteActivity extends AppCompatActivity
 
                     else if (activityState.equals("STATE_SHOWING")) {
                         toolbarTitle.setText(getString(R.string.activity_show_note_title));
-                        noteTextView.setEnabled(false);
-                        noteTitleView.setEnabled(false);
+
+                        noteTextView.setTextIsSelectable(true);
+                        noteTextView.setKeyListener(null);
+
+                        noteTitleView.setTextIsSelectable(true);
+                        noteTitleView.setKeyListener(null);
 
                         try {
                             noteLiveData.postValue(viewModel.getNote(note_id));
@@ -151,8 +167,12 @@ public class NoteActivity extends AppCompatActivity
 
                     else if (activityState.equals("STATE_EDITING")) {
                         toolbarTitle.setText(getString(R.string.activity_edit_note_title));
-                        noteTextView.setEnabled(true);
-                        noteTitleView.setEnabled(true);
+
+                        noteTextView.setTextIsSelectable(true);
+                        noteTextView.setKeyListener(defaultKeyListener);
+
+                        noteTitleView.setTextIsSelectable(true);
+                        noteTitleView.setKeyListener(defaultKeyListener);
 
                         toolbar.getMenu().findItem(R.id.item_edit_note).setVisible(false);
                         toolbar.getMenu().findItem(R.id.item_save_note).setVisible(true);
