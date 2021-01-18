@@ -372,7 +372,7 @@ public class NoteActivity extends AppCompatActivity
         String note_title_text = noteTitleView.getText().toString().trim();
         if (note_title_text.equals("")) {
             // If title is not specified get first 30 symbols from note text
-            note.setNoteTitle(getSubstring(noteTextView.getText().toString().trim(), 30));
+            note.setNoteTitle(getSubstring(noteTextView.getText().toString().trim().replaceAll("[\\t\\n\\r]+"," "), 30));
         }
         else {
             note.setNoteTitle(noteTitleView.getText().toString().trim());
