@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity
     private LinearLayout searchView;
     private EditText searchEditText;
     private ImageView closeSearchBtn;
+    private TextView searchNothingFoundView;
 
     private Vibrator vibrator;
 
@@ -89,6 +90,9 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        Log.d(LOG_TAG, "start the app");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -113,6 +117,7 @@ public class MainActivity extends AppCompatActivity
         searchView = findViewById(R.id.searchView);
         searchEditText = findViewById(R.id.searchEditText);
         closeSearchBtn = findViewById(R.id.closeSearchBtn);
+        searchNothingFoundView = findViewById(R.id.searchNothingFoundView);
 
         closeSearchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -298,6 +303,8 @@ public class MainActivity extends AppCompatActivity
 
                     searchEditText.setText("");
 
+                    searchNothingFoundView.setVisibility(View.GONE);
+
                 }
 
             }
@@ -328,7 +335,19 @@ public class MainActivity extends AppCompatActivity
                             filteredList.add(note);
                         }
                     }
+
+                    // Check if empty and show message
+                    if (filteredList.isEmpty()) {
+                        Log.d(LOG_TAG, "nothing found");
+                        searchNothingFoundView.setVisibility(View.VISIBLE);
+                    }
+                    else {
+                        searchNothingFoundView.setVisibility(View.GONE);
+                    }
+
                     adapter.setItems(filteredList);
+
+
                 }
                 else {
                     adapter.setItems(notesList);
