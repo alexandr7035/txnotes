@@ -36,6 +36,7 @@
     <string name="menu_copy_text">Копировать текст</string>
 
     <string name="shared_pref_key_sorting">SORTING_MODE</string>
+    <string name="shared_pref_last_installed_version">LAST_INSTALLED_VERSION</string>
 
 
     <string name="toast_cant_save_empty_note">Нельзя сохранить пустую заметку\nВведите заголовок и (или) текст заметки</string>

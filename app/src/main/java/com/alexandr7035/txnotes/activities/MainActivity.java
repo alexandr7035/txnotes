@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.text.Editable;
@@ -34,6 +35,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alexandr7035.txnotes.BuildConfig;
 import com.alexandr7035.txnotes.R;
 import com.alexandr7035.txnotes.adapters.NotesAdapter;
 import com.alexandr7035.txnotes.db.NoteEntity;
@@ -91,7 +93,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        Log.d(LOG_TAG, "start the app");
+        Log.d(LOG_TAG, "start the app. Version: " + BuildConfig.VERSION_CODE);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -360,6 +362,20 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+
+        // Show 'what's new' dialog if current version run for the first time
+        int lastInstalledVersion = sharedPreferences.getInt(getString(R.string.shared_pref_last_installed_version), 0);
+
+        // DEBUG
+        lastInstalledVersion = 0;
+
+        if (lastInstalledVersion != BuildConfig.VERSION_CODE) {
+            Log.d(LOG_TAG, "run version " + BuildConfig.VERSION_CODE + " for the first time, show release info");
+
+            SharedPreferences.Editor prefEditor = sharedPreferences.edit();
+            prefEditor.putInt(getString(R.string.shared_pref_last_installed_version), BuildConfig.VERSION_CODE);
+            prefEditor.apply();
+        }
     }
 
 
