@@ -6,20 +6,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Vibrator;
-import android.text.Editable;
-import android.text.Html;
-import android.text.Layout;
-import android.text.TextWatcher;
 import android.text.format.DateFormat;
 import android.text.method.KeyListener;
-import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,15 +39,10 @@ public class NoteActivity extends AppCompatActivity
     private NoteViewModel viewModel;
     private MutableLiveData<String> activityStateLiveData;
     private MutableLiveData<NoteEntity> noteLiveData;
-    private MutableLiveData<Boolean> searchVisibleLiveData;
 
     private TextView toolbarTitle;
     private EditText noteTitleView;
     private EditText noteTextView;
-    private LinearLayout searchView;
-    private EditText searchEditText;
-    private ImageView closeSearchBtn;
-    private ScrollView scrollView;
 
     // Key listeners for editable fields
     private KeyListener defaultKeyListener;
@@ -85,11 +71,6 @@ public class NoteActivity extends AppCompatActivity
         toolbarTitle = findViewById(R.id.toolbarTitle);
         noteTextView = findViewById(R.id.noteTextView);
         noteTitleView = findViewById(R.id.noteTitleView);
-        searchView = findViewById(R.id.searchView);
-        searchEditText = findViewById(R.id.searchEditText);
-        closeSearchBtn = findViewById(R.id.closeSearchBtn);
-        scrollView = findViewById(R.id.scrollView);
-
 
         // Save key listener
         // Key listeners are equal for all edit texts, so get 1
@@ -159,7 +140,6 @@ public class NoteActivity extends AppCompatActivity
                         toolbar.getMenu().findItem(R.id.item_save_note).setVisible(true);
                         toolbar.getMenu().findItem(R.id.item_show_info).setVisible(false);
                         toolbar.getMenu().findItem(R.id.item_copy_text).setVisible(false);
-                        toolbar.getMenu().findItem(R.id.item_search).setVisible(false);
 
                     }
 
@@ -182,7 +162,6 @@ public class NoteActivity extends AppCompatActivity
                         toolbar.getMenu().findItem(R.id.item_save_note).setVisible(false);
                         toolbar.getMenu().findItem(R.id.item_show_info).setVisible(true);
                         toolbar.getMenu().findItem(R.id.item_copy_text).setVisible(true);
-                        toolbar.getMenu().findItem(R.id.item_search).setVisible(true);
 
                     }
 
@@ -199,7 +178,6 @@ public class NoteActivity extends AppCompatActivity
                         toolbar.getMenu().findItem(R.id.item_save_note).setVisible(true);
                         toolbar.getMenu().findItem(R.id.item_show_info).setVisible(false);
                         toolbar.getMenu().findItem(R.id.item_copy_text).setVisible(false);
-                        toolbar.getMenu().findItem(R.id.item_search).setVisible(false);
 
                     }
 
@@ -258,98 +236,6 @@ public class NoteActivity extends AppCompatActivity
             }
         });
 
-
-        searchVisibleLiveData = new MutableLiveData<>(false);
-
-        closeSearchBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                searchVisibleLiveData.postValue(false);
-            }
-        });
-
-        searchVisibleLiveData.observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean searchVisible) {
-
-                Menu menu = toolbar.getMenu();
-
-                if (searchVisible) {
-                    Log.d(LOG_TAG, "show search view");
-
-                    // Hide all menu items
-                    for (int i = 0; i < menu.size(); i++)
-                        menu.getItem(i).setVisible(false);
-
-                    toolbarTitle.setVisibility(View.GONE);
-                    searchView.setVisibility(View.VISIBLE);
-
-                    toolbar.setNavigationIcon(null);
-
-                }
-                else {
-
-                    Log.d(LOG_TAG, "hide search view");
-
-                    // Show all items
-                    for (int i = 0; i < menu.size(); i++)
-                        menu.getItem(i).setVisible(true);
-
-                    // But hide "save_note"
-                    toolbar.getMenu().findItem(R.id.item_save_note).setVisible(false);
-
-                    toolbarTitle.setVisibility(View.VISIBLE);
-                    searchView.setVisibility(View.GONE);
-
-                    //toolbar.setNavigationIcon(android.R.attr.actionModeCloseDrawable);
-
-                    searchEditText.setText("");
-
-                }
-
-            }
-        });
-
-
-        searchEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence searchRequest, int i, int i1, int i2) {
-
-                Layout layout = noteTextView.getLayout();
-
-                if (layout == null) {
-                    return ;
-                }
-
-
-                String text = noteTextView.getText().toString();
-
-                if (text.contains(searchRequest.toString())) {
-                    int strIndex = text.indexOf(searchRequest.toString());
-
-
-                    String highlighted = "<font color='red'>"+ searchRequest  +"</font>";
-                    text = text.replace(searchRequest, highlighted);
-
-                    text = text.replace("\n", "<br>");
-                    noteTextView.setText(Html.fromHtml(text));
-
-                    int lineNumber = noteTextView.getLayout().getLineForOffset(strIndex);
-                    scrollView.scrollTo(0, noteTextView.getLayout().getLineTop(lineNumber));
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-
     }
 
 
@@ -370,12 +256,6 @@ public class NoteActivity extends AppCompatActivity
                 }
 
             }
-        }
-
-        // If search is opened close it
-        if (searchVisibleLiveData.getValue()) {
-            searchVisibleLiveData.postValue(false);
-            return ;
         }
 
         super.onBackPressed();
@@ -426,10 +306,6 @@ public class NoteActivity extends AppCompatActivity
                         Toast.LENGTH_SHORT);
                 toast.show();
             }
-        }
-
-        else if(itemId == R.id.item_search) {
-            searchVisibleLiveData.postValue(true);
         }
 
         return super.onOptionsItemSelected(item);
