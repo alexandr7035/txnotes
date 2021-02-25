@@ -28,6 +28,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
@@ -39,6 +40,7 @@ import com.alexandr7035.txnotes.BuildConfig;
 import com.alexandr7035.txnotes.R;
 import com.alexandr7035.txnotes.adapters.NotesAdapter;
 import com.alexandr7035.txnotes.db.NoteEntity;
+import com.alexandr7035.txnotes.dialogs.VersionChangesDialog;
 import com.alexandr7035.txnotes.utils.NotesSorter;
 import com.alexandr7035.txnotes.viewmodel.MainViewModel;
 import com.alexandr7035.txnotes.viewmodel.MainViewModelFactory;
@@ -371,6 +373,11 @@ public class MainActivity extends AppCompatActivity
 
         if (lastInstalledVersion != BuildConfig.VERSION_CODE) {
             Log.d(LOG_TAG, "run version " + BuildConfig.VERSION_CODE + " for the first time, show release info");
+
+            // Show dialog
+            FragmentManager fm = getSupportFragmentManager();
+            VersionChangesDialog dialog = new VersionChangesDialog();
+            dialog.show(fm, "version_change_dialog");
 
             SharedPreferences.Editor prefEditor = sharedPreferences.edit();
             prefEditor.putInt(getString(R.string.shared_pref_last_installed_version), BuildConfig.VERSION_CODE);

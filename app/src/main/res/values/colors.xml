@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+
     <color name="colorPrimary">#9B6A2E</color>
     <color name="colorPrimaryDark">#603F1E</color>
     <color name="colorAccent">#E4603F1E</color>
     <color name="colorNavigationBar">#000000</color>
+
+    <color name="colorPrimaryButton">#724F24</color>
+    <color name="colorPrimaryButtonPressed">#603F1E</color>
 
     <color name="colorToolbarButtonPressed">#E47E5830</color>
 
