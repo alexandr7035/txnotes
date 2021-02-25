@@ -47,7 +47,7 @@
     <string name="dialog_exit_confirmation_negative">Отмена</string>
     <string name="dialog_exit_confirmation_text">Выйти без сохранения?</string>
 
-    <string name="dialog_change_log_title">Изменения в %1$s</string>
+    <string name="dialog_change_log_title">Изменения в v%1$s</string>
     <string name="dialog_ok">OK</string>
 
     <string name="search_hint">Поиск</string>

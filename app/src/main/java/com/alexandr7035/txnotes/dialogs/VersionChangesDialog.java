@@ -20,11 +20,13 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentActivity;
 
+import com.alexandr7035.txnotes.BuildConfig;
 import com.alexandr7035.txnotes.R;
 
 public class VersionChangesDialog extends DialogFragment implements View.OnClickListener {
 
     private TextView closeDialogBtn;
+    private TextView dialogTitle;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -37,6 +39,9 @@ public class VersionChangesDialog extends DialogFragment implements View.OnClick
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View dialogView = inflater.inflate(R.layout.dialog_version_change, container, false);
+
+        dialogTitle = dialogView.findViewById(R.id.dialog_title);
+        dialogTitle.setText(getString(R.string.dialog_change_log_title, BuildConfig.VERSION_NAME));
 
         closeDialogBtn = dialogView.findViewById(R.id.closeDialogBtn);
         closeDialogBtn.setOnClickListener(this);
