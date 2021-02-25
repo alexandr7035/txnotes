@@ -54,10 +54,11 @@
     <string name="search_nothing_found">Ничего не найдено :(</string>
 
     <string name="changes_v_code_200">
-        Lorem Ipsum is simply dummy text of the printing and typesetting industry. \n
-        Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, \n
-        when an unknown printer took a galley of type and scrambled it
-        to make a type specimen book. It has survived not only five centuries,
-        but also the leap into electronic typesetting, remaining essentially unchanged.
+        • Добавлен поиск по списку заметок \n
+        • Добавлено отдельное поле для заголовка заметки \n
+        • Текст заметки теперь выделяется и копируется в режиме просмотра \n
+        • Добавлена опция в меню для копирования всего текста заметки \n
+        • Ссылки в тексте заметки теперь кликабельны \n
+        • Множество улучшений в UI приложения
     </string>
 </resources>
