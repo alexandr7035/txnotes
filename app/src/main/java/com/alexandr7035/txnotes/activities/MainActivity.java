@@ -369,7 +369,7 @@ public class MainActivity extends AppCompatActivity
         int lastInstalledVersion = sharedPreferences.getInt(getString(R.string.shared_pref_last_installed_version), 0);
 
         // DEBUG
-        lastInstalledVersion = 0;
+        //lastInstalledVersion = 0;
 
         if (lastInstalledVersion != BuildConfig.VERSION_CODE) {
             Log.d(LOG_TAG, "run version " + BuildConfig.VERSION_CODE + " for the first time, show release info");
