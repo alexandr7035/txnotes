@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        Log.d(LOG_TAG, "start the app. Version: " + BuildConfig.VERSION_CODE);
+        //Log.d(LOG_TAG, "start the app. Version: " + BuildConfig.VERSION_CODE);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -284,7 +284,7 @@ public class MainActivity extends AppCompatActivity
                 Menu menu = toolbar.getMenu();
 
                 if (searchVisible) {
-                    Log.d(LOG_TAG, "show search view");
+                    //Log.d(LOG_TAG, "show search view");
 
                     // Hide all menu items
                     for (int i = 0; i < menu.size(); i++)
@@ -297,7 +297,7 @@ public class MainActivity extends AppCompatActivity
                 else {
                     // Show all items
 
-                    Log.d(LOG_TAG, "hide search view");
+                    //Log.d(LOG_TAG, "hide search view");
 
                     for (int i = 0; i < menu.size(); i++)
                         menu.getItem(i).setVisible(true);
@@ -342,7 +342,7 @@ public class MainActivity extends AppCompatActivity
 
                     // Check if empty and show message
                     if (filteredList.isEmpty()) {
-                        Log.d(LOG_TAG, "nothing found");
+                        //Log.d(LOG_TAG, "nothing found");
                         searchNothingFoundView.setVisibility(View.VISIBLE);
                     }
                     else {
@@ -372,7 +372,7 @@ public class MainActivity extends AppCompatActivity
         //lastInstalledVersion = 0;
 
         if (lastInstalledVersion != BuildConfig.VERSION_CODE) {
-            Log.d(LOG_TAG, "run version " + BuildConfig.VERSION_CODE + " for the first time, show release info");
+            //Log.d(LOG_TAG, "run version " + BuildConfig.VERSION_CODE + " for the first time, show release info");
 
             // Show dialog
             FragmentManager fm = getSupportFragmentManager();
