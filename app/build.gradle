@@ -1,14 +1,27 @@
 apply plugin: 'com.android.application'
 
+def keystorePropertiesFile = rootProject.file("keystore.properties")
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
 android {
-    compileSdkVersion 29
+
+    signingConfigs {
+        config {
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile file(keystoreProperties['storeFile'])
+            storePassword keystoreProperties['storePassword']
+        }
+    }
+    compileSdkVersion 30
     buildToolsVersion "29.0.3"
     defaultConfig {
         applicationId "com.alexandr7035.txnotes"
         minSdkVersion 21
-        targetSdkVersion 29
-        versionCode 100
-        versionName "1.0"
+        targetSdkVersion 30
+        versionCode 200
+        versionName "2.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -25,10 +38,11 @@ android {
 
         // Don't set appidsuffix. When app releases, it wiil replece this one
         alpha {
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.config
             debuggable true
             minifyEnabled false
             versionNameSuffix ".alpha"
+            applicationIdSuffix ".alpha"
         }
     }
 }

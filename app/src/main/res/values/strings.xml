@@ -2,13 +2,14 @@
     <string name="app_name">TXNotes</string>
 
     <!-- Activities' titles -->
-    <string name="activity_main_title">TXNotes (%1$s)</string>
+    <string name="activity_main_title">TXNotes (%1$d)</string>
     <string name="activity_create_note_title">Новая заметка</string>
     <string name="activity_show_note_title">Просмотр</string>
     <string name="activity_edit_note_title">Редактирование</string>
 
     <!-- Hint text -->
     <string name="hint_set_note_text">Текст заметки</string>
+    <string name="hint_set_note_title_text">Заголовок заметки</string>
 
     <!-- Snacks -->
     <string name="snack_delete_notes">Заметки удалены (%1$s)</string>
@@ -27,18 +28,37 @@
     <string name="menu_sort_submenu">Сортировать</string>
     <string name="menu_sort_by_mdate_old_first">Сначала старые</string>
     <string name="menu_sort_by_mdate_new_first">Сначала новые</string>
-    <string name="menu_sort_by_text">По тексту</string>
+    <string name="menu_sort_by_title">По заголовку</string>
+
+    <string name="menu_search">Поиск</string>
 
     <string name="menu_info">Информация</string>
     <string name="menu_copy_text">Копировать текст</string>
 
     <string name="shared_pref_key_sorting">SORTING_MODE</string>
+    <string name="shared_pref_last_installed_version">LAST_INSTALLED_VERSION</string>
 
 
-    <string name="toast_cant_save_empty_note">Нельзя сохранить пустую заметку</string>
+    <string name="toast_cant_save_empty_note">Нельзя сохранить пустую заметку\nВведите заголовок и (или) текст заметки</string>
     <string name="toast_text_copied">Текст скопирован</string>
+    <string name="toast_saving_error">ОШИБКА: Не удалось сохранить заметку!</string>
 
     <string name="dialog_exit_confirmation_positive">Выход</string>
     <string name="dialog_exit_confirmation_negative">Отмена</string>
     <string name="dialog_exit_confirmation_text">Выйти без сохранения?</string>
+
+    <string name="dialog_change_log_title">Изменения в v%1$s</string>
+    <string name="dialog_ok">OK</string>
+
+    <string name="search_hint">Поиск</string>
+    <string name="search_nothing_found">Ничего не найдено :(</string>
+
+    <string name="changes_v_code_200">
+        • Добавлен поиск по списку заметок \n
+        • Добавлено отдельное поле для заголовка заметки \n
+        • Текст заметки теперь выделяется и копируется в режиме просмотра \n
+        • Добавлена опция в меню для копирования всего текста заметки \n
+        • Ссылки в тексте заметки теперь кликабельны \n
+        • Множество улучшений в UI приложения
+    </string>
 </resources>

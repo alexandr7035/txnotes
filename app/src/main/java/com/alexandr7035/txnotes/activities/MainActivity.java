@@ -4,14 +4,22 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.text.Editable;
 import android.text.Html;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -19,6 +27,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
@@ -26,9 +36,11 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alexandr7035.txnotes.BuildConfig;
 import com.alexandr7035.txnotes.R;
-import com.alexandr7035.txnotes.adapters.NotesRecyclerViewAdapter;
+import com.alexandr7035.txnotes.adapters.NotesAdapter;
 import com.alexandr7035.txnotes.db.NoteEntity;
+import com.alexandr7035.txnotes.dialogs.VersionChangesDialog;
 import com.alexandr7035.txnotes.utils.NotesSorter;
 import com.alexandr7035.txnotes.viewmodel.MainViewModel;
 import com.alexandr7035.txnotes.viewmodel.MainViewModelFactory;
@@ -44,7 +56,7 @@ public class MainActivity extends AppCompatActivity
 
     // Recycleviw for list of notes
     public static RecyclerView recyclerView;
-    public static NotesRecyclerViewAdapter adapter;
+    public static NotesAdapter adapter;
 
     private DefaultClickListener defaultClickListener;
     private SelectionClickListener selectionClickListener;
@@ -57,6 +69,10 @@ public class MainActivity extends AppCompatActivity
     private FloatingActionButton createNoteBtn;
     private Snackbar snackbar;
     private Toolbar toolbar;
+    private LinearLayout searchView;
+    private EditText searchEditText;
+    private ImageView closeSearchBtn;
+    private TextView searchNothingFoundView;
 
     private Vibrator vibrator;
 
@@ -65,6 +81,7 @@ public class MainActivity extends AppCompatActivity
 
     private LiveData<List<NoteEntity>> notesListLiveData;
     private LiveData<Integer> notesCountLiveData;
+    private MutableLiveData<Boolean> searchVisibleLiveData;
     private MutableLiveData<String> sortingStateLiveData;
     private MainViewModel viewModel;
 
@@ -73,9 +90,13 @@ public class MainActivity extends AppCompatActivity
 
     private SharedPreferences sharedPreferences;
 
+    private Boolean isSearchVisible = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        //Log.d(LOG_TAG, "start the app. Version: " + BuildConfig.VERSION_CODE);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -97,9 +118,22 @@ public class MainActivity extends AppCompatActivity
         toolbar.setOnMenuItemClickListener(this);
         toolbarTitle = findViewById(R.id.toolbarTitle);
 
+        searchView = findViewById(R.id.searchView);
+        searchEditText = findViewById(R.id.searchEditText);
+        closeSearchBtn = findViewById(R.id.closeSearchBtn);
+        searchNothingFoundView = findViewById(R.id.searchNothingFoundView);
+
+        closeSearchBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                searchVisibleLiveData.postValue(false);
+            }
+        });
+
         // Disable submenu title
         toolbar.getMenu().findItem(R.id.item_sort_submenu).getSubMenu().clearHeader();
-
+        // Make sorting items checkable
+        toolbar.getMenu().findItem(R.id.item_sort_submenu).getSubMenu().setGroupCheckable(0, true, true);
 
         // Init SharedPreferences
         sharedPreferences = this.getPreferences(Context.MODE_PRIVATE);
@@ -113,7 +147,7 @@ public class MainActivity extends AppCompatActivity
         selectionClickListener = new SelectionClickListener();
         defaultClickListener = new DefaultClickListener();
 
-        adapter = new NotesRecyclerViewAdapter();
+        adapter = new NotesAdapter();
 
         // Set default click listeners
         adapter.setItemClickListener(defaultClickListener);
@@ -129,10 +163,11 @@ public class MainActivity extends AppCompatActivity
         notesCountLiveData = viewModel.getNotesCount();
         selectedNotesLiveData = viewModel.getSelectedNotesLiveData();
         sortingStateLiveData = new MutableLiveData<>();
+        searchVisibleLiveData = new MutableLiveData<>(false);
 
         selectedNotes = new ArrayList<>();
 
-                // Watch for notes list and update the UI
+        // Watch for notes list and update the UI
         notesListLiveData.observe(this, new Observer<List<NoteEntity>>() {
             @Override
             public void onChanged(@Nullable List<NoteEntity> notes) {
@@ -205,20 +240,27 @@ public class MainActivity extends AppCompatActivity
             public void onChanged(@Nullable String sortingState) {
                 //Log.d(LOG_TAG, "sorting state changed '" + sortingState + "'");
 
+                Menu menu = toolbar.getMenu();
+                MenuItem sortByMdateNewFirstItem = menu.findItem(R.id.item_sort_by_mdtate_new_first);
+                MenuItem sortByMdateOldFirstItem = menu.findItem(R.id.item_sort_by_mdtate_old_first);
+                MenuItem sortByTitleItem = menu.findItem(R.id.item_sort_by_title);
 
                 if (sortingState != null) {
 
                     if (sortingState.equals("SORT_BY_MDATE_DESC")) {
+                        sortByMdateNewFirstItem.setChecked(true);
                         List<NoteEntity> items = adapter.getItems();
                         NotesSorter.sortByModificationDateDesc(items);
                         adapter.setItems(items);
                     } else if (sortingState.equals("SORT_BY_MDATE")) {
+                        sortByMdateOldFirstItem.setChecked(true);
                         List<NoteEntity> items = adapter.getItems();
                         NotesSorter.sortByModificationDate(items);
                         adapter.setItems(items);
                     } else if (sortingState.equals("SORT_BY_TEXT")) {
+                        sortByTitleItem.setChecked(true);
                         List<NoteEntity> items = adapter.getItems();
-                        NotesSorter.sortByText(items);
+                        NotesSorter.sortByTitle(items);
                         adapter.setItems(items);
                     }
 
@@ -234,12 +276,119 @@ public class MainActivity extends AppCompatActivity
              }
         });
 
+
+        searchVisibleLiveData.observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean searchVisible) {
+
+                Menu menu = toolbar.getMenu();
+
+                if (searchVisible) {
+                    //Log.d(LOG_TAG, "show search view");
+
+                    // Hide all menu items
+                    for (int i = 0; i < menu.size(); i++)
+                        menu.getItem(i).setVisible(false);
+
+                    toolbarTitle.setVisibility(View.GONE);
+                    searchView.setVisibility(View.VISIBLE);
+
+                }
+                else {
+                    // Show all items
+
+                    //Log.d(LOG_TAG, "hide search view");
+
+                    for (int i = 0; i < menu.size(); i++)
+                        menu.getItem(i).setVisible(true);
+
+                    toolbarTitle.setVisibility(View.VISIBLE);
+                    searchView.setVisibility(View.GONE);
+
+                    searchEditText.setText("");
+
+                    searchNothingFoundView.setVisibility(View.GONE);
+
+                }
+
+            }
+        });
+
+
+        searchEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                ArrayList<NoteEntity> filteredList = new ArrayList<>();
+
+                ArrayList<NoteEntity> notesList = (ArrayList<NoteEntity>) notesListLiveData.getValue();
+
+                if (notesList == null) {
+                    return ;
+                }
+
+                if (! charSequence.toString().equals("")) {
+                    for (NoteEntity note: notesList) {
+                        if (note.getNoteTitle().toLowerCase().contains(charSequence.toString().toLowerCase().trim())) {
+                            filteredList.add(note);
+                        }
+                    }
+
+                    // Check if empty and show message
+                    if (filteredList.isEmpty()) {
+                        //Log.d(LOG_TAG, "nothing found");
+                        searchNothingFoundView.setVisibility(View.VISIBLE);
+                    }
+                    else {
+                        searchNothingFoundView.setVisibility(View.GONE);
+                    }
+
+                    adapter.setItems(filteredList);
+
+
+                }
+                else {
+                    adapter.setItems(notesList);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+
+        // Show 'what's new' dialog if current version run for the first time
+        int lastInstalledVersion = sharedPreferences.getInt(getString(R.string.shared_pref_last_installed_version), 0);
+
+        // DEBUG
+        //lastInstalledVersion = 0;
+
+        if (lastInstalledVersion != BuildConfig.VERSION_CODE) {
+            //Log.d(LOG_TAG, "run version " + BuildConfig.VERSION_CODE + " for the first time, show release info");
+
+            // Show dialog
+            FragmentManager fm = getSupportFragmentManager();
+            VersionChangesDialog dialog = new VersionChangesDialog();
+            dialog.show(fm, "version_change_dialog");
+
+            SharedPreferences.Editor prefEditor = sharedPreferences.edit();
+            prefEditor.putInt(getString(R.string.shared_pref_last_installed_version), BuildConfig.VERSION_CODE);
+            prefEditor.apply();
+        }
     }
 
 
     // Default click listener for recyclerview items
-    class DefaultClickListener implements NotesRecyclerViewAdapter.NoteClickListener,
-           NotesRecyclerViewAdapter.NoteLongClickListener {
+    class DefaultClickListener implements NotesAdapter.NoteClickListener,
+           NotesAdapter.NoteLongClickListener {
 
 
         @Override
@@ -267,8 +416,8 @@ public class MainActivity extends AppCompatActivity
 
     // Set if at least one item in RecyclerView is selected
     // Replaced by default click listener when no items selected
-    class SelectionClickListener implements NotesRecyclerViewAdapter.NoteClickListener,
-            NotesRecyclerViewAdapter.NoteLongClickListener {
+    class SelectionClickListener implements NotesAdapter.NoteClickListener,
+            NotesAdapter.NoteLongClickListener {
 
 
         @Override
@@ -331,8 +480,14 @@ public class MainActivity extends AppCompatActivity
                                 viewModel.removeNote(note);
                             }
 
+                            // Clear selection
                             adapter.unselectAllItems();
                             selectedNotesLiveData.setValue(adapter.getSelectedItems());
+
+                            // Hide searchview if shown
+                            if (searchVisibleLiveData.getValue()) {
+                                searchVisibleLiveData.postValue(false);
+                            }
 
                             vibrator.vibrate(100);
                             snackbar.show();
@@ -379,9 +534,13 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onBackPressed() {
 
+        // If items selected unselect them
         if (adapter.checkIfAnyItemSelected()) {
             adapter.unselectAllItems();
             selectedNotesLiveData.setValue(adapter.getSelectedItems());
+        }
+        else if (searchVisibleLiveData.getValue()) {
+            searchVisibleLiveData.postValue(false);
         }
         else {
             super.onBackPressed();
@@ -397,7 +556,7 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-    // A click hadnler for toolbar menu items
+    // A click handler for toolbar menu items
     @Override
     public boolean onMenuItemClick(MenuItem item) {
 
@@ -413,7 +572,7 @@ public class MainActivity extends AppCompatActivity
                 sortingStateLiveData.postValue("SORT_BY_MDATE");
                 break;
 
-            case R.id.item_sort_by_text:
+            case R.id.item_sort_by_title:
                 //Log.d(LOG_TAG, "sort by text clicked");
                 sortingStateLiveData.postValue("SORT_BY_TEXT");
                 break;
@@ -422,10 +581,14 @@ public class MainActivity extends AppCompatActivity
                 finish();
 
 
+            case R.id.item_search:
+                searchVisibleLiveData.postValue(true);
+
         }
 
 
         return super.onOptionsItemSelected(item);
     }
+
 
 }

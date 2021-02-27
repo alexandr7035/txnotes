@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#E49B6A2E</color>
-    <color name="colorPrimaryDark">#E4603F1E</color>
+
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+
+    <color name="colorPrimary">#9B6A2E</color>
+    <color name="colorPrimaryDark">#603F1E</color>
     <color name="colorAccent">#E4603F1E</color>
     <color name="colorNavigationBar">#000000</color>
+
+    <color name="colorPrimaryButton">#724F24</color>
+    <color name="colorPrimaryButtonPressed">#603F1E</color>
 
     <color name="colorToolbarButtonPressed">#E47E5830</color>
 
@@ -20,6 +27,8 @@
      <color name="color_dialog_button">@android:color/transparent</color>
      <color name="color_dialog_button_pressed">#C5C5C5</color>
     <color name="color_dialog_button_text">@color/colorPrimaryDark</color>
+
+    <color name="hint_search">#C2C2C2</color>
 
 
 </resources>

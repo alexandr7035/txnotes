@@ -1,3 +1,7 @@
+keystore.properties
+
+.idea/
+
  Built application files
 *.apk
 *.aar

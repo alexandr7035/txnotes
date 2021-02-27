@@ -7,7 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.text.format.DateFormat;
-import android.util.Log;
+import android.text.method.KeyListener;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -33,22 +33,25 @@ import java.util.concurrent.ExecutionException;
 public class NoteActivity extends AppCompatActivity
                           implements Toolbar.OnMenuItemClickListener, ExitConfirmationDialog.ExitConfirmationDialogClickListener {
 
+    private final int MAX_TITLE_LENGTH = 30;
     private final String LOG_TAG = "DEBUG_TXNOTES";
 
-    private EditText noteTextView;
+    private NoteViewModel viewModel;
     private MutableLiveData<String> activityStateLiveData;
-
-    private TextView toolbarTitle;
-
     private MutableLiveData<NoteEntity> noteLiveData;
 
-    private NoteViewModel viewModel;
+    private TextView toolbarTitle;
+    private EditText noteTitleView;
+    private EditText noteTextView;
+
+    // Key listeners for editable fields
+    private KeyListener defaultKeyListener;
+    private final KeyListener showingKeyListener = null;
 
     private BottomSheetDialog infoDialog;
+    private ExitConfirmationDialog exitConfirmationDialog;
 
     private Vibrator vibrator;
-
-    private ExitConfirmationDialog exitConfirmationDialog;
 
     private long note_id;
 
@@ -67,8 +70,11 @@ public class NoteActivity extends AppCompatActivity
         final Toolbar toolbar = findViewById(R.id.toolbar);
         toolbarTitle = findViewById(R.id.toolbarTitle);
         noteTextView = findViewById(R.id.noteTextView);
+        noteTitleView = findViewById(R.id.noteTitleView);
 
-
+        // Save key listener
+        // Key listeners are equal for all edit texts, so get 1
+        defaultKeyListener = noteTextView.getKeyListener();
 
         // Close activity on navigation btn click
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -123,7 +129,12 @@ public class NoteActivity extends AppCompatActivity
                 if (activityState != null) {
                     if (activityState.equals("STATE_CREATING")) {
                         toolbarTitle.setText(getString(R.string.activity_create_note_title));
-                        noteTextView.setEnabled(true);
+
+                        noteTextView.setTextIsSelectable(true);
+                        noteTextView.setKeyListener(defaultKeyListener);
+
+                        noteTitleView.setTextIsSelectable(true);
+                        noteTitleView.setKeyListener(defaultKeyListener);
 
                         toolbar.getMenu().findItem(R.id.item_edit_note).setVisible(false);
                         toolbar.getMenu().findItem(R.id.item_save_note).setVisible(true);
@@ -134,7 +145,12 @@ public class NoteActivity extends AppCompatActivity
 
                     else if (activityState.equals("STATE_SHOWING")) {
                         toolbarTitle.setText(getString(R.string.activity_show_note_title));
-                        noteTextView.setEnabled(false);
+
+                        noteTextView.setTextIsSelectable(true);
+                        noteTextView.setKeyListener(null);
+
+                        noteTitleView.setTextIsSelectable(true);
+                        noteTitleView.setKeyListener(null);
 
                         try {
                             noteLiveData.postValue(viewModel.getNote(note_id));
@@ -151,7 +167,12 @@ public class NoteActivity extends AppCompatActivity
 
                     else if (activityState.equals("STATE_EDITING")) {
                         toolbarTitle.setText(getString(R.string.activity_edit_note_title));
-                        noteTextView.setEnabled(true);
+
+                        noteTextView.setTextIsSelectable(true);
+                        noteTextView.setKeyListener(defaultKeyListener);
+
+                        noteTitleView.setTextIsSelectable(true);
+                        noteTitleView.setKeyListener(defaultKeyListener);
 
                         toolbar.getMenu().findItem(R.id.item_edit_note).setVisible(false);
                         toolbar.getMenu().findItem(R.id.item_save_note).setVisible(true);
@@ -171,6 +192,7 @@ public class NoteActivity extends AppCompatActivity
             public void onChanged(@Nullable NoteEntity note) {
 
                 noteTextView.setText(note.getNoteText());
+                noteTitleView.setText(note.getNoteTitle());
 
                 // Views
                 TextView creationDateView = infoDialog.findViewById(R.id.note_info_creation_date_value);
@@ -243,54 +265,47 @@ public class NoteActivity extends AppCompatActivity
     @Override
     public boolean onMenuItemClick(MenuItem item) {
 
+        int itemId = item.getItemId();
+        
+        if (itemId == R.id.item_save_note) {// Prohibit saving empty notes
+            if (noteTextView.getText().toString().trim().equals("") && noteTitleView.getText().toString().trim().equals("")) {
+                vibrator.vibrate(200);
 
-        switch (item.getItemId()) {
-            case R.id.item_save_note:
+                Toast toast = Toast.makeText(this, getString(R.string.toast_cant_save_empty_note),
+                        Toast.LENGTH_SHORT);
+                toast.show();
+                return super.onOptionsItemSelected(item);
 
+            }
 
-                // Prohibit saving empty notes
-                if (noteTextView.getText().toString().trim().equals("")) {
-                    vibrator.vibrate(300);
+            saveNote();
 
-                    Toast toast = Toast.makeText(this, getString(R.string.toast_cant_save_empty_note),
-                                Toast.LENGTH_SHORT);
-                    toast.show();
-                    break;
+            if (activityStateLiveData.getValue() != null) {
+                activityStateLiveData.postValue("STATE_SHOWING");
+            }
 
-                }
+        }
 
-                saveNote();
+        else if (itemId == R.id.item_edit_note) {
+            if (activityStateLiveData.getValue() != null) {
+                activityStateLiveData.postValue("STATE_EDITING");
+            }
+        }
 
-                if (activityStateLiveData.getValue() != null) {
-                    activityStateLiveData.postValue("STATE_SHOWING");
-                }
+        else if (itemId == R.id.item_show_info) {// Show info dialog
+            // The info is updating inside noteLiveData observer
+            infoDialog.show();
+        }
 
-                break;
-
-            case R.id.item_edit_note:
-
-                if (activityStateLiveData.getValue() != null) {
-                    activityStateLiveData.postValue("STATE_EDITING");
-                }
-
-                break;
-
-            case R.id.item_show_info:
-                // Show info dialog
-                // The info is updating inside noteLiveData observer
-                infoDialog.show();
-                break;
-
-            case R.id.item_copy_text:
-                // Copy note text to clipboard
-                ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                ClipData clip = ClipData.newPlainText("note_text", noteTextView.getText().toString());
-                if (clipboard != null) {
-                    clipboard.setPrimaryClip(clip);
-                    Toast toast = Toast.makeText(this, getString(R.string.toast_text_copied),
-                            Toast.LENGTH_SHORT);
-                    toast.show();
-                }
+        else if (itemId == R.id.item_copy_text) {// Copy note text to clipboard
+            ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+            ClipData clip = ClipData.newPlainText("note_text", noteTextView.getText().toString());
+            if (clipboard != null) {
+                clipboard.setPrimaryClip(clip);
+                Toast toast = Toast.makeText(this, getString(R.string.toast_text_copied),
+                        Toast.LENGTH_SHORT);
+                toast.show();
+            }
         }
 
         return super.onOptionsItemSelected(item);
@@ -324,11 +339,13 @@ public class NoteActivity extends AppCompatActivity
 
     // Saves note or creates a new one 
     private void saveNote() {
-        // Create a new note
-        // Learn id of created note in order to correctly update state livedata
-        if (note_id == 0) {
+        // If note_id is 0, create a new note
+        // Else get existing from viewmodel and update it
 
-            NoteEntity note = new NoteEntity();
+        NoteEntity note;
+
+        if (note_id == 0) {
+            note = new NoteEntity();
 
             // Set modification date same as creation date
             // In order to implement correct sorting by date
@@ -336,41 +353,55 @@ public class NoteActivity extends AppCompatActivity
             long creation_date = System.currentTimeMillis() / 1000;
             note.setNoteCreationDate(creation_date);
             note.setNoteModificationDate(creation_date);
-
-            note.setNoteText(noteTextView.getText().toString());
-
+        }
+        else {
             try {
+                // Get existing note
+                note = viewModel.getNote(note_id);
+                note.setNoteModificationDate(System.currentTimeMillis() / 1000);
+            }
+            catch (InterruptedException | ExecutionException exception) {
+                Toast.makeText(this, getString(R.string.toast_saving_error), Toast.LENGTH_LONG).show();
+                return ;
+            }
+        }
+
+
+        note.setNoteText(noteTextView.getText().toString());
+
+        String note_title_text = noteTitleView.getText().toString().trim();
+        if (note_title_text.equals("")) {
+            // If title is not specified get first 30 symbols from note text
+            note.setNoteTitle(getSubstring(noteTextView.getText().toString().trim().replaceAll("[\\t\\n\\r]+"," "), 30));
+        }
+        else {
+            note.setNoteTitle(noteTitleView.getText().toString().trim());
+        }
+
+
+        // Save new note
+        if (note_id == 0) {
+            try {
+                // Update note_id for next uses
                 note_id = viewModel.createNote(note);
                 //Log.d(LOG_TAG, "CREATED NOTE ID " + note_id);
             } catch (ExecutionException | InterruptedException e) {
-                e.printStackTrace();
+                Toast.makeText(this, getString(R.string.toast_saving_error), Toast.LENGTH_LONG).show();
+                return ;
             }
-
         }
-
+        // Update existing note
         else {
-            //Log.d(LOG_TAG, "EDITED NOTE ID " + note_id);
-
-            try {
-                NoteEntity note = viewModel.getNote(note_id);
-                note.setNoteModificationDate(System.currentTimeMillis() / 1000);
-                note.setNoteText(noteTextView.getText().toString());
-                viewModel.updateNote(note);
-
-            } catch (ExecutionException | InterruptedException e) {
-                e.printStackTrace();
-            }
-
+            viewModel.updateNote(note);
         }
 
+        noteLiveData.postValue(note);
 
-        // Update LiveData
-        try {
-            NoteEntity note = viewModel.getNote(note_id);
-            noteLiveData.postValue(note);
-        } catch (ExecutionException | InterruptedException e) {
-            e.printStackTrace();
-        }
+    }
+
+
+    private String getSubstring(String s, int symbols) {
+        return s.substring(0, Math.min(s.length(), MAX_TITLE_LENGTH)).trim();
     }
 }
 

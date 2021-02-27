@@ -13,6 +13,7 @@
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
+        android:elevation="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -34,30 +35,50 @@
 
     </androidx.appcompat.widget.Toolbar>
 
+    <EditText
+        android:id="@+id/noteTitleView"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/default_field_background"
+        android:ems="10"
+        android:hint="@string/hint_set_note_title_text"
+        android:inputType="text"
+        android:maxLines="1"
+        android:maxLength="50"
+        android:padding="10dp"
+        android:textColor="@drawable/color_note_text"
+        android:textSize="@dimen/note_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_margin="10dp"
         android:fillViewport="true"
+        android:scrollbarThumbVertical="@drawable/scrollbar"
+        android:scrollbarSize="3dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+        app:layout_constraintTop_toBottomOf="@+id/noteTitleView">
 
         <EditText
             android:id="@+id/noteTextView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
+            android:linksClickable="true"
+            android:autoLink="web|email"
             android:background="@drawable/default_field_background"
             android:ems="10"
-            android:enabled="false"
             android:gravity="start|top"
             android:hint="@string/hint_set_note_text"
             android:inputType="textMultiLine"
             android:padding="10dp"
             android:textColor="@drawable/color_note_text"
-            android:textSize="@dimen/show_note_text" />
+            android:textSize="@dimen/note_text" />
 
 
     </ScrollView>
