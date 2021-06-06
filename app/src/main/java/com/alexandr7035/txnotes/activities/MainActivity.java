@@ -560,30 +560,21 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onMenuItemClick(MenuItem item) {
 
-        switch (item.getItemId()) {
-
-            case R.id.item_sort_by_mdtate_new_first:
-                //Log.d(LOG_TAG, "sort by mdate desc clicked");
-                sortingStateLiveData.postValue("SORT_BY_MDATE_DESC");
-                break;
-
-            case R.id.item_sort_by_mdtate_old_first:
-                //Log.d(LOG_TAG, "sort by mdate clicked");
-                sortingStateLiveData.postValue("SORT_BY_MDATE");
-                break;
-
-            case R.id.item_sort_by_title:
-                //Log.d(LOG_TAG, "sort by text clicked");
-                sortingStateLiveData.postValue("SORT_BY_TEXT");
-                break;
-
-            case R.id.item_exit:
-                finish();
-
-
-            case R.id.item_search:
-                searchVisibleLiveData.postValue(true);
-
+        int itemId = item.getItemId();
+        if (itemId == R.id.item_sort_by_mdtate_new_first) {//Log.d(LOG_TAG, "sort by mdate desc clicked");
+            sortingStateLiveData.postValue("SORT_BY_MDATE_DESC");
+        }
+        else if (itemId == R.id.item_sort_by_mdtate_old_first) {//Log.d(LOG_TAG, "sort by mdate clicked");
+            sortingStateLiveData.postValue("SORT_BY_MDATE");
+        }
+        else if (itemId == R.id.item_sort_by_title) {//Log.d(LOG_TAG, "sort by text clicked");
+            sortingStateLiveData.postValue("SORT_BY_TEXT");
+        }
+        else if (itemId == R.id.item_exit) {
+            finish();
+        }
+        else if (itemId == R.id.item_search) {
+            searchVisibleLiveData.postValue(true);
         }
 
 
