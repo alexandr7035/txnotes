@@ -24,13 +24,52 @@ class NoteToTxtSaver {
         private val TEXT_DATE_FORMAT = "dd.MM.yyyy HH:mm"
 
         private const val LOG_TAG = "DEBUG_TXNOTES"
-
-        //fun saveNotesToTxt(context: Context, notes: List<NoteEntity>) {
+        
         fun saveNotesToTxt(context: Context, notes: List<NoteEntity>) {
 
             // API 29+
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                val cv = ContentValues()
+                val resolver = context.contentResolver
 
+                notes.forEach {
+
+                    var text = ""
+                    text += "Creation date: ${DateFormat.format(TEXT_DATE_FORMAT, it.noteCreationDate * 1000)}\n"
+
+                    if (it.noteModificationDate != it.noteCreationDate) {
+                        text += "Modification date: ${DateFormat.format(TEXT_DATE_FORMAT, it.noteModificationDate * 1000)}\n"
+                    }
+                    else {
+                        text += "Modification date: -\n"
+                    }
+
+                    text += "\n${it.note_title}\n"
+                    text += "\n${it.note_text}\n"
+
+                    cv.apply {
+                        put(MediaStore.MediaColumns.TITLE, it.note_title + ".txt")
+                        put(MediaStore.MediaColumns.DISPLAY_NAME, it.note_title + ".txt")
+                        put(MediaStore.MediaColumns.MIME_TYPE, "text/plain")
+                        Log.d(LOG_TAG, MediaStore.Downloads.RELATIVE_PATH)
+                        put(MediaStore.MediaColumns.RELATIVE_PATH, "Download/$NOTES_DIR_NAME")
+                    }
+
+                    val collection = MediaStore.Downloads.EXTERNAL_CONTENT_URI
+                    val uri = resolver.insert(collection, cv)
+
+                    if (uri != null) {
+                        val pfd: ParcelFileDescriptor? = resolver.openFileDescriptor(uri, "w")
+
+                        val inputStream = text.byteInputStream()
+                        val outputStream = FileOutputStream(pfd!!.fileDescriptor)
+
+                        val bytes: Long = inputStream.copyTo(outputStream, COPY_BUFFER_SIZE)
+
+                        inputStream.close()
+                        outputStream.close()
+                    }
+                }
             }
             // API before 29
             else {
