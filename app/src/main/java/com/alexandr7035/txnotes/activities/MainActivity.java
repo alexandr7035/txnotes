@@ -41,6 +41,7 @@ import com.alexandr7035.txnotes.BuildConfig;
 import com.alexandr7035.txnotes.R;
 import com.alexandr7035.txnotes.adapters.NotesAdapter;
 import com.alexandr7035.txnotes.db.NoteEntity;
+import com.alexandr7035.txnotes.dialogs.ExportNotesConformationDialog;
 import com.alexandr7035.txnotes.dialogs.VersionChangesDialog;
 import com.alexandr7035.txnotes.utils.NoteToTxtSaver;
 import com.alexandr7035.txnotes.utils.NotesSorter;
@@ -62,7 +63,6 @@ public class MainActivity extends AppCompatActivity
 
     private DefaultClickListener defaultClickListener;
     private SelectionClickListener selectionClickListener;
-
 
     // Views
     private ConstraintLayout mainLayout;
@@ -581,6 +581,11 @@ public class MainActivity extends AppCompatActivity
 
         else if (itemId == R.id.item_export_to_txt) {
             showToast("Save files to Downloads/TXNotes");
+
+            // Show dialog
+            FragmentManager fm = getSupportFragmentManager();
+            ExportNotesConformationDialog dialog = new ExportNotesConformationDialog();
+            dialog.show(fm, "export_confirmation");
 
             // FIXME
             List<NoteEntity> notes = notesListLiveData.getValue();

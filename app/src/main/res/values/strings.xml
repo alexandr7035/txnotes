@@ -49,6 +49,7 @@
 
     <string name="dialog_change_log_title">Изменения в v%1$s</string>
     <string name="dialog_ok">OK</string>
+    <string name="dialog_cancel">Отмена</string>
 
     <string name="search_hint">Поиск</string>
     <string name="search_nothing_found">Ничего не найдено :(</string>
@@ -62,4 +63,6 @@
         • Множество улучшений в UI приложения
     </string>
     <string name="menu_export_to_txt">Экспорт в TXT</string>
+
+    <string name="export_notes_description_text">Экспортировать заметки в Downloads/TXNotes?</string>
 </resources>
