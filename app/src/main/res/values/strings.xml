@@ -61,4 +61,5 @@
         • Ссылки в тексте заметки теперь кликабельны \n
         • Множество улучшений в UI приложения
     </string>
+    <string name="menu_export_to_txt">Экспорт в TXT</string>
 </resources>

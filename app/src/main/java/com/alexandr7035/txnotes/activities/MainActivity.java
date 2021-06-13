@@ -21,6 +21,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -41,6 +42,7 @@ import com.alexandr7035.txnotes.R;
 import com.alexandr7035.txnotes.adapters.NotesAdapter;
 import com.alexandr7035.txnotes.db.NoteEntity;
 import com.alexandr7035.txnotes.dialogs.VersionChangesDialog;
+import com.alexandr7035.txnotes.utils.NoteToTxtSaver;
 import com.alexandr7035.txnotes.utils.NotesSorter;
 import com.alexandr7035.txnotes.viewmodel.MainViewModel;
 import com.alexandr7035.txnotes.viewmodel.MainViewModelFactory;
@@ -577,9 +579,22 @@ public class MainActivity extends AppCompatActivity
             searchVisibleLiveData.postValue(true);
         }
 
+        else if (itemId == R.id.item_export_to_txt) {
+            showToast("Save files to Downloads/TXNotes");
+
+            // FIXME
+            List<NoteEntity> notes = notesListLiveData.getValue();
+
+            if (notes != null) {
+                NoteToTxtSaver.Companion.saveNotesToTxt(this, notes);
+            }
+        }
 
         return super.onOptionsItemSelected(item);
     }
 
+    private void showToast(String text) {
+        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
+    }
 
 }
