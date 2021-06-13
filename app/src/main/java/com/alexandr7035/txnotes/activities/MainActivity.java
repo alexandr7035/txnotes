@@ -587,12 +587,25 @@ public class MainActivity extends AppCompatActivity
             ExportNotesConformationDialog dialog = new ExportNotesConformationDialog();
             dialog.show(fm, "export_confirmation");
 
-            // FIXME
-            List<NoteEntity> notes = notesListLiveData.getValue();
+            dialog.setActionHandler(new ExportNotesConformationDialog.DialogActionHandler() {
+                @Override
+                public void onPositiveClick() {
+                    // FIXME
+                    List<NoteEntity> notes = notesListLiveData.getValue();
 
-            if (notes != null) {
-                NoteToTxtSaver.Companion.saveNotesToTxt(this, notes);
-            }
+                    if (notes != null) {
+                        NoteToTxtSaver.Companion.saveNotesToTxt(MainActivity.this, notes);
+                    }
+
+                    dialog.dismiss();
+                }
+
+                @Override
+                public void onNegativeClick() {
+                    dialog.dismiss();
+                }
+            });
+
         }
 
         return super.onOptionsItemSelected(item);

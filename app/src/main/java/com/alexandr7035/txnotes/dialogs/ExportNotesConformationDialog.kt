@@ -4,11 +4,9 @@ import android.app.Dialog
 import android.graphics.Insets
 import android.os.Build
 import android.os.Bundle
-import android.text.Html
 import android.util.DisplayMetrics
 import android.view.*
 import android.widget.TextView
-import androidx.core.text.HtmlCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
 import com.alexandr7035.txnotes.R
@@ -16,6 +14,10 @@ import com.alexandr7035.txnotes.R
 class ExportNotesConformationDialog: DialogFragment(), View.OnClickListener {
 
     private val LOG_TAG = "DEBUG_TXNOTES"
+    private lateinit var actionHandler: DialogActionHandler
+
+    private lateinit var btnCancel: TextView
+    private lateinit var btnContinue: TextView
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
@@ -33,6 +35,11 @@ class ExportNotesConformationDialog: DialogFragment(), View.OnClickListener {
 
         dialog?.window?.setBackgroundDrawable(resources.getDrawable(R.drawable.background_dialog))
         isCancelable = false
+
+        btnCancel = dialogView.findViewById(R.id.btnCancel)
+        btnContinue= dialogView.findViewById(R.id.btnContinue)
+        btnCancel.setOnClickListener(this)
+        btnContinue.setOnClickListener(this)
 
         return dialogView
     }
@@ -68,9 +75,22 @@ class ExportNotesConformationDialog: DialogFragment(), View.OnClickListener {
         }
     }
 
+    override fun onClick(v: View) {
+        if (v.id == btnCancel.id) {
+            actionHandler.onNegativeClick()
+        }
+        else {
+            actionHandler.onPositiveClick()
+        }
+    }
 
-    override fun onClick(v: View?) {
+    fun setActionHandler(actionHandler: DialogActionHandler) {
+        this.actionHandler = actionHandler
+    }
 
+    interface DialogActionHandler {
+        fun onPositiveClick()
+        fun onNegativeClick()
     }
 
 }
