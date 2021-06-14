@@ -31,6 +31,7 @@ import com.alexandr7035.txnotes.dialogs.ExportNotesConformationDialog.DialogActi
 import com.alexandr7035.txnotes.dialogs.VersionChangesDialog
 import com.alexandr7035.txnotes.utils.NoteToTxtSaver.Companion.saveNotesToTxt
 import com.alexandr7035.txnotes.utils.NotesSorter
+import com.alexandr7035.txnotes.utils.SortingState
 import com.alexandr7035.txnotes.viewmodel.MainViewModel
 import com.alexandr7035.txnotes.viewmodel.MainViewModelFactory
 import com.google.android.material.snackbar.Snackbar
@@ -167,23 +168,17 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
 
             if (sortingState != null) {
                 when (sortingState) {
-                    "SORT_BY_MDATE_DESC" -> {
+                    SortingState.SORT_BY_MDATE_DESC -> {
                         sortByMdateNewFirstItem.isChecked = true
-                        val items = adapter.items
-                        NotesSorter.sortByModificationDateDesc(items)
-                        adapter.items = items
+                        NotesSorter.sortByModificationDateDesc(adapter.items)
                     }
-                    "SORT_BY_MDATE" -> {
+                    SortingState.SORT_BY_MDATE -> {
                         sortByMdateOldFirstItem.isChecked = true
-                        val items = adapter.items
-                        NotesSorter.sortByModificationDate(items)
-                        adapter.items = items
+                        NotesSorter.sortByModificationDate(adapter.items)
                     }
-                    "SORT_BY_TEXT" -> {
+                    SortingState.SORT_BY_TEXT -> {
                         sortByTitleItem.isChecked = true
-                        val items = adapter.items
-                        NotesSorter.sortByTitle(items)
-                        adapter.items = items
+                        NotesSorter.sortByTitle(adapter.items)
                     }
                 }
 
