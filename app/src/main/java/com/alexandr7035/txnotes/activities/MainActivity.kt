@@ -121,8 +121,8 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
                 if (notes != null) {
                     val sortingMode = sharedPreferences.getString(
                         getString(R.string.shared_pref_key_sorting),
-                        "SORT_BY_MDATE_DESC"
-                    )
+                        SortingState.SORT_BY_MDATE_DESC)
+
                     adapter.items = notes
                     sortingStateLiveData.postValue(sortingMode)
                 }
@@ -159,26 +159,33 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
         })
 
 
-        // Livedata that updates sorting
+        // Sorting handling
+        val sortByMdateNewFirstItem = binding.toolbar.menu.findItem(R.id.item_sort_by_mdtate_new_first)
+        val sortByMdateOldFirstItem = binding.toolbar.menu.findItem(R.id.item_sort_by_mdtate_old_first)
+        val sortByTitleItem = binding.toolbar.menu.findItem(R.id.item_sort_by_title)
+
         sortingStateLiveData.observe(this, { sortingState ->
             //Log.d(LOG_TAG, "sorting state changed '" + sortingState + "'");
-            val sortByMdateNewFirstItem = binding.toolbar.menu.findItem(R.id.item_sort_by_mdtate_new_first)
-            val sortByMdateOldFirstItem = binding.toolbar.menu.findItem(R.id.item_sort_by_mdtate_old_first)
-            val sortByTitleItem = binding.toolbar.menu.findItem(R.id.item_sort_by_title)
 
             if (sortingState != null) {
                 when (sortingState) {
                     SortingState.SORT_BY_MDATE_DESC -> {
                         sortByMdateNewFirstItem.isChecked = true
+                        val items = adapter.items
                         NotesSorter.sortByModificationDateDesc(adapter.items)
+                        adapter.items = items
                     }
                     SortingState.SORT_BY_MDATE -> {
                         sortByMdateOldFirstItem.isChecked = true
-                        NotesSorter.sortByModificationDate(adapter.items)
+                        val items = adapter.items
+                        NotesSorter.sortByModificationDate(items)
+                        adapter.items = items
                     }
                     SortingState.SORT_BY_TEXT -> {
                         sortByTitleItem.isChecked = true
-                        NotesSorter.sortByTitle(adapter.items)
+                        val items = adapter.items
+                        NotesSorter.sortByTitle(items)
+                        adapter.items = items
                     }
                 }
 
@@ -423,13 +430,13 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
     override fun onMenuItemClick(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.item_sort_by_mdtate_new_first -> { //Log.d(LOG_TAG, "sort by mdate desc clicked");
-                sortingStateLiveData.postValue("SORT_BY_MDATE_DESC")
+                sortingStateLiveData.postValue(SortingState.SORT_BY_MDATE_DESC)
             }
             R.id.item_sort_by_mdtate_old_first -> { //Log.d(LOG_TAG, "sort by mdate clicked");
-                sortingStateLiveData.postValue("SORT_BY_MDATE")
+                sortingStateLiveData.postValue(SortingState.SORT_BY_MDATE)
             }
             R.id.item_sort_by_title -> { //Log.d(LOG_TAG, "sort by text clicked");
-                sortingStateLiveData.postValue("SORT_BY_TEXT")
+                sortingStateLiveData.postValue(SortingState.SORT_BY_TEXT)
             }
             R.id.item_exit -> {
                 finish()
