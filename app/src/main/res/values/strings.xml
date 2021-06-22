@@ -15,7 +15,7 @@
     <string name="snack_delete_notes">Заметки удалены (%1$s)</string>
 
     <!-- Dialogs -->
-    <string name="dialog_delete_note_message"><![CDATA[<b>Удалить заметки?</b> [%1$s]]]></string>
+    <string name="dialog_delete_note_message"><![CDATA[<b>Удалить заметки?</b> [%1$d]]]></string>
     <string name="dialog_delete_note_positive">Да</string>
     <string name="dialog_delete_note_negative">Нет</string>
 

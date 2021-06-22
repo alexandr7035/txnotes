@@ -26,9 +26,11 @@ import com.alexandr7035.txnotes.adapters.NotesAdapter.NoteClickListener
 import com.alexandr7035.txnotes.adapters.NotesAdapter.NoteLongClickListener
 import com.alexandr7035.txnotes.databinding.ActivityMainBinding
 import com.alexandr7035.txnotes.db.NoteEntity
+import com.alexandr7035.txnotes.dialogs.DeleteNotesDialog
 import com.alexandr7035.txnotes.dialogs.ExportNotesConformationDialog
 import com.alexandr7035.txnotes.dialogs.ExportNotesConformationDialog.DialogActionHandler
 import com.alexandr7035.txnotes.dialogs.VersionChangesDialog
+import com.alexandr7035.txnotes.dialogs.core.PosNegDialog
 import com.alexandr7035.txnotes.utils.NoteToTxtSaver.Companion.saveNotesToTxt
 import com.alexandr7035.txnotes.utils.NotesSorter
 import com.alexandr7035.txnotes.utils.SortingState
@@ -336,71 +338,45 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
 
         val snackBar = Snackbar.make(binding.mainLayout, text, Snackbar.LENGTH_LONG)
 
-        val dialogClickListener = DialogInterface.OnClickListener { dialog, which ->
-            when (which) {
-                DialogInterface.BUTTON_POSITIVE -> {
-                    //Yes button clicked
+        // Show dialog
+        val fm = supportFragmentManager
+        val dialog = DeleteNotesDialog(deletingNotesCount)
+        dialog.show(fm, dialog.FM_TAG)
 
-                    // Delete notes
-                    for (note in adapter.selectedItems) {
-                        // Remove from db
-                        viewModel.removeNote(note)
-                    }
+        dialog.setActionHandler(object : PosNegDialog.DialogActionHandler {
+            override fun onPositiveClick() {
 
-                    // Clear selection
-                    adapter.unselectAllItems()
-                    selectedNotesLiveData.value = adapter.selectedItems
-
-                    // Hide searchView if shown
-                    if (searchVisibleLiveData.value!!) {
-                        searchVisibleLiveData.postValue(false)
-                    }
-                    vibrator.vibrate(100)
-                    snackBar.show()
-                    adapter.unselectAllItems()
-                    selectedNotesLiveData.setValue(adapter.selectedItems)
+                // Delete notes
+                for (note in adapter.selectedItems) {
+                    // Remove from db
+                    viewModel.removeNote(note)
                 }
-                DialogInterface.BUTTON_NEGATIVE -> {
-                    adapter.unselectAllItems()
-                    selectedNotesLiveData.setValue(adapter.selectedItems)
+
+                // Clear selection
+                adapter.unselectAllItems()
+                selectedNotesLiveData.value = adapter.selectedItems
+
+                // Hide searchView if shown
+                if (searchVisibleLiveData.value!!) {
+                    searchVisibleLiveData.postValue(false)
                 }
+                vibrator.vibrate(100)
+                snackBar.show()
+                adapter.unselectAllItems()
+                selectedNotesLiveData.value = adapter.selectedItems
+
+                dialog.dismiss()
             }
-        }
-        val builder = AlertDialog.Builder(this@MainActivity)
-        builder.setMessage(
-            Html.fromHtml(
-                getString(
-                    R.string.dialog_delete_note_message,
-                    "" + deletingNotesCount
-                )
-            )
-        )
-        builder.setPositiveButton(
-            getString(R.string.dialog_delete_note_positive),
-            dialogClickListener
-        )
-        builder.setNegativeButton(
-            getString(R.string.dialog_delete_note_negative),
-            dialogClickListener
-        )
-        val dialog = builder.create()
-        dialog.setCanceledOnTouchOutside(false)
-        dialog.show()
-        val msgTxt = dialog.findViewById<TextView>(android.R.id.message)
-        val posBtn = dialog.getButton(DialogInterface.BUTTON_POSITIVE)
-        val negBtn = dialog.getButton(DialogInterface.BUTTON_NEGATIVE)
-        msgTxt!!.setTextSize(
-            TypedValue.COMPLEX_UNIT_PX,
-            resources.getDimension(R.dimen.dialog_message_text)
-        )
-        posBtn.setTextSize(
-            TypedValue.COMPLEX_UNIT_PX,
-            resources.getDimension(R.dimen.dialog_message_btn)
-        )
-        negBtn.setTextSize(
-            TypedValue.COMPLEX_UNIT_PX,
-            resources.getDimension(R.dimen.dialog_message_btn)
-        )
+
+            override fun onNegativeClick() {
+
+                adapter.unselectAllItems()
+                selectedNotesLiveData.value = adapter.selectedItems
+
+                dialog.dismiss()
+            }
+        })
+        
     }
 
     // Override back button in MainActivity
