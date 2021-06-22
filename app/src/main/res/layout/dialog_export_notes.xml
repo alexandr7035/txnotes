@@ -29,7 +29,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/btnCancel"
+            android:id="@+id/btnNegative"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
@@ -43,7 +43,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/btnContinue"
+            android:id="@+id/btnPositive"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"

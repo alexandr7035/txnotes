@@ -36,8 +36,8 @@ class ExportNotesConformationDialog: DialogFragment(), View.OnClickListener {
         dialog?.window?.setBackgroundDrawable(resources.getDrawable(R.drawable.background_dialog))
         isCancelable = false
 
-        btnCancel = dialogView.findViewById(R.id.btnCancel)
-        btnContinue= dialogView.findViewById(R.id.btnContinue)
+        btnCancel = dialogView.findViewById(R.id.btnNegative)
+        btnContinue = dialogView.findViewById(R.id.btnPositive)
         btnCancel.setOnClickListener(this)
         btnContinue.setOnClickListener(this)
 
