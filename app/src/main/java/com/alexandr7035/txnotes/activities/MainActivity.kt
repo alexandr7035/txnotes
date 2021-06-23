@@ -1,18 +1,14 @@
 package com.alexandr7035.txnotes.activities
 
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Vibrator
 import android.text.Editable
-import android.text.Html
 import android.text.TextWatcher
-import android.util.TypedValue
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.LiveData
@@ -37,7 +33,12 @@ import com.alexandr7035.txnotes.utils.SortingState
 import com.alexandr7035.txnotes.viewmodel.MainViewModel
 import com.alexandr7035.txnotes.viewmodel.MainViewModelFactory
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.*
+
 
 class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
 
@@ -421,7 +422,6 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
                 searchVisibleLiveData.postValue(true)
             }
             R.id.item_export_to_txt -> {
-                showToast("Save files to Downloads/TXNotes")
 
                 // Show dialog
                 val fm = supportFragmentManager
@@ -429,11 +429,20 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
                 dialog.show(fm, "export_confirmation")
                 dialog.setActionHandler(object : DialogActionHandler {
                     override fun onPositiveClick() {
-                        // FIXME
                         val notes = notesListLiveData.value
+
                         if (notes != null) {
-                            saveNotesToTxt(this@MainActivity, notes)
+                            // Save asynchronously
+                            CoroutineScope(Dispatchers.IO).launch {
+                                saveNotesToTxt(this@MainActivity, notes)
+
+                                withContext(Dispatchers.Main) {
+                                    // FIXME
+                                    showToast("Notes have been exported")
+                                }
+                            }
                         }
+
                         dialog.dismiss()
                     }
 
