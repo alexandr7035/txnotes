@@ -65,4 +65,21 @@
     <string name="menu_export_to_txt">Экспорт в TXT</string>
 
     <string name="export_notes_description_text">Экспортировать заметки в Downloads/TXNotes?</string>
+
+    <string name="sp_permission_write_external_storage_first_request">PERMISSION_WRITE_EXTERNAL_STORAGE_FIRST_REQUEST</string>
+
+
+    <string name="info_permission_WES">
+        Недостаточно прав. Для данной функции приложению требуется право на запись в хранилище.
+        Предоставьте право и попробуйте снова.
+    </string>
+
+    <string name="info_permission_WES_with_settings">
+        Недостаточно прав. Для данной функции приложению требуется право на запись в хранилище.
+        Предоставьте право в настройках и попробуйте снова.
+    </string>
+
+    <string name="not_enough_rights">Недостаточно прав</string>
+
+    <string name="to_settings">В настройки</string>
 </resources>

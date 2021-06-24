@@ -1,16 +1,24 @@
 package com.alexandr7035.txnotes.activities
 
+import android.Manifest
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Vibrator
+import android.provider.Settings
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
@@ -22,11 +30,10 @@ import com.alexandr7035.txnotes.adapters.NotesAdapter.NoteClickListener
 import com.alexandr7035.txnotes.adapters.NotesAdapter.NoteLongClickListener
 import com.alexandr7035.txnotes.databinding.ActivityMainBinding
 import com.alexandr7035.txnotes.db.NoteEntity
-import com.alexandr7035.txnotes.dialogs.DeleteNotesDialog
-import com.alexandr7035.txnotes.dialogs.ExportNotesConformationDialog
+import com.alexandr7035.txnotes.dialogs.*
 import com.alexandr7035.txnotes.dialogs.ExportNotesConformationDialog.DialogActionHandler
-import com.alexandr7035.txnotes.dialogs.VersionChangesDialog
 import com.alexandr7035.txnotes.dialogs.core.PosNegDialog
+import com.alexandr7035.txnotes.dialogs.core.SingleActionDialog
 import com.alexandr7035.txnotes.utils.NoteToTxtSaver.Companion.saveNotesToTxt
 import com.alexandr7035.txnotes.utils.NotesSorter
 import com.alexandr7035.txnotes.utils.SortingState
@@ -409,51 +416,156 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
             R.id.item_sort_by_mdtate_new_first -> { //Log.d(LOG_TAG, "sort by mdate desc clicked");
                 sortingStateLiveData.postValue(SortingState.SORT_BY_MDATE_DESC)
             }
+
             R.id.item_sort_by_mdtate_old_first -> { //Log.d(LOG_TAG, "sort by mdate clicked");
                 sortingStateLiveData.postValue(SortingState.SORT_BY_MDATE)
             }
+
             R.id.item_sort_by_title -> { //Log.d(LOG_TAG, "sort by text clicked");
                 sortingStateLiveData.postValue(SortingState.SORT_BY_TEXT)
             }
+
             R.id.item_exit -> {
                 finish()
             }
+
             R.id.item_search -> {
                 searchVisibleLiveData.postValue(true)
             }
+
             R.id.item_export_to_txt -> {
-
-                // Show dialog
-                val fm = supportFragmentManager
-                val dialog = ExportNotesConformationDialog()
-                dialog.show(fm, "export_confirmation")
-                dialog.setActionHandler(object : DialogActionHandler {
-                    override fun onPositiveClick() {
-                        val notes = notesListLiveData.value
-
-                        if (notes != null) {
-                            // Save asynchronously
-                            CoroutineScope(Dispatchers.IO).launch {
-                                saveNotesToTxt(this@MainActivity, notes)
-
-                                withContext(Dispatchers.Main) {
-                                    // FIXME
-                                    showToast("Notes have been exported")
-                                }
-                            }
-                        }
-
-                        dialog.dismiss()
-                    }
-
-                    override fun onNegativeClick() {
-                        dialog.dismiss()
-                    }
-                })
+                exportNotesToTxt()
             }
         }
         return super.onOptionsItemSelected(item)
     }
+
+
+    private fun exportNotesToTxt() {
+
+        // Request for permissions to write into external storage
+        // Needed for APIs lower that Q
+        // In Q and higher Mediastore is used to save files
+        // See NoteToTxtSaver.kt for details
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                // 2 cases when ActivityCompat.shouldShowRequestPermissionRationalble() is FALSE:
+                // 1) When user has rejected the request previously AND never ask again checkbox was selected.
+                // 2) When user is requesting permission for the first time
+                if (!ActivityCompat.shouldShowRequestPermissionRationale(this,  Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+
+                    // If request is shown for the first time
+                    if (sharedPreferences.getBoolean(getString(R.string.sp_permission_write_external_storage_first_request), true)) {
+
+                        // Show simple info dialog
+                        val dialog = InfoDialog(
+                            title = getString(R.string.not_enough_rights),
+                            description = getString(R.string.info_permission_WES)
+                        )
+                        dialog.show(supportFragmentManager, dialog.FM_TAG)
+
+                        dialog.setActionHandler(object : SingleActionDialog.DialogActionHandler {
+                            override fun onActionClick() {
+
+                                val prefEditor = sharedPreferences.edit()
+                                prefEditor.putBoolean(
+                                    getString(R.string.sp_permission_write_external_storage_first_request),
+                                    false)
+
+                                prefEditor.apply()
+
+                                ActivityCompat.requestPermissions(
+                                    this@MainActivity,
+                                    arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                                    0)
+
+                                dialog.dismiss()
+                            }
+
+                        })
+                    }
+                    // If user rejected the request with "Don't show again checkmark"
+                    // Show info dialog with button redirecting to settings
+                    else {
+                        showToast("EXPLANATION DIALOG HERE")
+
+                        val dialog = PermissionExplanationWESDialog()
+                        dialog.show(supportFragmentManager, dialog.FM_TAG)
+                        dialog.setActionHandler(object : PosNegDialog.DialogActionHandler {
+                            override fun onPositiveClick() {
+                                val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                                val uri = Uri.fromParts("package", this@MainActivity.packageName, null)
+                                intent.data = uri
+                                this@MainActivity.startActivityForResult(intent, 0)
+
+                                dialog.dismiss()
+                            }
+
+                            override fun onNegativeClick() {
+                                dialog.dismiss()
+                            }
+                        })
+                    }
+                }
+
+                // User rejected the request previously but has not checked the "Never Ask Again" checkbox.
+                // So request permission again
+                else {
+
+                    // Show simple info dialog
+                    val dialog = InfoDialog(
+                        title = getString(R.string.not_enough_rights),
+                        description = getString(R.string.info_permission_WES)
+                    )
+                    dialog.show(supportFragmentManager, dialog.FM_TAG)
+
+                    dialog.setActionHandler(object : SingleActionDialog.DialogActionHandler {
+                        override fun onActionClick() {
+
+                            ActivityCompat.requestPermissions(
+                                this@MainActivity,
+                                arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                                0)
+
+                            dialog.dismiss()
+                        }
+                    })
+                }
+
+                return
+            }
+
+        }
+
+        // Show export confirmation dialog
+        val dialog = ExportNotesConformationDialog()
+        dialog.show(supportFragmentManager, "export_confirmation")
+        dialog.setActionHandler(object : DialogActionHandler {
+            override fun onPositiveClick() {
+                val notes = notesListLiveData.value
+
+                if (notes != null) {
+                    // Save asynchronously
+                    CoroutineScope(Dispatchers.IO).launch {
+                        saveNotesToTxt(this@MainActivity, notes)
+
+                        withContext(Dispatchers.Main) {
+                            // FIXME
+                            showToast("Notes have been exported")
+                        }
+                    }
+                }
+
+                dialog.dismiss()
+            }
+
+            override fun onNegativeClick() {
+                dialog.dismiss()
+            }
+        })
+
+    }
+
 
     private fun showToast(text: String) {
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
