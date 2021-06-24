@@ -129,6 +129,9 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
         notesListLiveData.observe(this, { notes ->
 
                 if (notes != null) {
+
+                    binding.toolbar.menu.findItem(R.id.item_export_to_txt).isEnabled = notes.isNotEmpty()
+
                     val sortingMode = sharedPreferences.getString(
                         getString(R.string.shared_pref_key_sorting),
                         SortingState.SORT_BY_MDATE_DESC)
