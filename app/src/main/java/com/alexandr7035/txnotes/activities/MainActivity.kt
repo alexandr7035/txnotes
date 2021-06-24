@@ -450,7 +450,7 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
         // Needed for APIs lower that Q
         // In Q and higher Mediastore is used to save files
         // See NoteToTxtSaver.kt for details
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 // 2 cases when ActivityCompat.shouldShowRequestPermissionRationalble() is FALSE:
                 // 1) When user has rejected the request previously AND never ask again checkbox was selected.
