@@ -23,11 +23,15 @@ class NoteToTxtSaver {
         private val COPY_BUFFER_SIZE = 4096
         private val TEXT_DATE_FORMAT = "dd.MM.yyyy HH:mm"
 
+        private val DIR_DATE_FORMAT = "yyyy-dd-MM HH:mm:ss"
+
         private const val LOG_TAG = "DEBUG_TXNOTES"
         
         fun saveNotesToTxt(context: Context, notes: List<NoteEntity>) {
 
-            // API 29+
+            val EXPORT_DIR = "${DateFormat.format(DIR_DATE_FORMAT, System.currentTimeMillis())}"
+
+                // API 29+
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 val cv = ContentValues()
                 val resolver = context.contentResolver
@@ -47,12 +51,14 @@ class NoteToTxtSaver {
                     text += "\n${it.note_title}\n"
                     text += "\n${it.note_text}\n"
 
+                    val RELATIVE_PATH = "Download" + File.separator + NOTES_DIR_NAME + File.separator + EXPORT_DIR + File.separator
+
                     cv.apply {
                         put(MediaStore.MediaColumns.TITLE, it.note_title + ".txt")
                         put(MediaStore.MediaColumns.DISPLAY_NAME, it.note_title + ".txt")
                         put(MediaStore.MediaColumns.MIME_TYPE, "text/plain")
                         Log.d(LOG_TAG, MediaStore.Downloads.RELATIVE_PATH)
-                        put(MediaStore.MediaColumns.RELATIVE_PATH, "Download/$NOTES_DIR_NAME")
+                        put(MediaStore.MediaColumns.RELATIVE_PATH, RELATIVE_PATH)
                     }
 
                     val collection = MediaStore.Downloads.EXTERNAL_CONTENT_URI
@@ -74,7 +80,7 @@ class NoteToTxtSaver {
             // API before 29
             else {
 
-                val pathToSave = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).absolutePath + File.separator + NOTES_DIR_NAME + File.separator
+                val pathToSave = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).absolutePath + File.separator + NOTES_DIR_NAME + File.separator + EXPORT_DIR + File.separator
 
 
                 if (! File(pathToSave).exists()) {
