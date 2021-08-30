@@ -15,7 +15,7 @@
     <string name="snack_delete_notes">Заметки удалены (%1$s)</string>
 
     <!-- Dialogs -->
-    <string name="dialog_delete_note_message"><![CDATA[<b>Удалить заметки?</b> [%1$s]]]></string>
+    <string name="dialog_delete_note_message"><![CDATA[<b>Удалить заметки?</b> [%1$d]]]></string>
     <string name="dialog_delete_note_positive">Да</string>
     <string name="dialog_delete_note_negative">Нет</string>
 
@@ -49,6 +49,7 @@
 
     <string name="dialog_change_log_title">Изменения в v%1$s</string>
     <string name="dialog_ok">OK</string>
+    <string name="dialog_cancel">Отмена</string>
 
     <string name="search_hint">Поиск</string>
     <string name="search_nothing_found">Ничего не найдено :(</string>
@@ -61,4 +62,29 @@
         • Ссылки в тексте заметки теперь кликабельны \n
         • Множество улучшений в UI приложения
     </string>
+
+    <string name="changes_v_code_300">
+        • Добавлена функция сохранения заметок в формате TXT \n
+    </string>
+
+    <string name="menu_export_to_txt">Экспорт в TXT</string>
+
+    <string name="export_notes_description_text">Экспортировать заметки в Downloads/TXNotes?</string>
+
+    <string name="sp_permission_write_external_storage_first_request">PERMISSION_WRITE_EXTERNAL_STORAGE_FIRST_REQUEST</string>
+
+
+    <string name="info_permission_WES">
+        Недостаточно прав. Для данной функции приложению требуется право на запись в хранилище.
+        Предоставьте право и попробуйте снова.
+    </string>
+
+    <string name="info_permission_WES_with_settings">
+        Недостаточно прав. Для данной функции приложению требуется право на запись в хранилище.
+        Предоставьте право в настройках и попробуйте снова.
+    </string>
+
+    <string name="not_enough_rights">Недостаточно прав</string>
+
+    <string name="to_settings">В настройки</string>
 </resources>

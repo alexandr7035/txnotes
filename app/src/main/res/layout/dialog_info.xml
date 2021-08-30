@@ -6,7 +6,7 @@
     android:padding="10dp">
 
     <TextView
-        android:id="@+id/dialog_title"
+        android:id="@+id/dialogTitleView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="5dp"
@@ -15,26 +15,24 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/changesText"
+        android:id="@+id/dialogDescriptionView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/changes_v_code_300"
         android:textSize="18sp" />
 
     <TextView
-        android:id="@+id/closeDialogBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/btnAction"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
+        android:layout_weight="1"
         android:background="@drawable/background_primary_button"
         android:clickable="true"
-        android:paddingLeft="50dp"
-        android:paddingRight="50dp"
         android:text="@string/dialog_ok"
         android:textAlignment="center"
         android:textColor="@color/white"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:textStyle="bold" />
 
 </LinearLayout>
