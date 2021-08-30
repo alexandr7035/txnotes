@@ -30,8 +30,8 @@ android {
         applicationId "com.alexandr7035.txnotes"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 200
-        versionName "2.0"
+        versionCode 300
+        versionName "3.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
