@@ -62,6 +62,11 @@
         • Ссылки в тексте заметки теперь кликабельны \n
         • Множество улучшений в UI приложения
     </string>
+
+    <string name="changes_v_code_300">
+        • Добавлена функция сохранения заметок в формате TXT \n
+    </string>
+
     <string name="menu_export_to_txt">Экспорт в TXT</string>
 
     <string name="export_notes_description_text">Экспортировать заметки в Downloads/TXNotes?</string>

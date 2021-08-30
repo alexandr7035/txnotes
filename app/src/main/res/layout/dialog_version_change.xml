@@ -18,7 +18,7 @@
         android:id="@+id/changesText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/changes_v_code_200"
+        android:text="@string/changes_v_code_300"
         android:textSize="18sp" />
 
     <TextView

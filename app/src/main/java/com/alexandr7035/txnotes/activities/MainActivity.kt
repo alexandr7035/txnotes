@@ -275,10 +275,12 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
         val lastInstalledVersion =
             sharedPreferences.getInt(getString(R.string.shared_pref_last_installed_version), 0)
 
+        Log.d(LOG_TAG, "$lastInstalledVersion VERSION")
+
         // DEBUG
         //lastInstalledVersion = 0;
         if (lastInstalledVersion != BuildConfig.VERSION_CODE) {
-            //Log.d(LOG_TAG, "run version " + BuildConfig.VERSION_CODE + " for the first time, show release info");
+            Log.d(LOG_TAG, "run version " + BuildConfig.VERSION_CODE + " for the first time, show release info");
 
             // Show dialog
             val fm = supportFragmentManager
