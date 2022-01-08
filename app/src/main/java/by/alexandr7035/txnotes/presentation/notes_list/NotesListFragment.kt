@@ -40,6 +40,12 @@ class NotesListFragment : Fragment(), NoteClickListener {
         })
 
         viewModel.load()
+
+
+        binding.createNoteBtn.setOnClickListener {
+            findNavController()
+                .navigateSafe(NotesListFragmentDirections.actionNotesListFragmentToCreateNoteFragment())
+        }
     }
 
 

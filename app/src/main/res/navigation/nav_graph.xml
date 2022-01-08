@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_notesListFragment_to_viewNoteFragment"
             app:destination="@id/viewNoteFragment" />
+        <action
+            android:id="@+id/action_notesListFragment_to_createNoteFragment"
+            app:destination="@id/createNoteFragment" />
     </fragment>
     <fragment
         android:id="@+id/viewNoteFragment"
@@ -23,4 +26,9 @@
             android:name="noteId"
             app:argType="integer" />
     </fragment>
+    <fragment
+        android:id="@+id/createNoteFragment"
+        android:name="by.alexandr7035.txnotes.presentation.create_note.CreateNoteFragment"
+        android:label="fragment_create_note"
+        tools:layout="@layout/fragment_create_note" />
 </navigation>

@@ -1,9 +1,11 @@
 package by.alexandr7035.data.repository
 
+import by.alexandr7035.data.local.NoteEntity
+import by.alexandr7035.data.local.NotesDao
 import by.alexandr7035.domain.model.Note
 import by.alexandr7035.domain.repository.NotesRepository
 
-class NotesRepositoryImpl : NotesRepository {
+class NotesRepositoryImpl(private val dao: NotesDao) : NotesRepository {
     override fun getNotesList(): List<Note> {
         return listOf(
             Note(1,"Note 1", "lorem ipsum"),
@@ -16,5 +18,12 @@ class NotesRepositoryImpl : NotesRepository {
 
     override fun getNoteById(id: Int): Note {
         return Note(1, "Note 1", "lorem ipsum note text")
+    }
+
+    override fun saveNote(note: Note) {
+        dao.saveNote(NoteEntity(
+            title = note.title,
+            text = note.text
+        ))
     }
 }
