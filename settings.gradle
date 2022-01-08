@@ -7,3 +7,5 @@ dependencyResolutionManagement {
 }
 rootProject.name = "TXNotes"
 include ':app'
+include ':domain'
+include ':data'
