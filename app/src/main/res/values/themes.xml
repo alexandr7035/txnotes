@@ -20,4 +20,26 @@
         <item name="android:background">@drawable/background_note_item</item>
         <item name="android:elevation">@dimen/cardview_default_elevation</item>
     </style>
+
+    <style name="NoteItemTitle">
+        <item name="android:textSize">@dimen/note_item_title_text</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="NoteItemDate">
+        <item name="android:textSize">@dimen/note_item_date_text</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="singleLine">true</item>
+    </style>
+
+    <style name="NoteItemText">
+        <item name="android:textSize">@dimen/note_item_primary_text</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:maxLines">8</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
 </resources>

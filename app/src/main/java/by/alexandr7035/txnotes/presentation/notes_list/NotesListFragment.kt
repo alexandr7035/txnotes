@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import by.alexandr7035.txnotes.R
 import by.alexandr7035.txnotes.databinding.FragmentNotesListBinding
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -28,8 +29,7 @@ class NotesListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val adapter = NotesAdapter()
-        // TODO use flexbox or same
-        val layoutManager = LinearLayoutManager(requireContext())
+        val layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         binding.recycler.adapter = adapter
         binding.recycler.layoutManager = layoutManager
 

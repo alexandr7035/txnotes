@@ -3,25 +3,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/NoteCardStyle"
     android:padding="@dimen/note_item_padding"
+    android:layout_margin="@dimen/note_item_margin"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    tools:layout_width="200dp">
 
     <TextView
+        style="@style/NoteItemTitle"
         android:id="@+id/noteTitleView"
         tools:text="Note Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
     <TextView
+        style="@style/NoteItemDate"
         android:id="@+id/noteDateView"
         tools:text="19 Nov 2020"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
     <TextView
+        style="@style/NoteItemText"
+        android:layout_marginTop="@dimen/note_item_text_top_margin"
         android:id="@+id/noteTextView"
-        tools:text="Note Text Lorem Ipsum"
+        tools:text="Note Text Lorem IpsumNote Text Lorem IpsumNote Text Lorem IpsumNote Text Lorem IpsumNote Text Lorem Ipsum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 </LinearLayout>

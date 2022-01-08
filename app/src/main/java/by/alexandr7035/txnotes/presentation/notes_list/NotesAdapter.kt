@@ -31,6 +31,8 @@ class NotesAdapter: RecyclerView.Adapter<NotesAdapter.NoteViewHolder>() {
         fun bind(note: Note) {
             binding.noteTitleView.text = note.title
             binding.noteTextView.text = note.text
+            // FIXME remove
+            binding.noteDateView.text = "19 Nov 2020"
         }
     }
 }
