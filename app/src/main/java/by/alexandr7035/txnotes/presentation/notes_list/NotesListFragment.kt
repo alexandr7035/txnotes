@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import by.alexandr7035.txnotes.R
 import by.alexandr7035.txnotes.databinding.FragmentNotesListBinding
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -26,8 +27,15 @@ class NotesListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val adapter = NotesAdapter()
+        // TODO use flexbox or same
+        val layoutManager = LinearLayoutManager(requireContext())
+        binding.recycler.adapter = adapter
+        binding.recycler.layoutManager = layoutManager
+
         viewModel.getNotesLiveData().observe(viewLifecycleOwner, {
             Log.d("DEBUG_TAG", "$it")
+            adapter.setItems(it)
         })
 
         viewModel.load()
