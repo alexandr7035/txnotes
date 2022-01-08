@@ -74,4 +74,9 @@ dependencies {
     // ViewBinding delegate
     def viewbindingdelegate_version = "1.5.3"
     implementation "com.github.kirich1409:viewbindingpropertydelegate-noreflection:$viewbindingdelegate_version"
+
+    // Room
+    def room_version = "2.4.0"
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
 }
