@@ -22,6 +22,12 @@
         <item name="titleTextAppearance">@style/ToolbarTextAppearance</item>
     </style>
 
+    <style name="ToolbarWithBackNav" parent="Toolbar">
+        <item name="contentInsetStartWithNavigation">0dp</item>
+        <item name="navigationIcon">?attr/actionModeCloseDrawable</item>
+        <item name="navigationIconTint">@color/brown_500</item>
+    </style>
+
     <style name="ToolbarTextAppearance">
         <item name="android:textSize">20sp</item>
         <item name="android:textStyle">bold</item>
@@ -57,6 +63,22 @@
     <style name="FloatingActionButtonStyle">
         <item name="android:backgroundTint">@color/brown_500</item>
         <item name="tint">@color/white</item>
+    </style>
+
+    <style name="NoteField">
+        <item name="android:textSize">@dimen/note_field_text</item>
+        <item name="android:textColor">@color/gray_500</item>
+        <item name="android:background">@drawable/background_note_field</item>
+        <item name="android:paddingStart">@dimen/note_field_padding_horizontal</item>
+        <item name="android:paddingEnd">@dimen/note_field_padding_horizontal</item>
+        <item name="android:paddingTop">@dimen/note_field_padding_vertical</item>
+        <item name="android:paddingBottom">@dimen/note_field_padding_vertical</item>
+        <item name="android:autoLink">web|email</item>
+        <item name="android:linksClickable">true</item>
+    </style>
+
+    <style name="NoteTitle" parent="NoteField">
+        <item name="singleLine">true</item>
     </style>
 
 </resources>

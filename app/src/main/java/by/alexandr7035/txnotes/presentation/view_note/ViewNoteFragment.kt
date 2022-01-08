@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import by.alexandr7035.txnotes.R
 import by.alexandr7035.txnotes.databinding.FragmentViewNoteBinding
@@ -28,8 +29,13 @@ class ViewNoteFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.getNoteLiveData().observe(viewLifecycleOwner, {
+        binding.toolbar.setNavigationOnClickListener {
+            findNavController().navigateUp()
+        }
 
+        viewModel.getNoteLiveData().observe(viewLifecycleOwner, { note ->
+            binding.noteTitleView.text = note.title
+            binding.noteTextView.text = note.text
         })
 
         viewModel.load(safeArgs.noteId)

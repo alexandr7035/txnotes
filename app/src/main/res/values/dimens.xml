@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="default_fragment_margin">12dp</dimen>
+
     <dimen name="note_item_corner_radius">16dp</dimen>
     <dimen name="note_item_padding">16dp</dimen>
     <dimen name="note_item_margin">4dp</dimen>
@@ -7,5 +9,11 @@
     <dimen name="note_item_date_text">14sp</dimen>
     <dimen name="note_item_primary_text">16sp</dimen>
     <dimen name="note_item_text_top_margin">8dp</dimen>
+
     <dimen name="fab_default_margin">16dp</dimen>
+
+    <dimen name="note_field_text">18sp</dimen>
+    <dimen name="note_field_corners">16dp</dimen>
+    <dimen name="note_field_padding_vertical">4dp</dimen>
+    <dimen name="note_field_padding_horizontal">8dp</dimen>
 </resources>

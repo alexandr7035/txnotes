@@ -15,4 +15,5 @@
     <color name="brown_600">#603F1E</color>
     <color name="gray_500">#343434</color>
 
+    <color name="transp_5">#0D000000</color>
 </resources>
