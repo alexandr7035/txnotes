@@ -9,4 +9,10 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="yellow_100">#FFDE7E</color>
+
+    <color name="brown_100">#F3D5B2</color>
+    <color name="brown_500">#9B6A2E</color>
+    <color name="brown_600">#603F1E</color>
+    <color name="gray_500">#343434</color>
+
 </resources>

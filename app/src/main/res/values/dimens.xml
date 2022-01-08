@@ -7,4 +7,5 @@
     <dimen name="note_item_date_text">14sp</dimen>
     <dimen name="note_item_primary_text">16sp</dimen>
     <dimen name="note_item_text_top_margin">8dp</dimen>
+    <dimen name="fab_default_margin">16dp</dimen>
 </resources>
