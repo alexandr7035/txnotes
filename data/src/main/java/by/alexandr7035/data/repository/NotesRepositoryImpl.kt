@@ -6,7 +6,7 @@ import by.alexandr7035.domain.model.Note
 import by.alexandr7035.domain.repository.NotesRepository
 
 class NotesRepositoryImpl(private val dao: NotesDao) : NotesRepository {
-    override fun getNotesList(): List<Note> {
+    override suspend fun getNotesList(): List<Note> {
         return listOf(
             Note(1,"Note 1", "lorem ipsum"),
             Note(2, "Note 2", "lorem ipsum more long text"),
@@ -16,11 +16,11 @@ class NotesRepositoryImpl(private val dao: NotesDao) : NotesRepository {
         )
     }
 
-    override fun getNoteById(id: Int): Note {
+    override suspend fun getNoteById(id: Int): Note {
         return Note(1, "Note 1", "lorem ipsum note text")
     }
 
-    override fun saveNote(note: Note) {
+    override suspend fun saveNote(note: Note) {
         dao.saveNote(NoteEntity(
             title = note.title,
             text = note.text

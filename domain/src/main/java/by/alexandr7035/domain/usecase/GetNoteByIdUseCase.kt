@@ -5,7 +5,7 @@ import by.alexandr7035.domain.repository.NotesRepository
 import javax.inject.Inject
 
 class GetNoteByIdUseCase @Inject constructor(private val repository: NotesRepository) {
-    fun execute(id: Int): Note {
+    suspend fun execute(id: Int): Note {
         return repository.getNoteById(id)
     }
 }
