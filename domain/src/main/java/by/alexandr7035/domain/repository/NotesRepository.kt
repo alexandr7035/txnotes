@@ -6,4 +6,6 @@ interface NotesRepository {
     fun getNotesList(): List<Note>
 
     fun getNoteById(id: Int): Note
+
+    fun saveNote(note: Note)
 }
