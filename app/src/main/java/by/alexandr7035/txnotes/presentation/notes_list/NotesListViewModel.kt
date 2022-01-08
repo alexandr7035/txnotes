@@ -1,5 +1,6 @@
 package by.alexandr7035.txnotes.presentation.notes_list
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -12,7 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class NotesListViewModel @Inject constructor(private val getNotesListUseCase: GetNotesListUseCase): ViewModel() {
-    val notesListLiveData = MutableLiveData<List<Note>>()
+    private val notesListLiveData = MutableLiveData<List<Note>>()
 
     fun load() {
         viewModelScope.launch(Dispatchers.IO) {
@@ -20,4 +21,6 @@ class NotesListViewModel @Inject constructor(private val getNotesListUseCase: Ge
             notesListLiveData.postValue(notes)
         }
     }
+
+    fun getNotesLiveData(): LiveData<List<Note>> = notesListLiveData
 }
