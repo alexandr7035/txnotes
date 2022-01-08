@@ -7,15 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import by.alexandr7035.txnotes.R
+import by.alexandr7035.txnotes.core.extensions.navigateSafe
 import by.alexandr7035.txnotes.databinding.FragmentNotesListBinding
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class NotesListFragment : Fragment() {
+class NotesListFragment : Fragment(), NoteClickListener {
 
     private val binding by viewBinding(FragmentNotesListBinding::bind)
     private val viewModel by viewModels<NotesListViewModel>()
@@ -28,7 +29,7 @@ class NotesListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = NotesAdapter()
+        val adapter = NotesAdapter(itemClickListener = this)
         val layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         binding.recycler.adapter = adapter
         binding.recycler.layoutManager = layoutManager
@@ -39,5 +40,11 @@ class NotesListFragment : Fragment() {
         })
 
         viewModel.load()
+    }
+
+
+    override fun onNoteClicked(noteId: Int) {
+        findNavController()
+            .navigateSafe(NotesListFragmentDirections.actionNotesListFragmentToViewNoteFragment(noteId))
     }
 }

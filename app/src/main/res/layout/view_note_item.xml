@@ -4,6 +4,8 @@
     style="@style/NoteCardStyle"
     android:padding="@dimen/note_item_padding"
     android:layout_margin="@dimen/note_item_margin"
+    android:clickable="true"
+    android:focusable="true"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"

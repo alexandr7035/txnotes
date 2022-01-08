@@ -29,6 +29,7 @@
 
     <style name="NoteCardStyle">
         <item name="android:background">@drawable/background_note_item</item>
+        <item name="android:foreground">@drawable/foreground_note_item</item>
         <item name="android:elevation">@dimen/cardview_default_elevation</item>
     </style>
 

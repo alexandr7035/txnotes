@@ -9,5 +9,18 @@
         android:id="@+id/notesListFragment"
         android:name="by.alexandr7035.txnotes.presentation.notes_list.NotesListFragment"
         android:label="fragment_notes_list"
-        tools:layout="@layout/fragment_notes_list" />
+        tools:layout="@layout/fragment_notes_list" >
+        <action
+            android:id="@+id/action_notesListFragment_to_viewNoteFragment"
+            app:destination="@id/viewNoteFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/viewNoteFragment"
+        android:name="by.alexandr7035.txnotes.presentation.view_note.ViewNoteFragment"
+        android:label="fragment_view_note"
+        tools:layout="@layout/fragment_view_note" >
+        <argument
+            android:name="noteId"
+            app:argType="integer" />
+    </fragment>
 </navigation>
