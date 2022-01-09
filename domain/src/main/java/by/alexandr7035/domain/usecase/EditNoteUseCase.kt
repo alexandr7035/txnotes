@@ -20,8 +20,7 @@ class EditNoteUseCase @Inject constructor(private val repository: NotesRepositor
             EditNoteModel(
                 id = note.id,
                 title = title,
-                text = text,
-                creationDate = note.creationDate
+                text = text
             )
         )
     }

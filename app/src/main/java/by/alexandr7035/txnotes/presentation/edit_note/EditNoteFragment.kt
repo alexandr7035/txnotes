@@ -52,7 +52,6 @@ class EditNoteFragment : Fragment() {
                                 id = oldNoteModel.id,
                                 title = binding.noteTitleEditText.text.toString(),
                                 text = binding.noteTextEditText.text.toString(),
-                                creationDate = System.currentTimeMillis()
                             )
 
                             viewModel.editNote(note)

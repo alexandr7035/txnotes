@@ -43,12 +43,15 @@ class NotesRepositoryImpl(private val dao: NotesDao) : NotesRepository {
     }
 
     override suspend fun editNote(note: EditNoteModel) {
+        val oldNote = dao.getNoteById(note.id)
+
         dao.editNote(NoteEntity(
             id = note.id,
             title = note.title,
             text = note.text,
-            creationDate = note.creationDate,
-            updateDate = note.creationDate
+            creationDate = oldNote.creationDate,
+            // TODO implement
+            updateDate = oldNote.updateDate
         ))
     }
 }
