@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import by.alexandr7035.txnotes.R
+import by.alexandr7035.txnotes.core.extensions.navigateSafe
 import by.alexandr7035.txnotes.databinding.FragmentViewNoteBinding
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -37,6 +38,17 @@ class ViewNoteFragment : Fragment() {
             binding.noteTitleView.text = note.title
             binding.noteTextView.text = note.text
             binding.noteDateView.text = note.creationDate
+
+            binding.toolbar.setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.editNoteItem -> {
+                        findNavController()
+                            .navigateSafe(ViewNoteFragmentDirections.actionViewNoteFragmentToEditNoteFragment(note.id))
+                    }
+                }
+
+                true
+            }
         })
 
         viewModel.load(safeArgs.noteId)

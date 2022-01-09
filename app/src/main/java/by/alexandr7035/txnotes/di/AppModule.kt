@@ -7,6 +7,7 @@ import by.alexandr7035.data.local.NotesDatabase
 import by.alexandr7035.data.repository.NotesRepositoryImpl
 import by.alexandr7035.domain.repository.NotesRepository
 import by.alexandr7035.domain.usecase.CreateNoteUseCase
+import by.alexandr7035.domain.usecase.EditNoteUseCase
 import by.alexandr7035.domain.usecase.GetNoteByIdUseCase
 import by.alexandr7035.domain.usecase.GetNotesListUseCase
 import dagger.Module
@@ -59,5 +60,11 @@ object AppModule {
     @Singleton
     fun provideCreateNoteUseCase(notesRepository: NotesRepository): CreateNoteUseCase {
         return CreateNoteUseCase(notesRepository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideEditNoteUseCase(notesRepository: NotesRepository): EditNoteUseCase {
+        return EditNoteUseCase(notesRepository)
     }
 }

@@ -8,5 +8,6 @@
     <string name="enter_note_text">Enter note text</string>
     <string name="enter_note_title">Enter note title</string>
     <string name="error_empty_note">Cant save empty note. Please, fill the text field</string>
+    <string name="edit_note">Edit note</string>
 
 </resources>

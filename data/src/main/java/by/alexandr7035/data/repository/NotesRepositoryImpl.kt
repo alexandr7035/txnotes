@@ -3,6 +3,7 @@ package by.alexandr7035.data.repository
 import by.alexandr7035.data.local.NoteEntity
 import by.alexandr7035.data.local.NotesDao
 import by.alexandr7035.domain.model.CreateNoteModel
+import by.alexandr7035.domain.model.EditNoteModel
 import by.alexandr7035.domain.model.Note
 import by.alexandr7035.domain.repository.NotesRepository
 
@@ -32,8 +33,18 @@ class NotesRepositoryImpl(private val dao: NotesDao) : NotesRepository {
         )
     }
 
-    override suspend fun saveNote(note: CreateNoteModel) {
+    override suspend fun createNote(note: CreateNoteModel) {
         dao.createNote(NoteEntity(
+            title = note.title,
+            text = note.text,
+            creationDate = note.creationDate,
+            updateDate = note.creationDate
+        ))
+    }
+
+    override suspend fun editNote(note: EditNoteModel) {
+        dao.editNote(NoteEntity(
+            id = note.id,
             title = note.title,
             text = note.text,
             creationDate = note.creationDate,
