@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import by.alexandr7035.domain.model.CreateNoteModel
 import by.alexandr7035.domain.model.Note
 import by.alexandr7035.txnotes.R
+import by.alexandr7035.txnotes.core.extensions.showToast
 import by.alexandr7035.txnotes.databinding.FragmentCreateNoteBinding
 import by.alexandr7035.txnotes.databinding.FragmentViewNoteBinding
 import by.alexandr7035.txnotes.presentation.view_note.ViewNoteViewModel
@@ -35,18 +36,24 @@ class CreateNoteFragment : Fragment() {
         }
 
         binding.toolbar.setOnMenuItemClickListener {
-            // TODO validation
+
             when (it.itemId) {
                 R.id.saveNoteItem -> {
-                    val note = CreateNoteModel(
-                        title = binding.noteTitleView.text.toString(),
-                        text = binding.noteTextView.text.toString(),
-                        creationDate = System.currentTimeMillis()
-                    )
+                    if (binding.noteTextView.text.isBlank()) {
+                        // TODO error dialog
+                        requireContext().showToast(getString(R.string.error_empty_note))
+                    }
+                    else {
+                        val note = CreateNoteModel(
+                            title = binding.noteTitleView.text.toString(),
+                            text = binding.noteTextView.text.toString(),
+                            creationDate = System.currentTimeMillis()
+                        )
 
-                    viewModel.saveNote(note)
+                        viewModel.saveNote(note)
 
-                    findNavController().navigateUp()
+                        findNavController().navigateUp()
+                    }
                 }
             }
 
