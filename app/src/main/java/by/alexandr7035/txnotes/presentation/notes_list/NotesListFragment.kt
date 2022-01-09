@@ -16,7 +16,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class NotesListFragment : Fragment(), NoteClickListener {
+class NotesListFragment : Fragment(), NoteClickListener, NoteLongClickListener {
 
     private val binding by viewBinding(FragmentNotesListBinding::bind)
     private val viewModel by viewModels<NotesListViewModel>()
@@ -29,7 +29,7 @@ class NotesListFragment : Fragment(), NoteClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = NotesAdapter(itemClickListener = this)
+        val adapter = NotesAdapter(itemClickListener = this, itemLongClickListener = this)
         val layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         binding.recycler.adapter = adapter
         binding.recycler.layoutManager = layoutManager
@@ -52,5 +52,9 @@ class NotesListFragment : Fragment(), NoteClickListener {
     override fun onNoteClicked(noteId: Int) {
         findNavController()
             .navigateSafe(NotesListFragmentDirections.actionNotesListFragmentToViewNoteFragment(noteId))
+    }
+
+    override fun onNoteLongClicked(noteId: Int) {
+
     }
 }

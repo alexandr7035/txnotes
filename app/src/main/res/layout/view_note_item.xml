@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/NoteCardStyle"
     android:padding="@dimen/note_item_padding"
     android:layout_margin="@dimen/note_item_margin"
@@ -16,14 +17,9 @@
         android:id="@+id/noteTitleView"
         tools:text="Note Title"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-    <TextView
-        style="@style/NoteItemDate"
-        android:id="@+id/noteDateView"
-        tools:text="19 Nov 2020"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
 
     <TextView
         style="@style/NoteItemText"
@@ -31,5 +27,32 @@
         android:id="@+id/noteTextView"
         tools:text="Note Text Lorem IpsumNote Text Lorem IpsumNote Text Lorem IpsumNote Text Lorem IpsumNote Text Lorem Ipsum"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-</LinearLayout>
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/noteTitleView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        style="@style/NoteItemDate"
+        android:id="@+id/noteDateView"
+        tools:text="19 Nov 2020"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/selectionMark"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/selectionMark"/>
+
+    <ImageView
+        android:id="@+id/selectionMark"
+        tools:visibility="visible"
+        android:visibility="invisible"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/ic_mark"
+        android:layout_marginTop="@dimen/note_item_selection_mark_top_margin"
+        app:layout_constraintTop_toBottomOf="@id/noteTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:tint="?attr/colorControlNormal" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
