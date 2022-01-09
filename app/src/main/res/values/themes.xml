@@ -63,7 +63,7 @@
     </style>
 
     <style name="FloatingActionButtonStyle">
-        <item name="android:backgroundTint">@color/brown_500</item>
+        <item name="android:backgroundTint">?attr/colorPrimaryVariant</item>
         <item name="tint">@color/white</item>
     </style>
 
