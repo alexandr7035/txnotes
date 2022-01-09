@@ -18,7 +18,8 @@
 
     <TextView
         android:id="@+id/noteTitleView"
-        style="@style/NoteTitle"
+        style="@style/NoteField"
+        android:maxLines="1"
         android:layout_marginStart="@dimen/default_fragment_margin"
         android:layout_marginEnd="@dimen/default_fragment_margin"
         android:layout_marginTop="@dimen/default_fragment_margin"

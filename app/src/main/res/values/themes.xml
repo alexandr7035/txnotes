@@ -79,10 +79,6 @@
         <item name="android:linksClickable">true</item>
     </style>
 
-    <style name="NoteTitle" parent="NoteField">
-        <item name="singleLine">true</item>
-    </style>
-
     <style name="NoteEditableField" parent="NoteField">
         <item name="android:inputType">textMultiLine</item>
         <item name="android:gravity">start|top</item>
