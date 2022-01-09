@@ -12,8 +12,9 @@ import by.alexandr7035.txnotes.presentation.NoteUiModel
 
 class NotesAdapter(
     private val itemClickListener: NoteClickListener,
-    private val itemLongClickListener: NoteLongClickListener
-): RecyclerView.Adapter<NotesAdapter.NoteViewHolder>() {
+    private val itemLongClickListener: NoteLongClickListener,
+    private val itemClickListenerWithSelection: NoteClickListenerWithSelection
+) : RecyclerView.Adapter<NotesAdapter.NoteViewHolder>() {
 
     private var items: List<NoteUiModel> = emptyList()
     private var selectedItems: LinkedHashSet<NoteUiModel> = LinkedHashSet()
@@ -43,36 +44,41 @@ class NotesAdapter(
         notifyDataSetChanged()
     }
 
-    inner class NoteViewHolder(private val binding: ViewNoteItemBinding): RecyclerView.ViewHolder(binding.root) {
+    fun checkIfAnyItemSelected(): Boolean {
+        return selectedItems.isNotEmpty()
+    }
+
+    inner class NoteViewHolder(private val binding: ViewNoteItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(note: NoteUiModel) {
             binding.noteTitleView.text = note.title
             binding.noteTextView.text = note.text
             binding.noteDateView.text = note.creationDate
 
             binding.root.setOnClickListener {
-
-                // If note is selected just unselect it
-                if (selectedItems.contains(note)) {
-                    selectedItems.remove(note)
-                    binding.selectionMark.visibility = View.INVISIBLE
+                if (checkIfAnyItemSelected()) {
+                    toggleNoteSelection(note)
+                    itemClickListenerWithSelection.onNoteClickedWithSelection()
                 }
-                // Pass click otherwise
                 else {
                     itemClickListener.onNoteClicked(note.id)
                 }
             }
 
             binding.root.setOnLongClickListener {
-                if (selectedItems.contains(note)) {
-                    selectedItems.remove(note)
-                    binding.selectionMark.visibility = View.INVISIBLE
-                }
-                else {
-                    selectedItems.add(note)
-                    binding.selectionMark.visibility = View.VISIBLE
-                }
-
+                toggleNoteSelection(note)
+                itemLongClickListener.onNoteLongClicked(note.id)
                 true
+            }
+        }
+
+
+        private fun toggleNoteSelection(note: NoteUiModel) {
+            if (selectedItems.contains(note)) {
+                selectedItems.remove(note)
+                binding.selectionMark.visibility = View.INVISIBLE
+            } else {
+                selectedItems.add(note)
+                binding.selectionMark.visibility = View.VISIBLE
             }
         }
     }

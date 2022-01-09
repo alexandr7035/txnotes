@@ -37,4 +37,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:contentDescription="@string/cd_add_note" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/deleteNoteBtn"
+        android:visibility="gone"
+        style="@style/FloatingActionButtonStyle"
+        android:src="@drawable/ic_save"
+        android:tint="@color/white"
+        android:layout_margin="@dimen/fab_default_margin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:contentDescription="@string/cd_delete_notes" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
