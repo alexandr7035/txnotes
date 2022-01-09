@@ -11,4 +11,7 @@ interface NotesDao {
 
     @Query("SELECT * FROM notes ORDER by id DESC")
     suspend fun getNotesList(): List<NoteEntity>
+
+    @Query("SELECT * FROM notes WHERE id = (:noteId)")
+    suspend fun getNoteById(noteId: Int): NoteEntity
 }
