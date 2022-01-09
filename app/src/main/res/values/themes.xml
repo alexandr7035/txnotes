@@ -84,4 +84,17 @@
         <item name="android:gravity">start|top</item>
     </style>
 
+    <style name="NoteTitleStyle">
+        <item name="android:textSize">@dimen/note_title_text</item>
+        <item name="android:textColor">@color/gray_500</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="NoteTextStyle">
+        <item name="android:textSize">@dimen/note_text</item>
+        <item name="android:textColor">@color/gray_500</item>
+        <item name="android:autoLink">web|email</item>
+        <item name="android:linksClickable">true</item>
+    </style>
+
 </resources>
