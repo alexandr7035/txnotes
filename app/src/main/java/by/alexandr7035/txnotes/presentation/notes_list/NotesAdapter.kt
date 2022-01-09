@@ -1,5 +1,6 @@
 package by.alexandr7035.txnotes.presentation.notes_list
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,8 +25,10 @@ class NotesAdapter(private val itemClickListener: NoteClickListener): RecyclerVi
         return items.size
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun setItems(items: List<Note>) {
         this.items = items
+        notifyDataSetChanged()
     }
 
     inner class NoteViewHolder(private val binding: ViewNoteItemBinding): RecyclerView.ViewHolder(binding.root) {

@@ -8,13 +8,25 @@ import by.alexandr7035.domain.repository.NotesRepository
 
 class NotesRepositoryImpl(private val dao: NotesDao) : NotesRepository {
     override suspend fun getNotesList(): List<Note> {
-        return listOf(
-            Note(1,"Note 1", "lorem ipsum"),
-            Note(2, "Note 2", "lorem ipsum more long text"),
-            Note(3,"Note 3 LONG TITLE with several lines", "lorem ipsum more long text lorem ipsum more long text lorem ipsum more long textext lorem ipsum more long text lorem ipsum more long text"),
-            Note(4, "Note 4", "lorem ipsum more long text lorem ipsum"),
-            Note(5, "Short 5", "lorem ipsum")
-        )
+        val notes = dao.getNotesList()
+
+        val domainNotes = notes.map {
+            Note(
+                id = it.id,
+                title = it.title,
+                text = it.text
+            )
+        }
+
+//        return listOf(
+//            Note(1,"Note 1", "lorem ipsum"),
+//            Note(2, "Note 2", "lorem ipsum more long text"),
+//            Note(3,"Note 3 LONG TITLE with several lines", "lorem ipsum more long text lorem ipsum more long text lorem ipsum more long textext lorem ipsum more long text lorem ipsum more long text"),
+//            Note(4, "Note 4", "lorem ipsum more long text lorem ipsum"),
+//            Note(5, "Short 5", "lorem ipsum")
+//        )
+
+        return domainNotes
     }
 
     override suspend fun getNoteById(id: Int): Note {
