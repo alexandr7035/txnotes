@@ -6,6 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import by.alexandr7035.domain.model.CreateNoteModel
+import by.alexandr7035.domain.model.Note
 import by.alexandr7035.txnotes.R
 import by.alexandr7035.txnotes.databinding.FragmentCreateNoteBinding
 import by.alexandr7035.txnotes.databinding.FragmentViewNoteBinding
@@ -26,5 +29,27 @@ class CreateNoteFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.toolbar.setNavigationOnClickListener {
+            findNavController().navigateUp()
+        }
+
+        binding.toolbar.setOnMenuItemClickListener {
+            // TODO validation
+            when (it.itemId) {
+                R.id.saveNoteItem -> {
+                    val note = CreateNoteModel(
+                        title = binding.noteTitleView.text.toString(),
+                        text = binding.noteTextView.text.toString()
+                    )
+
+                    viewModel.saveNote(note)
+
+                    findNavController().navigateUp()
+                }
+            }
+
+            true
+        }
     }
 }
