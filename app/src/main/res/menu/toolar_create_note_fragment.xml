@@ -3,6 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item android:id="@+id/saveNoteItem"
         app:showAsAction="ifRoom"
-        android:icon="@drawable/ic_add"
+        android:icon="@drawable/ic_save"
         android:title="@string/create_note" />
 </menu>

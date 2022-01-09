@@ -14,6 +14,8 @@
         <!-- Customize your theme here. -->
 
         <item name="android:windowBackground">@color/brown_100</item>
+
+        <item name="colorControlNormal">?attr/colorPrimary</item>
     </style>
 
     <style name="Toolbar">
