@@ -1,5 +1,6 @@
 package by.alexandr7035.domain.repository
 
+import by.alexandr7035.domain.model.CreateNoteModel
 import by.alexandr7035.domain.model.Note
 
 interface NotesRepository {
@@ -7,5 +8,5 @@ interface NotesRepository {
 
     suspend fun getNoteById(id: Int): Note
 
-    suspend fun saveNote(note: Note)
+    suspend fun saveNote(note: CreateNoteModel)
 }

@@ -2,6 +2,7 @@ package by.alexandr7035.data.repository
 
 import by.alexandr7035.data.local.NoteEntity
 import by.alexandr7035.data.local.NotesDao
+import by.alexandr7035.domain.model.CreateNoteModel
 import by.alexandr7035.domain.model.Note
 import by.alexandr7035.domain.repository.NotesRepository
 
@@ -20,7 +21,7 @@ class NotesRepositoryImpl(private val dao: NotesDao) : NotesRepository {
         return Note(1, "Note 1", "lorem ipsum note text")
     }
 
-    override suspend fun saveNote(note: Note) {
+    override suspend fun saveNote(note: CreateNoteModel) {
         dao.saveNote(NoteEntity(
             title = note.title,
             text = note.text
