@@ -19,5 +19,7 @@
 
     <dimen name="note_title_text">22sp</dimen>
     <dimen name="note_text">20sp</dimen>
+    <dimen name="note_date">16sp</dimen>
+    <dimen name="note_element_spacing">12dp</dimen>
 
 </resources>

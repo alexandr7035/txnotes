@@ -40,7 +40,8 @@ class CreateNoteFragment : Fragment() {
                 R.id.saveNoteItem -> {
                     val note = CreateNoteModel(
                         title = binding.noteTitleView.text.toString(),
-                        text = binding.noteTextView.text.toString()
+                        text = binding.noteTextView.text.toString(),
+                        creationDate = System.currentTimeMillis()
                     )
 
                     viewModel.saveNote(note)

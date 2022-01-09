@@ -36,6 +36,7 @@ class ViewNoteFragment : Fragment() {
         viewModel.getNoteLiveData().observe(viewLifecycleOwner, { note ->
             binding.noteTitleView.text = note.title
             binding.noteTextView.text = note.text
+            binding.noteDateView.text = note.creationDate
         })
 
         viewModel.load(safeArgs.noteId)

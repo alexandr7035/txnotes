@@ -97,4 +97,9 @@
         <item name="android:linksClickable">true</item>
     </style>
 
+    <style name="NoteDateStyle">
+        <item name="android:textSize">@dimen/note_date</item>
+        <item name="android:textColor">@color/gray_500</item>
+    </style>
+
 </resources>

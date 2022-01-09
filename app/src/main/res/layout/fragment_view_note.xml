@@ -41,11 +41,20 @@
                 tools:text="Note title" />
 
             <TextView
+                android:id="@+id/noteDateView"
+                style="@style/NoteDateStyle"
+                tools:text="19 Nov 2020"
+                android:layout_marginStart="@dimen/default_fragment_margin"
+                android:layout_marginTop="@dimen/note_element_spacing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
                 android:id="@+id/noteTextView"
                 style="@style/NoteTextStyle"
                 android:layout_marginStart="@dimen/default_fragment_margin"
                 android:layout_marginEnd="@dimen/default_fragment_margin"
-                android:layout_marginTop="@dimen/default_fragment_margin"
+                android:layout_marginTop="@dimen/note_element_spacing"
                 android:layout_marginBottom="@dimen/default_fragment_margin"
                 tools:text="Note text"
                 android:layout_width="match_parent"

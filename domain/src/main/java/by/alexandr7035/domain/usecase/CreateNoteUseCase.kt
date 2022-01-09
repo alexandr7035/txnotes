@@ -17,7 +17,11 @@ class CreateNoteUseCase @Inject constructor(private val repository: NotesReposit
 
         val text = note.text.trim()
 
-        repository.saveNote(CreateNoteModel(title = title, text = text))
+        repository.saveNote(CreateNoteModel(
+            title = title,
+            text = text,
+            creationDate = note.creationDate
+        ))
     }
 
     companion object {

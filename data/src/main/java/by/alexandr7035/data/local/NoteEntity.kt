@@ -8,5 +8,7 @@ data class NoteEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     val title: String,
-    val text: String
+    val text: String,
+    val creationDate: Long,
+    val updateDate: Long
 )
