@@ -41,7 +41,7 @@
         android:id="@+id/deleteNoteBtn"
         android:visibility="gone"
         style="@style/FloatingActionButtonStyle"
-        android:src="@drawable/ic_save"
+        android:src="@drawable/ic_trash"
         android:tint="@color/white"
         android:layout_margin="@dimen/fab_default_margin"
         android:layout_width="wrap_content"
