@@ -4,16 +4,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import by.alexandr7035.domain.model.EditNoteModel
 import by.alexandr7035.txnotes.R
+import by.alexandr7035.txnotes.core.extensions.debug
+import by.alexandr7035.txnotes.core.extensions.navigateSafe
 import by.alexandr7035.txnotes.core.extensions.showToast
 import by.alexandr7035.txnotes.databinding.FragmentEditNoteBinding
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class EditNoteFragment : Fragment() {
@@ -30,9 +34,9 @@ class EditNoteFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // TODO exit confirmation dialog
         binding.toolbar.setNavigationOnClickListener {
-            findNavController().navigateUp()
+            findNavController().navigateSafe(EditNoteFragmentDirections
+                .actionEditNoteFragmentToCancelEditNoteFragment(safeArgs.noteId))
         }
 
         viewModel.getNoteLiveData().observe(viewLifecycleOwner, { oldNoteModel ->
@@ -66,5 +70,14 @@ class EditNoteFragment : Fragment() {
         })
 
         viewModel.load(safeArgs.noteId)
+
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object: OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                Timber.debug("back pressed")
+                findNavController().navigateSafe(EditNoteFragmentDirections
+                    .actionEditNoteFragmentToCancelEditNoteFragment(safeArgs.noteId))
+            }
+        })
     }
 }

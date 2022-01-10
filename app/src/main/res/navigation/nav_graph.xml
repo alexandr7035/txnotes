@@ -45,5 +45,23 @@
         <argument
             android:name="noteId"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_editNoteFragment_to_cancelEditNoteFragment"
+            app:destination="@id/cancelEditNoteFragment" />
     </fragment>
+
+    <dialog
+        android:id="@+id/cancelEditNoteFragment"
+        android:name="by.alexandr7035.txnotes.presentation.edit_note.CancelEditNoteFragment"
+        android:label="fragment_cancel_edit_note"
+        tools:layout="@layout/fragment_cancel_edit_note" >
+        <action
+            android:id="@+id/action_cancelEditNoteFragment_to_viewNoteFragment"
+            app:destination="@id/viewNoteFragment"
+            app:popUpTo="@id/viewNoteFragment"
+            app:popUpToInclusive="true"/>
+        <argument
+            android:name="noteId"
+            app:argType="integer" />
+    </dialog>
 </navigation>
