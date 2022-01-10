@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import by.alexandr7035.txnotes.databinding.ViewNoteItemBinding
-import by.alexandr7035.txnotes.presentation.NoteUiModel
 
 class NotesAdapter(
     private val itemClickListener: NoteClickListener,
@@ -14,8 +13,7 @@ class NotesAdapter(
     private val itemClickListenerWithSelection: NoteClickListenerWithSelection
 ) : RecyclerView.Adapter<NotesAdapter.NoteViewHolder>() {
 
-    private var items: List<NoteUiModel> = emptyList()
-    private var selectedItems: LinkedHashSet<NoteUiModel> = LinkedHashSet()
+    private var items: List<NoteListItemUiModel> = emptyList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
         val binding = ViewNoteItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -31,30 +29,30 @@ class NotesAdapter(
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setItems(items: List<NoteUiModel>) {
+    fun setItems(items: List<NoteListItemUiModel>) {
         this.items = items
         notifyDataSetChanged()
     }
 
     fun clearSelection() {
-        this.selectedItems = LinkedHashSet()
+        items.forEach { it.isSelected = false }
     }
 
-    fun getSelectedNotes(): LinkedHashSet<NoteUiModel> {
-        return selectedItems
+    fun getSelectedNotes(): List<NoteListItemUiModel> {
+        return items.filter { it.isSelected }
     }
 
     fun checkIfAnyItemSelected(): Boolean {
-        return selectedItems.isNotEmpty()
+        return items.findLast { it.isSelected } != null
     }
 
     inner class NoteViewHolder(private val binding: ViewNoteItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(note: NoteUiModel, itemPosition: Int) {
+        fun bind(note: NoteListItemUiModel, itemPosition: Int) {
             binding.noteTitleView.text = note.title
             binding.noteTextView.text = note.text
             binding.noteDateView.text = note.creationDate
 
-            if (selectedItems.contains(note)) {
+            if (note.isSelected) {
                 binding.selectionMark.visibility = View.VISIBLE
             }
             else {
@@ -81,12 +79,8 @@ class NotesAdapter(
         }
 
 
-        private fun toggleNoteSelection(note: NoteUiModel) {
-            if (selectedItems.contains(note)) {
-                selectedItems.remove(note)
-            } else {
-                selectedItems.add(note)
-            }
+        private fun toggleNoteSelection(note: NoteListItemUiModel) {
+            note.isSelected = ! note.isSelected
         }
     }
 }
