@@ -4,8 +4,6 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import by.alexandr7035.txnotes.databinding.ViewNoteItemBinding
 import by.alexandr7035.txnotes.presentation.NoteUiModel
@@ -25,7 +23,7 @@ class NotesAdapter(
     }
 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
-        holder.bind(items[position])
+        holder.bind(items[position], position)
     }
 
     override fun getItemCount(): Int {
@@ -38,10 +36,12 @@ class NotesAdapter(
         notifyDataSetChanged()
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     fun clearSelection() {
         this.selectedItems = LinkedHashSet()
-        notifyDataSetChanged()
+    }
+
+    fun getSelectedNotes(): LinkedHashSet<NoteUiModel> {
+        return selectedItems
     }
 
     fun checkIfAnyItemSelected(): Boolean {
@@ -49,14 +49,22 @@ class NotesAdapter(
     }
 
     inner class NoteViewHolder(private val binding: ViewNoteItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(note: NoteUiModel) {
+        fun bind(note: NoteUiModel, itemPosition: Int) {
             binding.noteTitleView.text = note.title
             binding.noteTextView.text = note.text
             binding.noteDateView.text = note.creationDate
 
+            if (selectedItems.contains(note)) {
+                binding.selectionMark.visibility = View.VISIBLE
+            }
+            else {
+                binding.selectionMark.visibility = View.INVISIBLE
+            }
+
             binding.root.setOnClickListener {
                 if (checkIfAnyItemSelected()) {
                     toggleNoteSelection(note)
+                    notifyItemChanged(itemPosition)
                     itemClickListenerWithSelection.onNoteClickedWithSelection()
                 }
                 else {
@@ -66,6 +74,7 @@ class NotesAdapter(
 
             binding.root.setOnLongClickListener {
                 toggleNoteSelection(note)
+                notifyItemChanged(itemPosition)
                 itemLongClickListener.onNoteLongClicked(note.id)
                 true
             }
@@ -75,10 +84,8 @@ class NotesAdapter(
         private fun toggleNoteSelection(note: NoteUiModel) {
             if (selectedItems.contains(note)) {
                 selectedItems.remove(note)
-                binding.selectionMark.visibility = View.INVISIBLE
             } else {
                 selectedItems.add(note)
-                binding.selectionMark.visibility = View.VISIBLE
             }
         }
     }

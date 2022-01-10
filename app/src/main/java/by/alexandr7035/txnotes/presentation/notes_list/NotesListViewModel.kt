@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import by.alexandr7035.domain.model.DeleteNoteModel
+import by.alexandr7035.domain.usecase.DeleteNotesUseCase
 import by.alexandr7035.domain.usecase.GetNotesListUseCase
 import by.alexandr7035.txnotes.core.extensions.getStringDateFromLong
 import by.alexandr7035.txnotes.presentation.NoteUiModel
@@ -13,7 +15,10 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class NotesListViewModel @Inject constructor(private val getNotesListUseCase: GetNotesListUseCase): ViewModel() {
+class NotesListViewModel @Inject constructor(
+    private val getNotesListUseCase: GetNotesListUseCase,
+    private val deleteNotesUseCase: DeleteNotesUseCase
+): ViewModel() {
     private val notesListLiveData = MutableLiveData<List<NoteUiModel>>()
 
     fun load() {
@@ -34,6 +39,19 @@ class NotesListViewModel @Inject constructor(private val getNotesListUseCase: Ge
     }
 
     fun getNotesLiveData(): LiveData<List<NoteUiModel>> = notesListLiveData
+
+    fun deleteNotes(notes: LinkedHashSet<NoteUiModel>) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val notesToDelete = notes.map {
+                DeleteNoteModel(it.id)
+            }
+
+            deleteNotesUseCase.execute(notesToDelete)
+
+            // Reload list from here
+            load()
+        }
+    }
 
 
     companion object {

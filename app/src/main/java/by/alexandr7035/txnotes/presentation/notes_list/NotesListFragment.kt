@@ -10,10 +10,12 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import by.alexandr7035.txnotes.R
+import by.alexandr7035.txnotes.core.extensions.debug
 import by.alexandr7035.txnotes.core.extensions.navigateSafe
 import by.alexandr7035.txnotes.databinding.FragmentNotesListBinding
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class NotesListFragment : Fragment(), NoteClickListener, NoteLongClickListener, NoteClickListenerWithSelection {
@@ -38,11 +40,11 @@ class NotesListFragment : Fragment(), NoteClickListener, NoteLongClickListener, 
         binding.recycler.layoutManager = layoutManager
 
         viewModel.getNotesLiveData().observe(viewLifecycleOwner, {
+            Timber.debug("update livedata $it")
             adapter.setItems(it)
         })
 
         viewModel.load()
-
 
         binding.createNoteBtn.setOnClickListener {
             findNavController()
@@ -50,7 +52,13 @@ class NotesListFragment : Fragment(), NoteClickListener, NoteLongClickListener, 
         }
 
         binding.deleteNoteBtn.setOnClickListener {
-            // TODO delete notes
+            // Delete notes
+            val notesToDelete = adapter.getSelectedNotes()
+            viewModel.deleteNotes(notesToDelete)
+
+            // Clear selection
+            adapter.clearSelection()
+            toggleFab()
         }
     }
 
@@ -65,7 +73,7 @@ class NotesListFragment : Fragment(), NoteClickListener, NoteLongClickListener, 
     }
 
     // Click on ANY note if selection is applied passed here
-    // In order to toggle fabs
+    // In order to toggle FABs when selection is cleared
     override fun onNoteClickedWithSelection() {
         toggleFab()
     }

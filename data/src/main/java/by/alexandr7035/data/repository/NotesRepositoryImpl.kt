@@ -1,8 +1,10 @@
 package by.alexandr7035.data.repository
 
+import android.util.Log
 import by.alexandr7035.data.local.NoteEntity
 import by.alexandr7035.data.local.NotesDao
 import by.alexandr7035.domain.model.CreateNoteModel
+import by.alexandr7035.domain.model.DeleteNoteModel
 import by.alexandr7035.domain.model.EditNoteModel
 import by.alexandr7035.domain.model.Note
 import by.alexandr7035.domain.repository.NotesRepository
@@ -53,5 +55,19 @@ class NotesRepositoryImpl(private val dao: NotesDao) : NotesRepository {
             // TODO implement
             updateDate = oldNote.updateDate
         ))
+    }
+
+    override suspend fun deleteNotes(notes: List<DeleteNoteModel>) {
+//        val ids: List<Int> = notes.map {
+//            it.id
+//        }
+
+        val ids = ArrayList<Int>()
+        notes.forEach {
+            ids.add(it.id)
+        }
+
+        Log.d("DEBUG_TAG", "ids to delete $ids")
+        dao.deleteNotes(ids)
     }
 }
