@@ -13,5 +13,7 @@
     <string name="edit_note">Edit note</string>
     <string name="your_changes_will_be_lost">Your changes will be lost</string>
     <string name="discard_changes">Discard changes</string>
+    <string name="cancel_new_note">Cancel new note?</string>
+    <string name="your_new_note_will_not_be_saved">Your new note will not be saved</string>
 
 </resources>

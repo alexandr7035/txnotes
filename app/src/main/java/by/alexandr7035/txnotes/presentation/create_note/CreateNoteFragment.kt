@@ -1,21 +1,22 @@
 package by.alexandr7035.txnotes.presentation.create_note
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import by.alexandr7035.domain.model.CreateNoteModel
-import by.alexandr7035.domain.model.Note
 import by.alexandr7035.txnotes.R
+import by.alexandr7035.txnotes.core.extensions.debug
+import by.alexandr7035.txnotes.core.extensions.navigateSafe
 import by.alexandr7035.txnotes.core.extensions.showToast
 import by.alexandr7035.txnotes.databinding.FragmentCreateNoteBinding
-import by.alexandr7035.txnotes.databinding.FragmentViewNoteBinding
-import by.alexandr7035.txnotes.presentation.view_note.ViewNoteViewModel
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class CreateNoteFragment : Fragment() {
@@ -32,7 +33,7 @@ class CreateNoteFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.toolbar.setNavigationOnClickListener {
-            findNavController().navigateUp()
+            navigateBack()
         }
 
         binding.toolbar.setOnMenuItemClickListener {
@@ -58,6 +59,23 @@ class CreateNoteFragment : Fragment() {
             }
 
             true
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object: OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                navigateBack()
+            }
+        })
+    }
+
+
+    private fun navigateBack() {
+        if (binding.noteTitleView.text.isNotBlank() || binding.noteTextView.text.isNotBlank()) {
+            findNavController().navigateSafe(
+                CreateNoteFragmentDirections.actionCreateNoteFragmentToCancelCreateNoteFragment())
+        }
+        else {
+            findNavController().popBackStack()
         }
     }
 }
