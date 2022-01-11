@@ -11,7 +11,7 @@
     <string name="create_note">Create note</string>
     <string name="enter_note_text">Enter note text</string>
     <string name="enter_note_title">Enter note title</string>
-    <string name="error_empty_note">Can\'t save empty note. Please, fill the text field</string>
+    <string name="error_empty_note">Can\'t save empty note. Please, fill at least the title or text field</string>
     <string name="edit_note">Edit note</string>
     <string name="your_changes_will_be_lost">Your changes will be lost</string>
     <string name="discard_changes">Discard changes</string>

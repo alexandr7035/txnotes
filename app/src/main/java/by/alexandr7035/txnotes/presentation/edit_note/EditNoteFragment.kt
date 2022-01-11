@@ -49,7 +49,7 @@ class EditNoteFragment : Fragment() {
             binding.toolbar.setOnMenuItemClickListener {
                 when (it.itemId) {
                     R.id.saveNoteItem -> {
-                        if (binding.noteTextEditText.text.isBlank()) {
+                        if (binding.noteTextEditText.text.isBlank() && binding.noteTitleEditText.text.isBlank()) {
                             // TODO error dialog
                             requireContext().showToast(getString(R.string.error_empty_note))
                         } else {

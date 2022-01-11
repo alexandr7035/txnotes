@@ -43,7 +43,7 @@ class CreateNoteFragment : Fragment() {
 
             when (it.itemId) {
                 R.id.saveNoteItem -> {
-                    if (binding.noteTextView.text.isBlank()) {
+                    if (binding.noteTextView.text.isBlank() && binding.noteTitleView.text.isBlank()) {
                         // TODO error dialog
                         requireContext().showToast(getString(R.string.error_empty_note))
                     }
