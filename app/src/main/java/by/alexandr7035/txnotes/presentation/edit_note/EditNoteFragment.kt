@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -66,6 +67,24 @@ class EditNoteFragment : Fragment() {
                 }
 
                 true
+            }
+
+
+            // Initialize note symbol counters
+            val titleActual = oldNoteModel.title.length
+            val titleMax = resources.getInteger(R.integer.max_note_title_length)
+            binding.titleSymbolsCounter.text = getString(R.string.note_symbol_counter_template, titleActual, titleMax)
+
+            val textActual = oldNoteModel.text.length
+            val textMax = resources.getInteger(R.integer.max_note_text_length)
+            binding.textSymbolsCounter.text = getString(R.string.note_symbol_counter_template, textActual, textMax)
+
+            binding.noteTitleEditText.doOnTextChanged { text, _, _, _ ->
+                binding.titleSymbolsCounter.text = getString(R.string.note_symbol_counter_template, text?.length ?: 0, titleMax)
+            }
+
+            binding.noteTextEditText.doOnTextChanged { text, _, _, _ ->
+                binding.textSymbolsCounter.text = getString(R.string.note_symbol_counter_template, text?.length ?: 0, textMax)
             }
         })
 

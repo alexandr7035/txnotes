@@ -17,33 +17,55 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
+    <TextView
+        style="@style/TextSymbolCounterStyle"
+        android:id="@+id/titleSymbolsCounter"
+        tools:text="1/10"
+        android:layout_marginTop="@dimen/default_fragment_margin"
+        android:layout_marginEnd="@dimen/default_fragment_margin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"/>
+
     <EditText
         android:id="@+id/noteTitleEditText"
         style="@style/NoteTitleField"
         android:maxLines="1"
         android:layout_marginStart="@dimen/default_fragment_margin"
         android:layout_marginEnd="@dimen/default_fragment_margin"
-        android:layout_marginTop="@dimen/default_fragment_margin"
+        android:layout_marginTop="@dimen/symbol_counter_margin"
         tools:text="Note title"
         android:hint="@string/enter_note_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintTop_toBottomOf="@id/titleSymbolsCounter"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        style="@style/TextSymbolCounterStyle"
+        android:id="@+id/textSymbolsCounter"
+        tools:text="1/10000"
+        android:layout_marginTop="@dimen/default_fragment_margin"
+        android:layout_marginEnd="@dimen/default_fragment_margin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/noteTitleEditText"/>
 
     <EditText
         android:id="@+id/noteTextEditText"
         style="@style/NoteEditableField"
         android:layout_marginStart="@dimen/default_fragment_margin"
         android:layout_marginEnd="@dimen/default_fragment_margin"
-        android:layout_marginTop="@dimen/default_fragment_margin"
+        android:layout_marginTop="@dimen/symbol_counter_margin"
         android:layout_marginBottom="@dimen/default_fragment_margin"
         tools:text="Note text"
         android:hint="@string/enter_note_text"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/noteTitleEditText"
+        app:layout_constraintTop_toBottomOf="@id/textSymbolsCounter"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
