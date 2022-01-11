@@ -1,10 +1,13 @@
 package by.alexandr7035.txnotes.presentation.create_note
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -66,6 +69,23 @@ class CreateNoteFragment : Fragment() {
                 navigateBack()
             }
         })
+
+        // Initialize note symbol counters
+        val titleActual = 0
+        val titleMax = resources.getInteger(R.integer.max_note_title_length)
+        binding.titleSymbolsCounter.text = getString(R.string.note_symbol_counter_template, titleActual, titleMax)
+
+        val textActual = 0
+        val textMax = resources.getInteger(R.integer.max_note_text_length)
+        binding.textSymbolsCounter.text = getString(R.string.note_symbol_counter_template, textActual, textMax)
+
+        binding.noteTitleView.doOnTextChanged { text, _, _, _ ->
+            binding.titleSymbolsCounter.text = getString(R.string.note_symbol_counter_template, text?.length ?: 0, titleMax)
+        }
+
+        binding.noteTextView.doOnTextChanged { text, _, _, _ ->
+            binding.textSymbolsCounter.text = getString(R.string.note_symbol_counter_template, text?.length ?: 0, textMax)
+        }
     }
 
 

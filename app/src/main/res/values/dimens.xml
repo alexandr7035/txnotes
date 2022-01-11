@@ -28,4 +28,7 @@
     <dimen name="dialog_vertical_spacing">12dp</dimen>
     <dimen name="notes_list_fragment_recycler_margin">4dp</dimen>
 
+    <dimen name="symbol_counter_text_size">14sp</dimen>
+    <dimen name="symbol_counter_margin">4dp</dimen>
+
 </resources>

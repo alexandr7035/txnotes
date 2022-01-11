@@ -76,6 +76,11 @@
         <item name="tint">@color/white</item>
     </style>
 
+    <style name="TextSymbolCounterStyle">
+        <item name="android:textColor">?attr/colorControlNormal</item>
+        <item name="android:textSize">@dimen/symbol_counter_text_size</item>
+    </style>
+
     <style name="NoteField">
         <item name="android:textSize">@dimen/note_field_text</item>
         <item name="android:textColor">@color/gray_500</item>
