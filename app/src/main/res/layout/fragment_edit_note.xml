@@ -19,7 +19,7 @@
 
     <EditText
         android:id="@+id/noteTitleEditText"
-        style="@style/NoteField"
+        style="@style/NoteTitleField"
         android:maxLines="1"
         android:layout_marginStart="@dimen/default_fragment_margin"
         android:layout_marginEnd="@dimen/default_fragment_margin"

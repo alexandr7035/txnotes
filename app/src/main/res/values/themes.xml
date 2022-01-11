@@ -86,6 +86,13 @@
         <item name="android:paddingBottom">@dimen/note_field_padding_vertical</item>
         <item name="android:autoLink">web|email</item>
         <item name="android:linksClickable">true</item>
+        <item name="android:maxLength">@integer/max_note_text_length</item>
+    </style>
+
+    <style name="NoteTitleField" parent="NoteField">
+        <item name="android:lines">3</item>
+        <item name="android:gravity">top|start</item>
+        <item name="android:maxLength">@integer/max_note_title_length</item>
     </style>
 
     <style name="NoteEditableField" parent="NoteField">

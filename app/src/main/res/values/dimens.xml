@@ -26,5 +26,6 @@
     <dimen name="primary_button_height">48dp</dimen>
     <dimen name="primary_button_text_size">16sp</dimen>
     <dimen name="dialog_vertical_spacing">12dp</dimen>
+    <dimen name="notes_list_fragment_recycler_margin">4dp</dimen>
 
 </resources>
