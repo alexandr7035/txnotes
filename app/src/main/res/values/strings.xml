@@ -13,9 +13,16 @@
     <string name="enter_note_title">Enter note title</string>
     <string name="error_empty_note">Can\'t save empty note. Please, fill at least the title or text field</string>
     <string name="edit_note">Edit note</string>
+
     <string name="your_changes_will_be_lost">Your changes will be lost</string>
     <string name="discard_changes">Discard changes</string>
     <string name="cancel_new_note">Cancel new note?</string>
     <string name="your_new_note_will_not_be_saved">Your new note will not be saved</string>
 
+    <string name="delete_notes">Delete notes</string>
+    <string name="delete_notes_question">Delete notes?</string>
+    <string name="confirm">Confirm</string>
+    <string name="all_the_selected_notes_will_be_deleted">All the selected notes will be deleted</string>
+
+    <string name="deleted_notes_key">DELETED_NOTES_KEY</string>
 </resources>

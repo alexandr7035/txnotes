@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_notesListFragment_to_createNoteFragment"
             app:destination="@id/createNoteFragment" />
+        <action
+            android:id="@+id/action_notesListFragment_to_deleteNotesFragment"
+            app:destination="@id/deleteNotesFragment" />
     </fragment>
 
     <fragment
@@ -79,5 +82,12 @@
             app:destination="@id/notesListFragment"
             app:popUpTo="@id/notesListFragment"
             app:popUpToInclusive="true"/>
+    </dialog>
+
+    <dialog
+        android:id="@+id/deleteNotesFragment"
+        android:name="by.alexandr7035.txnotes.presentation.delete_notes.DeleteNotesFragment"
+        android:label="fragment_delete_notes"
+        tools:layout="@layout/fragment_delete_notes" >
     </dialog>
 </navigation>

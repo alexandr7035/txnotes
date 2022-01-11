@@ -51,15 +51,26 @@ class NotesListFragment : Fragment(), NoteClickListener, NoteLongClickListener, 
                 .navigateSafe(NotesListFragmentDirections.actionNotesListFragmentToCreateNoteFragment())
         }
 
+        // Show deletion confirmation dialog. The result will be passed back via livedata
         binding.deleteNoteBtn.setOnClickListener {
-            // Delete notes
-            val notesToDelete = adapter.getSelectedNotes()
-            viewModel.deleteNotes(notesToDelete)
-
-            // Clear selection
-            adapter.clearSelection()
-            toggleFab()
+            findNavController().navigateSafe(NotesListFragmentDirections
+                .actionNotesListFragmentToDeleteNotesFragment())
         }
+
+        // Here the result of notes deletion will be passed back
+        val key = getString(R.string.deleted_notes_key)
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<Boolean>(key)?.observe(viewLifecycleOwner, { deleteNotes ->
+            Timber.debug("get notes deletion request from dialog")
+            if (deleteNotes) {
+                // Delete notes
+                val notesToDelete = adapter.getSelectedNotes()
+                viewModel.deleteNotes(notesToDelete)
+
+                // Clear selection
+                adapter.clearSelection()
+                toggleFab()
+            }
+        })
     }
 
 
