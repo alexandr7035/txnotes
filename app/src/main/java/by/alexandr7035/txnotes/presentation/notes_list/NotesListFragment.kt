@@ -4,12 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import by.alexandr7035.txnotes.R
+import by.alexandr7035.txnotes.core.extensions.checkIfBackStackEmpty
 import by.alexandr7035.txnotes.core.extensions.debug
 import by.alexandr7035.txnotes.core.extensions.navigateSafe
 import by.alexandr7035.txnotes.databinding.FragmentNotesListBinding
@@ -69,6 +72,29 @@ class NotesListFragment : Fragment(), NoteClickListener, NoteLongClickListener, 
                 // Clear selection
                 adapter.clearSelection()
                 toggleFab()
+            }
+        })
+
+        // Clear notes selection on back pressed
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object: OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                val navHostFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+
+                when {
+                    adapter.checkIfAnyItemSelected() -> {
+                        // Clear selection
+                        adapter.clearSelection()
+                        toggleFab()
+                    }
+                    // The default behaviour
+                    navHostFragment.checkIfBackStackEmpty() -> {
+                        requireActivity().finish()
+                    }
+                    else -> {
+                        findNavController().navigateUp()
+                    }
+                }
+
             }
         })
     }

@@ -34,8 +34,10 @@ class NotesAdapter(
         notifyDataSetChanged()
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun clearSelection() {
         items.forEach { it.isSelected = false }
+        notifyDataSetChanged()
     }
 
     fun getSelectedNotes(): List<NoteListItemUiModel> {
