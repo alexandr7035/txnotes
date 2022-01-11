@@ -13,20 +13,21 @@
     tools:layout_width="200dp">
 
     <TextView
-        style="@style/NoteItemTitle"
         android:id="@+id/noteTitleView"
-        tools:text="Note Title"
-        android:layout_width="wrap_content"
+        style="@style/NoteItemTitle"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        tools:text="Note Title" />
 
     <TextView
         style="@style/NoteItemText"
         android:layout_marginTop="@dimen/note_item_text_top_margin"
         android:id="@+id/noteTextView"
         tools:text="Note Text Lorem IpsumNote Text Lorem IpsumNote Text Lorem IpsumNote Text Lorem IpsumNote Text Lorem Ipsum"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/noteTitleView"
         app:layout_constraintStart_toStartOf="parent"
