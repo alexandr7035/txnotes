@@ -67,7 +67,6 @@ class NotesRepositoryImpl(private val dao: NotesDao) : NotesRepository {
             ids.add(it.id)
         }
 
-        Log.d("DEBUG_TAG", "ids to delete $ids")
         dao.deleteNotes(ids)
     }
 }

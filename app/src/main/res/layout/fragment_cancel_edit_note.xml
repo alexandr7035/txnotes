@@ -12,7 +12,7 @@
         style="@style/DialogTitleStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Cancel edit?"/>
+        android:text="@string/cancel_edit_question"/>
 
     <TextView
         style="@style/DialogTextStyle"

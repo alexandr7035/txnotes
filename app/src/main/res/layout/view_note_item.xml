@@ -51,6 +51,7 @@
         android:layout_height="32dp"
         android:src="@drawable/ic_mark"
         android:layout_marginTop="@dimen/note_item_selection_mark_top_margin"
+        android:contentDescription="@string/cd_selection_mark"
         app:layout_constraintTop_toBottomOf="@id/noteTextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

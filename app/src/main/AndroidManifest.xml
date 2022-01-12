@@ -3,6 +3,7 @@
     package="by.alexandr7035.txnotes">
 
     <application
+        android:allowBackup="false"
         android:name=".core.App"
         android:icon="@drawable/ic_app"
         android:label="@string/app_name"
