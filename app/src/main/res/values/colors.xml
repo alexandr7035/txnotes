@@ -1,34 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
 
-    <color name="black">#000000</color>
-    <color name="white">#FFFFFF</color>
+    <color name="brown_100">#F3D5B2</color>
+    <color name="brown_200">#C19C60</color>
+    <color name="brown_300">#C19754</color>
+    <color name="brown_400">#BB9262</color>
+    <color name="brown_500">#9B6A2E</color>
+    <color name="brown_600">#603F1E</color>
 
-    <color name="colorPrimary">#9B6A2E</color>
-    <color name="colorPrimaryDark">#603F1E</color>
-    <color name="colorAccent">#E4603F1E</color>
-    <color name="colorNavigationBar">#000000</color>
+    <color name="gray_100">#F5F5F5</color>
+    <color name="gray_500">#343434</color>
 
-    <color name="colorPrimaryButton">#724F24</color>
-    <color name="colorPrimaryButtonPressed">#603F1E</color>
-
-    <color name="colorToolbarButtonPressed">#E47E5830</color>
-
-    <color name="colorToolbarTitle">#FFFFFF</color>
-
-    <color name="colorNoteWidget">#C5C2C2</color>
-    <color name="colorNoteWidgetPressed">#9B9B9B</color>
-    <color name="colorNoteWidgetSelected">#BD7070</color>
-    <color name="colorNoteText">#000000</color>
-    <color name="colorNoteWidgetSeparator">#848484</color>
-
-    <color name="colorDefaultField">#E8E5E5</color>
-
-     <color name="color_dialog_button">@android:color/transparent</color>
-     <color name="color_dialog_button_pressed">#C5C5C5</color>
-    <color name="color_dialog_button_text">@color/colorPrimaryDark</color>
-
-    <color name="hint_search">#C2C2C2</color>
-
-
+    <color name="transp_5">#0D000000</color>
 </resources>

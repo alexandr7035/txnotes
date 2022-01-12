@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="default_fragment_margin">12dp</dimen>
+
+    <dimen name="note_item_elevation">12dp</dimen>
+    <dimen name="note_item_corner_radius">16dp</dimen>
+    <dimen name="note_item_padding">16dp</dimen>
+    <dimen name="note_item_margin">4dp</dimen>
+    <dimen name="note_item_title_text">18sp</dimen>
+    <dimen name="note_item_date_text">14sp</dimen>
+    <dimen name="note_item_primary_text">16sp</dimen>
+    <dimen name="note_item_text_top_margin">4dp</dimen>
+    <dimen name="note_item_selection_mark_top_margin">4dp</dimen>
+
+    <dimen name="fab_default_margin">16dp</dimen>
+
+    <dimen name="note_field_text">18sp</dimen>
+    <dimen name="note_field_corners">16dp</dimen>
+    <dimen name="note_field_padding_vertical">4dp</dimen>
+    <dimen name="note_field_padding_horizontal">8dp</dimen>
+
+    <dimen name="note_title_text">22sp</dimen>
+    <dimen name="note_text">20sp</dimen>
+    <dimen name="note_date">16sp</dimen>
+    <dimen name="note_element_spacing">12dp</dimen>
+    <dimen name="primary_button_corner_radius">12dp</dimen>
+    <dimen name="primary_button_height">52dp</dimen>
+    <dimen name="primary_button_text_size">16sp</dimen>
+    <dimen name="dialog_vertical_spacing">12dp</dimen>
+    <dimen name="notes_list_fragment_recycler_margin">4dp</dimen>
+
+    <dimen name="symbol_counter_text_size">14sp</dimen>
+    <dimen name="symbol_counter_margin">4dp</dimen>
+
+</resources>
