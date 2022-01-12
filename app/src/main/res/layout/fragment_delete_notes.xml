@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:padding="@dimen/default_fragment_margin"
+    tools:context=".presentation.edit_note.CancelEditNoteFragment">
+
+    <TextView
+        style="@style/DialogTitleStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/delete_notes_question"/>
+
+    <TextView
+        style="@style/DialogTextStyle"
+        android:layout_marginTop="@dimen/dialog_vertical_spacing"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/all_the_selected_notes_will_be_deleted" />
+
+    <Button
+        style="@style/PrimaryButton"
+        android:id="@+id/confirmDeleteBtn"
+        android:layout_marginTop="@dimen/dialog_vertical_spacing"
+        android:text="@string/confirm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

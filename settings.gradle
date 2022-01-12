@@ -1,2 +1,11 @@
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+rootProject.name = "TXNotes"
 include ':app'
-rootProject.name='TXNotes'
+include ':domain'
+include ':data'

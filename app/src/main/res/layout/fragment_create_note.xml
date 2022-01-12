@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".presentation.view_note.ViewNoteFragment">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        style="@style/ToolbarWithBackNav"
+        app:menu="@menu/toolar_create_note_fragment"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:title="@string/create_note"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <EditText
+        android:id="@+id/noteTitleView"
+        style="@style/NoteTitleField"
+        android:layout_marginTop="@dimen/symbol_counter_margin"
+        android:layout_marginStart="@dimen/default_fragment_margin"
+        android:layout_marginEnd="@dimen/default_fragment_margin"
+        tools:text="Note title"
+        android:hint="@string/enter_note_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/titleSymbolsCounter"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        style="@style/TextSymbolCounterStyle"
+        android:id="@+id/titleSymbolsCounter"
+        tools:text="1/10"
+        android:layout_marginTop="@dimen/default_fragment_margin"
+        android:layout_marginEnd="@dimen/default_fragment_margin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"/>
+
+    <TextView
+        style="@style/TextSymbolCounterStyle"
+        android:id="@+id/textSymbolsCounter"
+        tools:text="1/10000"
+        android:layout_marginTop="@dimen/default_fragment_margin"
+        android:layout_marginEnd="@dimen/default_fragment_margin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/noteTitleView"/>
+
+    <EditText
+        android:id="@+id/noteTextView"
+        style="@style/NoteEditableField"
+        android:layout_marginStart="@dimen/default_fragment_margin"
+        android:layout_marginEnd="@dimen/default_fragment_margin"
+        android:layout_marginTop="@dimen/symbol_counter_margin"
+        android:layout_marginBottom="@dimen/default_fragment_margin"
+        tools:text="Note text"
+        android:hint="@string/enter_note_text"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/textSymbolsCounter"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
